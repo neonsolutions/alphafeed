@@ -1,8 +1,36 @@
 import Image from "next/image"
+import FeedCard from "../components/FeedCard"
 import { UserCircleIcon } from "@heroicons/react/24/outline"
 import logoWithText from "../../public/images/logoWithText.svg"
 
-export default function app() {
+const mockData = [
+  {
+    title: "Amazing Twitter Post",
+    body: "This is an amazing Twitter post that you should check out!",
+    ranking: 1,
+    media: "https://via.placeholder.com/150",
+    mediaType: "twitter" as const,
+    link: "https://www.twitter.com",
+  },
+  {
+    title: "Interesting News Article",
+    body: "Here's an interesting news article that we found. Have a read!",
+    ranking: 2,
+    media: "https://via.placeholder.com/150",
+    mediaType: "news" as const,
+    link: "https://www.newswebsite.com",
+  },
+  {
+    title: "Intriguing Research Paper",
+    body: "This research paper presents some groundbreaking findings. Take a look!",
+    ranking: 3,
+    media: "https://via.placeholder.com/150",
+    mediaType: "research" as const,
+    link: "https://www.researchwebsite.com",
+  },
+]
+
+export default function App() {
   return (
     <div>
       <div className="bg-white z-0 h-screen">
@@ -21,7 +49,7 @@ export default function app() {
           </nav>
         </header>
 
-        <div className="relative isolate px-6 pt-14 lg:px-8">
+        <div className="relative isolate px-6 pt-44 lg:px-8 w-full flex justify-center ">
           <div
             className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
             aria-hidden="true"
@@ -34,31 +62,30 @@ export default function app() {
               }}
             />
           </div>
-          <div className="mx-auto max-w-4xl py-32 sm:py-48 lg:py-56">
-            <div className="text-center ">
-              <h1 className="text-4xl font-bold leading-tight  text-gray-900 sm:text-6xl">
-                Your AI-Powered News
-                <span className=" text-indigo-500 leading-tight"> Aggregator for Everything AI</span>
-              </h1>
-
-              <div className="flex justify-center w-full">
-                {" "}
-                <p className="mt-10 text-lg max-w-sm leading-normal  text-gray-600">
-                  AI moves fast, we keep you up to date and sift through the noise so you don't have to.
-                </p>
+          <div className="w-full max-w-[500px] ">
+            <div className="flex justify-between">
+              <h1 className="text-2xl font-bold  text-gray-900 sm:text-4xl">The latest in AI</h1>
+              <div className="w-10">
+                <div className="h-[18px] bg-indigo-300 rounded-t-md w-full text-center flex justify-center items-center">
+                  <p className="font-bold text-[10px]">MAY</p>
+                </div>
+                <div className="h-6 bg-indigo-100 rounded-b-md w-full text-center flex justify-center items-center">
+                  <p className="font-bold text-sm text-gray-900">31</p>
+                </div>
               </div>
-
-              <div className="mt-10 flex items-center justify-center gap-x-6">
-                <a
-                  href="#"
-                  className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Get started
-                </a>
-                <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
-                  Learn more
-                </a>
-              </div>
+            </div>
+            <div>
+              {mockData.map((post, index) => (
+                <FeedCard
+                  key={index}
+                  title={post.title}
+                  body={post.body}
+                  ranking={post.ranking}
+                  media={post.media}
+                  mediaType={post.mediaType}
+                  link={post.link}
+                />
+              ))}
             </div>
           </div>
           <div
