@@ -7,7 +7,7 @@ import infographic from "../../public/images/landing/infographic.svg"
 
 const includedFeatures = ["Access to past articles", "Personalized feed", "Daily summary email", "Priority updates"]
 
-export default function landing() {
+export default function Landing() {
   return (
     <div>
       <div className="bg-white z-0 h-screen">
