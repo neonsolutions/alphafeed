@@ -3,30 +3,30 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model alembic_version {
-  version_num String @id
+  version_num String @id(map: "alembic_version_pkc") @db.VarChar(32)
 }
 
 model feed_items {
-  id          Int      @id @default(autoincrement())
-  title       String?
-  link        String?  @unique(map: "sqlite_autoindex_feed_items_1")
-  description String?
-  published   String?
-  author      String?
-  scores      scores[]
+  id          Int       @id @default(autoincrement())
+  title       String   @db.VarChar
+  link        String   @unique @db.VarChar
+  description String   @db.VarChar
+  published   DateTime @db.Timestamp(6)
+  author      String   @db.VarChar
+  scores       scores?
 }
 
 model scores {
   id           Int         @id @default(autoincrement())
-  relevance    Float?
-  impact       Float?
-  novelty      Float?
-  reliability  Float?
-  feed_item_id Int?
-  feed_items   feed_items? @relation(fields: [feed_item_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  relevance    Float
+  impact       Float
+  novelty      Float
+  reliability  Float
+  feed_item_id Int         @unique
+  feed_items   feed_items  @relation(fields: [feed_item_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
