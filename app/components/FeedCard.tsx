@@ -53,23 +53,36 @@ const FeedCard = ({ title, body, scores, media, mediaType, link }: CardProps) =>
             {dropdownVisible && ( // Show dropdown if dropdownVisible is true
               <div className="origin-top-right absolute left-0 top-6 w-32 rounded-md shadow-xl bg-white ring-1 ring-black ring-opacity-5 transition-all ease-out duration-300 transform opacity-100 scale-100">
                 <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                  <p className="block px-4 py-2 text-sm text-gray-700  hover:text-gray-900" role="menuitem">
-                    Relevance: {scores.relevance}
+                  <p
+                    className="flex justify-between px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    <span>Relevance:</span> <span>{scores.relevance}</span>
                   </p>
-                  <p className="block px-4 py-2 text-sm text-gray-700  hover:text-gray-900" role="menuitem">
-                    Impact: {scores.impact}
+                  <p
+                    className="flex justify-between px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    <span>Impact:</span> <span>{scores.impact}</span>
                   </p>
-                  <p className="block px-4 py-2 text-sm text-gray-700  hover:text-gray-900" role="menuitem">
-                    Novelty: {scores.novelty}
+                  <p
+                    className="flex justify-between px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    <span>Novelty:</span> <span>{scores.novelty}</span>
                   </p>
-                  <p className="block px-4 py-2 text-sm text-gray-700  hover:text-gray-900" role="menuitem">
-                    Reliability: {scores.reliability}
+                  <p
+                    className="flex justify-between px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
+                    role="menuitem"
+                  >
+                    <span>Reliability:</span> <span>{scores.reliability}</span>
                   </p>
                 </div>
               </div>
             )}
           </div>
         </div>
+
         <Image src={icon} alt="mediaType icon" width={22} height={22} />
       </div>
       <p className="text-gray-500 text-sm">{body}</p>
