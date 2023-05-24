@@ -3,6 +3,15 @@ import Link from "next/link"
 import FeedCard from "../components/FeedCard"
 import { prisma } from "./db"
 
+const threeHoursAgo = new Date()
+threeHoursAgo.setHours(threeHoursAgo.getHours() - 3)
+
+const twentyMinutesAgo = new Date()
+twentyMinutesAgo.setMinutes(twentyMinutesAgo.getMinutes() - 20)
+
+const onePointThreeDaysAgo = new Date()
+onePointThreeDaysAgo.setDate(onePointThreeDaysAgo.getDate() - 1.3)
+
 const mockData = [
   {
     title: "Amazing Twitter Post",
@@ -15,6 +24,7 @@ const mockData = [
     ], // Placeholder image from Lorem Picsum&#8203;`oaicite:{"index":0,"metadata":{"title":"Lorem Picsum","url":"https://picsum.photos/","text":"https://picsum.photos/200/300. To get a square image, just add the size. https://picsum.photos/200. Specifi","pub_date":null}}`&#8203;
     mediaType: "twitter",
     link: "https://www.twitter.com",
+    date: threeHoursAgo,
   },
   {
     title: "Interesting News Article",
@@ -27,6 +37,7 @@ const mockData = [
     ], // Random image from Unsplash&#8203;`oaicite:{"index":1,"metadata":{"title":"awik.io","url":"https://awik.io/generate-random-images-unsplash-without-using-api/","text":"https://source.unsplash.com/random/WIDTHxHEIGHT\n\nLet’s generate a random image with the width and height of 300px:\n\nhttps://source.unsplash.com/random/300×300","pub_date":null}}`&#8203;
     mediaType: "news",
     link: "https://www.newswebsite.com",
+    date: twentyMinutesAgo,
   },
   {
     title: "Intriguing Research Paper",
@@ -34,6 +45,7 @@ const mockData = [
     scores: { significance: 7, relevance: 2, impact: 2, novelty: 3, reliability: 3 },
     mediaType: "research",
     link: "https://www.researchwebsite.com",
+    date: onePointThreeDaysAgo,
   },
   {
     title: "Intriguing Research Paper",
@@ -41,20 +53,33 @@ const mockData = [
     scores: { significance: 7, relevance: 2, impact: 2, novelty: 3, reliability: 3 },
     mediaType: "internet",
     link: "https://www.researchwebsite.com",
+    date: onePointThreeDaysAgo,
   },
 ]
 
 export const getServerSideProps = async () => {
   // const posts = await prisma.feed_items.findMany({})
   // console.log(posts)
-  return { props: { posts: mockData } }
+  //Date object can't be serialized directly to JSON, which is required for Next.js to send the data from getServerSideProps to your client side component.
+  const mockDataWithSerializedDates = mockData.map((post) => ({
+    ...post,
+    date: post.date.toISOString(),
+  }))
+  return { props: { posts: mockDataWithSerializedDates } }
 }
 
 type CardProps = {
   title: string
   body: string
-  scores: { significance: number; relevance: number; impact: number; novelty: number; reliability: number }
-  media: string[] | undefined // Assume this is an array of URLs for images
+  scores: {
+    significance: number
+    relevance: number
+    impact: number
+    novelty: number
+    reliability: number
+  }
+  date: string
+  media: string[] | undefined
   mediaType: "twitter" | "internet" | "news" | "research"
   link: string
 }
@@ -78,7 +103,7 @@ const Feed = ({ posts }: { posts: CardProps[] }) => {
         <div className="w-full max-w-[500px] ">
           <div className="flex justify-between pb-6">
             <h1 className="text-2xl font-bold  text-gray-900 sm:text-4xl">The latest in AI</h1>
-            <div className="w-10">
+            <div className="w-10 -mt-1">
               <div className="h-[18px] bg-indigo-300 rounded-t-md w-full text-center flex justify-center items-center">
                 <p className="font-bold text-[10px]">MAY</p>
               </div>
@@ -97,6 +122,7 @@ const Feed = ({ posts }: { posts: CardProps[] }) => {
                 media={post.media}
                 mediaType={post.mediaType}
                 link={post.link}
+                datePosted={new Date(post.date)}
               />
             ))}
           </div>

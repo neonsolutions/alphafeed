@@ -11,12 +11,13 @@ type CardProps = {
     novelty: number
     reliability: number
   }
+  datePosted: Date
   media: string[] | undefined
   mediaType: "twitter" | "internet" | "news" | "research"
   link: string
 }
 
-const FeedCard = ({ title, body, scores, media, mediaType, link }: CardProps) => {
+const FeedCard = ({ title, body, scores, media, mediaType, link, datePosted }: CardProps) => {
   let icon = "/images/feedCard/internetIcon.svg"
   const [dropdownVisible, setDropdownVisible] = useState(false) // New state
 
@@ -46,8 +47,34 @@ const FeedCard = ({ title, body, scores, media, mediaType, link }: CardProps) =>
     )
   }
 
+  const formatPostDate = (date: Date) => {
+    const now = new Date()
+    const diffMs = now.getTime() - date.getTime() // The difference in milliseconds
+    const diffSec = diffMs / 1000 // The difference in seconds
+    const diffMin = diffSec / 60 // The difference in minutes
+    const diffHour = diffMin / 60 // The difference in hours
+
+    if (diffMin < 60) {
+      // Less than 1 hour ago
+      return `${Math.floor(diffMin)} min ago`
+    } else if (diffHour < 24) {
+      // More than an hour but less than a day ago
+      return `${Math.floor(diffHour)} hours ago`
+    } else {
+      // More than a day ago
+      // Format the date and time to display dd/mm/yy and time
+      const day = date.getDate().toString().padStart(2, "0")
+      const month = (date.getMonth() + 1).toString().padStart(2, "0") // Months are zero-indexed in JS
+      const year = date.getFullYear().toString().slice(2)
+      const hour = date.getHours().toString().padStart(2, "0")
+      const minute = date.getMinutes().toString().padStart(2, "0")
+      return `${day}/${month}/${year} ${hour}:${minute}`
+    }
+  }
+
   return (
     <div className="max-w-md mx-auto bg-white rounded-2xl border border-gray-200 md:max-w-2xl my-8 p-6">
+      {datePosted && <h2 className="text-gray-300 text-xl">{formatPostDate(datePosted)}</h2>}
       <div className="w-full flex justify-between pb-3">
         <div className="flex justify-start gap-3">
           <h3 className="text-[16px] font-medium text-gray-900">{title}</h3>
@@ -62,7 +89,7 @@ const FeedCard = ({ title, body, scores, media, mediaType, link }: CardProps) =>
               <Image alt="downIcon" width={8} height={8} src="/images/feedCard/down.svg" className="ml-1" />
             </button>
             {dropdownVisible && ( // Show dropdown if dropdownVisible is true
-              <div className="origin-top-right z-50 absolute left-0 top-6 w-32 rounded-md shadow-xl bg-white ring-1 ring-black ring-opacity-5 transition-all ease-out duration-300 transform opacity-100 scale-100">
+              <div className="origin-top-right z-50 absolute -left-10  top-6 w-32 rounded-md shadow-xl bg-white ring-1 ring-black ring-opacity-5 transition-all ease-out duration-300 transform opacity-100 scale-100">
                 <div className="py-1 pb-4" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                   <p
                     className="flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
@@ -114,7 +141,9 @@ const FeedCard = ({ title, body, scores, media, mediaType, link }: CardProps) =>
         </div>
       )}
 
-      <p className="text-gray-400 text-xs underline">{link}</p>
+      <a href={link} target="_blank" className="text-gray-400 text-xs underline">
+        {link}
+      </a>
     </div>
   )
 }
