@@ -39,10 +39,16 @@ First cd into the `src/` directory:
 cd src/
 ```
 
-Then run the script:
+Then run the ingestion task:
 
 ```
 python -m tasks.ingest
+```
+
+Then run the scoring task:
+
+```
+python -m tasks.analyze
 ```
 
 ## Database
