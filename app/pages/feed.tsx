@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import FeedCard from "../components/FeedCard"
+import { prisma } from "./db"
 
 const mockData = [
   {
@@ -30,6 +31,8 @@ const mockData = [
 ]
 
 export const getServerSideProps = async () => {
+  const posts = await prisma.feed_items.findMany({})
+  console.log(posts)
   return { props: { posts: mockData } }
 }
 

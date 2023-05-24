@@ -1,11 +1,32 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
+}
+
+model alembic_version {
+  version_num String @id
+}
+
+model feed_items {
+  id          Int      @id @default(autoincrement())
+  title       String?
+  link        String?  @unique(map: "sqlite_autoindex_feed_items_1")
+  description String?
+  published   String?
+  author      String?
+  scores      scores[]
+}
+
+model scores {
+  id           Int         @id @default(autoincrement())
+  relevance    Float?
+  impact       Float?
+  novelty      Float?
+  reliability  Float?
+  feed_item_id Int?
+  feed_items   feed_items? @relation(fields: [feed_item_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
