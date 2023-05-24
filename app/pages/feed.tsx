@@ -5,26 +5,34 @@ import FeedCard from "../components/FeedCard"
 const mockData = [
   {
     title: "Amazing Twitter Post",
-    body: "This is an amazing Twitter post that you should check out!",
+    body: "A groundbreaking study reveals how AI is transforming healthcare diagnostics. The research, conducted by a team of scientists at MIT, demonstrates how AI can accurately diagnose certain medical conditions faster than human doctors. This breakthrough could potentially save millions of lives and revolutionize the healthcare industry.",
     ranking: 1,
-    media: "https://via.placeholder.com/150",
-    source: "twitter" as const,
+    media: ["https://picsum.photos/200/300"], // Placeholder image from Lorem Picsum&#8203;`oaicite:{"index":0,"metadata":{"title":"Lorem Picsum","url":"https://picsum.photos/","text":"https://picsum.photos/200/300. To get a square image, just add the size. https://picsum.photos/200. Specifi","pub_date":null}}`&#8203;
+    mediaType: "twitter",
     link: "https://www.twitter.com",
   },
   {
     title: "Interesting News Article",
-    body: "Here's an interesting news article that we found. Have a read!",
+    body: "demonstrates how AI can accurately diagnose certain medical conditions faster than human doctors. This breakthrough could potentially save millions of lives and revolutionize the healthcare industry.",
     ranking: 2,
-    media: "https://via.placeholder.com/150",
-    source: "news" as const,
+    media: ["https://source.unsplash.com/random/200x300"], // Random image from Unsplash&#8203;`oaicite:{"index":1,"metadata":{"title":"awik.io","url":"https://awik.io/generate-random-images-unsplash-without-using-api/","text":"https://source.unsplash.com/random/WIDTHxHEIGHT\n\nLet’s generate a random image with the width and height of 300px:\n\nhttps://source.unsplash.com/random/300×300","pub_date":null}}`&#8203;
+    mediaType: "news",
     link: "https://www.newswebsite.com",
   },
   {
     title: "Intriguing Research Paper",
     body: "This research paper presents some groundbreaking findings. Take a look!",
     ranking: 3,
-    media: "https://via.placeholder.com/150",
-    source: "research" as const,
+    media: ["https://via.placeholder.com/150"],
+    mediaType: "research",
+    link: "https://www.researchwebsite.com",
+  },
+  {
+    title: "Intriguing Research Paper",
+    body: "This research paper presents some groundbreaking findings. Take a look!",
+    ranking: 3,
+    media: ["https://via.placeholder.com/150"],
+    mediaType: "internet",
     link: "https://www.researchwebsite.com",
   },
 ]
@@ -36,7 +44,7 @@ export const getServerSideProps = async () => {
 const Feed = ({ posts }: { posts: IFeedPost[] }) => {
   return (
     <div>
-      <div className="relative isolate px-6 pt-44 lg:px-8 w-full flex justify-center ">
+      <div className="relative isolate px-6 pt-14 sm:pt-20 lg:px-8 w-full flex justify-center ">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
           aria-hidden="true"
@@ -50,7 +58,7 @@ const Feed = ({ posts }: { posts: IFeedPost[] }) => {
           />
         </div>
         <div className="w-full max-w-[500px] ">
-          <div className="flex justify-between">
+          <div className="flex justify-between pb-6">
             <h1 className="text-2xl font-bold  text-gray-900 sm:text-4xl">The latest in AI</h1>
             <div className="w-10">
               <div className="h-[18px] bg-indigo-300 rounded-t-md w-full text-center flex justify-center items-center">
