@@ -1,7 +1,6 @@
-import Image from "next/image"
-import Link from "next/link"
 import FeedCard from "../components/FeedCard"
-import { prisma } from "./db"
+import { IFeedPost, SourceType } from "../interfaces/IFeedPost"
+import { getPostsForDate } from "../lib/feed"
 
 const threeHoursAgo = new Date()
 threeHoursAgo.setHours(threeHoursAgo.getHours() - 3)
@@ -58,33 +57,35 @@ const mockData = [
 ]
 
 export const getServerSideProps = async () => {
-  // const posts = await prisma.feed_items.findMany({})
-  // console.log(posts)
-  //Date object can't be serialized directly to JSON, which is required for Next.js to send the data from getServerSideProps to your client side component.
-  const mockDataWithSerializedDates = mockData.map((post) => ({
-    ...post,
-    date: post.date.toISOString(),
-  }))
-  return { props: { posts: mockDataWithSerializedDates } }
-}
-
-type CardProps = {
-  title: string
-  body: string
-  scores: {
-    significance: number
-    relevance: number
-    impact: number
-    novelty: number
-    reliability: number
+  const posts = await getPostsForDate(new Date())
+  console.log(posts)
+  if (!posts) {
+    return { props: { posts: [] } }
   }
-  date: string
-  media: string[] | undefined
-  mediaType: "twitter" | "internet" | "news" | "research"
-  link: string
+  const parsedPosts: IFeedPost[] = posts.map((post) => {
+    const scores = post.scores! // Filtering out nulls
+    const significance = (scores.impact + scores.novelty + scores.relevance) / 3
+    return {
+      title: post.title,
+      body: post.description,
+      significance: significance,
+      scores: {
+        significance,
+        relevance: scores.relevance,
+        impact: scores.impact,
+        novelty: scores.novelty,
+        reliability: scores.reliability,
+      },
+      media: null,
+      source: SourceType.Twitter,
+      link: post.link,
+      publishedAt: post.published.toISOString(),
+    }
+  })
+  return { props: { posts: parsedPosts } }
 }
 
-const Feed = ({ posts }: { posts: CardProps[] }) => {
+const Feed = ({ posts }: { posts: IFeedPost[] }) => {
   return (
     <div>
       <div className="relative isolate px-6 pt-14 sm:pt-20 lg:px-8 w-full flex justify-center ">
@@ -114,16 +115,7 @@ const Feed = ({ posts }: { posts: CardProps[] }) => {
           </div>
           <div>
             {posts.map((post, index) => (
-              <FeedCard
-                key={index}
-                title={post.title}
-                body={post.body}
-                scores={post.scores}
-                media={post.media}
-                mediaType={post.mediaType}
-                link={post.link}
-                datePosted={new Date(post.date)}
-              />
+              <FeedCard {...post} key={index} />
             ))}
           </div>
         </div>

@@ -1,27 +1,12 @@
-import { useState } from "react"
 import Image from "next/image"
+import { useState } from "react"
+import { IFeedPost } from "../interfaces/IFeedPost"
 
-type CardProps = {
-  title: string
-  body: string
-  scores: {
-    significance: number
-    relevance: number
-    impact: number
-    novelty: number
-    reliability: number
-  }
-  datePosted: Date
-  media: string[] | undefined
-  mediaType: "twitter" | "internet" | "news" | "research"
-  link: string
-}
-
-const FeedCard = ({ title, body, scores, media, mediaType, link, datePosted }: CardProps) => {
+const FeedCard = ({ title, body, scores, media, source, link, publishedAt }: IFeedPost) => {
   let icon = "/images/feedCard/internetIcon.svg"
   const [dropdownVisible, setDropdownVisible] = useState(false) // New state
 
-  switch (mediaType) {
+  switch (source) {
     case "twitter":
       icon = "/images/feedCard/twitterIconLight.svg"
       break
@@ -34,6 +19,8 @@ const FeedCard = ({ title, body, scores, media, mediaType, link, datePosted }: C
     case "research":
       icon = "/images/feedCard/researchIcon.svg"
       break
+    default:
+      icon = "/images/feedCard/internetIcon.svg"
   }
 
   const renderScoreBar = (score: number) => {
@@ -74,7 +61,7 @@ const FeedCard = ({ title, body, scores, media, mediaType, link, datePosted }: C
 
   return (
     <div className="max-w-md mx-auto bg-white rounded-2xl border border-gray-200 md:max-w-2xl my-8 p-6">
-      {datePosted && <h2 className="text-gray-300 text-xl">{formatPostDate(datePosted)}</h2>}
+      {publishedAt && <h2 className="text-gray-300 text-xl">{formatPostDate(new Date(publishedAt))}</h2>}
       <div className="w-full flex justify-between pb-3">
         <div className="flex justify-start gap-3">
           <h3 className="text-[16px] font-medium text-gray-900">{title}</h3>
@@ -133,7 +120,7 @@ const FeedCard = ({ title, body, scores, media, mediaType, link, datePosted }: C
       </div>
       <p className="text-gray-500 text-sm pb-4">{body}</p>
 
-      {media! && (
+      {media && (
         <div className="flex overflow-x-scroll space-x-4  pb-4">
           {media.map((imgUrl, index) => (
             <img key={index} src={imgUrl} alt={`media ${index}`} className="rounded-lg" />

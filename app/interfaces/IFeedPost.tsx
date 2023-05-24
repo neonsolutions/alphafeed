@@ -1,8 +1,16 @@
-interface IFeedPost {
+export enum SourceType {
+  Twitter = "twitter",
+  Internet = "internet",
+  News = "news",
+  Research = "research",
+}
+
+export interface IFeedPost {
   title: string
   body: string
-  significance: number
-  media: string | undefined
-  source: string
+  scores: { significance: number; relevance: number; impact: number; novelty: number; reliability: number }
+  media: [string] | null
+  source: SourceType
   link: string
+  publishedAt: string // ISO Date String
 }
