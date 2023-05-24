@@ -35,6 +35,17 @@ const FeedCard = ({ title, body, scores, media, mediaType, link }: CardProps) =>
       break
   }
 
+  const renderScoreBar = (score: number) => {
+    const scorePercentage = (score / 10) * 100
+    return (
+      <div className="px-4">
+        <div className="h-1 w-full bg-gray-300 rounded-full ">
+          <div className="h-full bg-indigo-700 rounded-full" style={{ width: `${scorePercentage}%` }}></div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="max-w-md mx-auto bg-white rounded-2xl border border-gray-200 md:max-w-2xl m-4 p-6">
       <div className="w-full flex justify-between pb-3">
@@ -52,31 +63,39 @@ const FeedCard = ({ title, body, scores, media, mediaType, link }: CardProps) =>
             </button>
             {dropdownVisible && ( // Show dropdown if dropdownVisible is true
               <div className="origin-top-right absolute left-0 top-6 w-32 rounded-md shadow-xl bg-white ring-1 ring-black ring-opacity-5 transition-all ease-out duration-300 transform opacity-100 scale-100">
-                <div className="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                <div className="py-1 pb-4" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                   <p
-                    className="flex justify-between px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
+                    className="flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
                     role="menuitem"
                   >
-                    <span>Relevance:</span> <span>{scores.relevance}</span>
+                    <span>Relevance:</span>
+                    <span>{scores.relevance}</span>
                   </p>
+                  {renderScoreBar(scores.relevance)}
                   <p
-                    className="flex justify-between px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
+                    className="flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
                     role="menuitem"
                   >
-                    <span>Impact:</span> <span>{scores.impact}</span>
+                    <span>Impact:</span>
+                    <span>{scores.impact}</span>
                   </p>
+                  {renderScoreBar(scores.impact)}
                   <p
-                    className="flex justify-between px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
+                    className="flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
                     role="menuitem"
                   >
-                    <span>Novelty:</span> <span>{scores.novelty}</span>
+                    <span>Novelty:</span>
+                    <span>{scores.novelty}</span>
                   </p>
+                  {renderScoreBar(scores.novelty)}
                   <p
-                    className="flex justify-between px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
+                    className="flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
                     role="menuitem"
                   >
-                    <span>Reliability:</span> <span>{scores.reliability}</span>
+                    <span>Reliability:</span>
+                    <span>{scores.reliability}</span>
                   </p>
+                  {renderScoreBar(scores.reliability)}
                 </div>
               </div>
             )}

@@ -7,7 +7,7 @@ const mockData = [
   {
     title: "Amazing Twitter Post",
     body: "A groundbreaking study reveals how AI is transforming healthcare diagnostics. The research, conducted by a team of scientists at MIT, demonstrates how AI can accurately diagnose certain medical conditions faster than human doctors. This breakthrough could potentially save millions of lives and revolutionize the healthcare industry.",
-    scores: { significance: 9, relevance: 8, impact: 3, novelty: 9, reliability: 2 },
+    scores: { significance: 9, relevance: 1, impact: 9, novelty: 5, reliability: 2 },
     media: [
       "https://picsum.photos/200/300",
       "https://source.unsplash.com/random/200x300",
