@@ -1,16 +1,13 @@
-import Image from "next/image";
-import { UserCircleIcon } from "@heroicons/react/24/outline";
-import logoWithText from "../../public/images/logoWithText.svg";
+import Image from "next/image"
+import { UserCircleIcon } from "@heroicons/react/24/outline"
+import logoWithText from "../../public/images/logoWithText.svg"
 
 export default function app() {
   return (
     <div>
       <div className="bg-white z-0 h-screen">
         <header className="absolute inset-x-0 top-0 z-50">
-          <nav
-            className="flex items-center justify-between p-6 lg:px-8"
-            aria-label="Global"
-          >
+          <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
             <div className="flex lg:flex-1">
               <a href="#" className="-m-1.5 p-1.5">
                 <span className="sr-only">Your Company</span>
@@ -19,10 +16,7 @@ export default function app() {
               </a>
             </div>
             <div className=" lg:flex lg:flex-1 lg:justify-end">
-              <UserCircleIcon
-                className="h-6 w-5 flex-none text-gray-800"
-                aria-hidden="true"
-              />
+              <UserCircleIcon className="h-6 w-5 flex-none text-gray-800" aria-hidden="true" />
             </div>
           </nav>
         </header>
@@ -44,17 +38,13 @@ export default function app() {
             <div className="text-center ">
               <h1 className="text-4xl font-bold leading-tight  text-gray-900 sm:text-6xl">
                 Your AI-Powered News
-                <span className=" text-indigo-500 leading-tight">
-                  {" "}
-                  Aggregator for Everything AI
-                </span>
+                <span className=" text-indigo-500 leading-tight"> Aggregator for Everything AI</span>
               </h1>
 
               <div className="flex justify-center w-full">
                 {" "}
                 <p className="mt-10 text-lg max-w-sm leading-normal  text-gray-600">
-                  AI moves fast, we keep you up to date and sift through the
-                  noise so you don't have to.
+                  AI moves fast, we keep you up to date and sift through the noise so you don't have to.
                 </p>
               </div>
 
@@ -65,10 +55,7 @@ export default function app() {
                 >
                   Get started
                 </a>
-                <a
-                  href="#"
-                  className="text-sm font-semibold leading-6 text-gray-900"
-                >
+                <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
                   Learn more
                 </a>
               </div>
@@ -89,5 +76,5 @@ export default function app() {
         </div>
       </div>
     </div>
-  );
+  )
 }
