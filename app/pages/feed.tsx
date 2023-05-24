@@ -7,44 +7,59 @@ const mockData = [
   {
     title: "Amazing Twitter Post",
     body: "A groundbreaking study reveals how AI is transforming healthcare diagnostics. The research, conducted by a team of scientists at MIT, demonstrates how AI can accurately diagnose certain medical conditions faster than human doctors. This breakthrough could potentially save millions of lives and revolutionize the healthcare industry.",
-    ranking: 1,
-    media: ["https://picsum.photos/200/300"], // Placeholder image from Lorem Picsum&#8203;`oaicite:{"index":0,"metadata":{"title":"Lorem Picsum","url":"https://picsum.photos/","text":"https://picsum.photos/200/300. To get a square image, just add the size. https://picsum.photos/200. Specifi","pub_date":null}}`&#8203;
+    scores: { significance: 9, relevance: 8, impact: 3, novelty: 9, reliability: 2 },
+    media: [
+      "https://picsum.photos/200/300",
+      "https://source.unsplash.com/random/200x300",
+      "https://source.unsplash.com/random/200x300",
+    ], // Placeholder image from Lorem Picsum&#8203;`oaicite:{"index":0,"metadata":{"title":"Lorem Picsum","url":"https://picsum.photos/","text":"https://picsum.photos/200/300. To get a square image, just add the size. https://picsum.photos/200. Specifi","pub_date":null}}`&#8203;
     mediaType: "twitter",
     link: "https://www.twitter.com",
   },
   {
     title: "Interesting News Article",
     body: "demonstrates how AI can accurately diagnose certain medical conditions faster than human doctors. This breakthrough could potentially save millions of lives and revolutionize the healthcare industry.",
-    ranking: 2,
-    media: ["https://source.unsplash.com/random/200x300"], // Random image from Unsplash&#8203;`oaicite:{"index":1,"metadata":{"title":"awik.io","url":"https://awik.io/generate-random-images-unsplash-without-using-api/","text":"https://source.unsplash.com/random/WIDTHxHEIGHT\n\nLet’s generate a random image with the width and height of 300px:\n\nhttps://source.unsplash.com/random/300×300","pub_date":null}}`&#8203;
+    scores: { significance: 8, relevance: 2, impact: 2, novelty: 3, reliability: 3 },
+    media: [
+      "https://source.unsplash.com/random/200x300",
+      "https://source.unsplash.com/random/200x300",
+      "https://source.unsplash.com/random/200x300",
+    ], // Random image from Unsplash&#8203;`oaicite:{"index":1,"metadata":{"title":"awik.io","url":"https://awik.io/generate-random-images-unsplash-without-using-api/","text":"https://source.unsplash.com/random/WIDTHxHEIGHT\n\nLet’s generate a random image with the width and height of 300px:\n\nhttps://source.unsplash.com/random/300×300","pub_date":null}}`&#8203;
     mediaType: "news",
     link: "https://www.newswebsite.com",
   },
   {
     title: "Intriguing Research Paper",
     body: "This research paper presents some groundbreaking findings. Take a look!",
-    ranking: 3,
-    media: ["https://via.placeholder.com/150"],
+    scores: { significance: 7, relevance: 2, impact: 2, novelty: 3, reliability: 3 },
     mediaType: "research",
     link: "https://www.researchwebsite.com",
   },
   {
     title: "Intriguing Research Paper",
     body: "This research paper presents some groundbreaking findings. Take a look!",
-    ranking: 3,
-    media: ["https://via.placeholder.com/150"],
+    scores: { significance: 7, relevance: 2, impact: 2, novelty: 3, reliability: 3 },
     mediaType: "internet",
     link: "https://www.researchwebsite.com",
   },
 ]
 
 export const getServerSideProps = async () => {
-  const posts = await prisma.feed_items.findMany({})
-  console.log(posts)
+  // const posts = await prisma.feed_items.findMany({})
+  // console.log(posts)
   return { props: { posts: mockData } }
 }
 
-const Feed = ({ posts }: { posts: IFeedPost[] }) => {
+type CardProps = {
+  title: string
+  body: string
+  scores: { significance: number; relevance: number; impact: number; novelty: number; reliability: number }
+  media: string[] | undefined // Assume this is an array of URLs for images
+  mediaType: "twitter" | "internet" | "news" | "research"
+  link: string
+}
+
+const Feed = ({ posts }: { posts: CardProps[] }) => {
   return (
     <div>
       <div className="relative isolate px-6 pt-14 sm:pt-20 lg:px-8 w-full flex justify-center ">
@@ -78,9 +93,9 @@ const Feed = ({ posts }: { posts: IFeedPost[] }) => {
                 key={index}
                 title={post.title}
                 body={post.body}
-                significance={post.significance}
+                scores={post.scores}
                 media={post.media}
-                source={post.source}
+                mediaType={post.mediaType}
                 link={post.link}
               />
             ))}
