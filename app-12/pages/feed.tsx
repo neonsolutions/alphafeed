@@ -8,7 +8,7 @@ const mockData = [
     body: "This is an amazing Twitter post that you should check out!",
     ranking: 1,
     media: "https://via.placeholder.com/150",
-    mediaType: "twitter" as const,
+    source: "twitter" as const,
     link: "https://www.twitter.com",
   },
   {
@@ -16,7 +16,7 @@ const mockData = [
     body: "Here's an interesting news article that we found. Have a read!",
     ranking: 2,
     media: "https://via.placeholder.com/150",
-    mediaType: "news" as const,
+    source: "news" as const,
     link: "https://www.newswebsite.com",
   },
   {
@@ -24,12 +24,16 @@ const mockData = [
     body: "This research paper presents some groundbreaking findings. Take a look!",
     ranking: 3,
     media: "https://via.placeholder.com/150",
-    mediaType: "research" as const,
+    source: "research" as const,
     link: "https://www.researchwebsite.com",
   },
 ]
 
-const Feed = () => {
+export const getServerSideProps = async () => {
+  return { props: { posts: mockData } }
+}
+
+const Feed = ({ posts }: { posts: IFeedPost[] }) => {
   return (
     <div>
       <div className="relative isolate px-6 pt-44 lg:px-8 w-full flex justify-center ">
@@ -58,14 +62,14 @@ const Feed = () => {
             </div>
           </div>
           <div>
-            {mockData.map((post, index) => (
+            {posts.map((post, index) => (
               <FeedCard
                 key={index}
                 title={post.title}
                 body={post.body}
-                ranking={post.ranking}
+                significance={post.significance}
                 media={post.media}
-                mediaType={post.mediaType}
+                source={post.source}
                 link={post.link}
               />
             ))}
