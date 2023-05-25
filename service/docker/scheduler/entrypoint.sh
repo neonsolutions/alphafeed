@@ -10,4 +10,4 @@ while true; do
     fi
 done
 
-python -m scheduler
+# python -m scheduler

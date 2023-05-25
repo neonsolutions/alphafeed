@@ -9,7 +9,6 @@ while true; do
 done
 
 # alembic upgrade head && cd src && python -m scheduler
-
 yarn prisma migrate dev
 
 yarn dev
