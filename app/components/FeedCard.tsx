@@ -65,7 +65,6 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt }: IFe
       <div className="w-full flex justify-between pb-3">
         <div className="flex justify-start gap-3">
           <h3 className="text-[16px] font-medium text-gray-900">{title}</h3>
-
           <div
             className="relative inline-flex"
             onMouseEnter={() => setDropdownVisible(true)} // Show dropdown on hover
@@ -114,12 +113,21 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt }: IFe
               </div>
             )}
           </div>
+          <Image src={icon} alt="mediaType icon" width={22} height={22} />
         </div>
-
-        <Image src={icon} alt="mediaType icon" width={22} height={22} />
+        <p className="text-gray-500 text-sm pb-4">{body}</p>
+        {media! && (
+          <div className="flex overflow-x-scroll space-x-4  pb-4">
+            {media.map((imgUrl, index) => (
+              <img key={index} src={imgUrl} alt={`media ${index}`} className="rounded-lg" />
+            ))}
+          </div>
+        )}
+        <a href={link} target="_blank" className="text-gray-400 text-xs underline">
+          {link}
+        </a>
       </div>
       <p className="text-gray-500 text-sm pb-4">{body}</p>
-
       {media && (
         <div className="flex overflow-x-scroll space-x-4  pb-4">
           {media.map((imgUrl, index) => (
