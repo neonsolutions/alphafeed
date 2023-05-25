@@ -11,7 +11,7 @@ export default function Navbar() {
 
   if (asPath === "/") {
     linkElement = (
-      <Link href="/home">
+      <Link href="/login">
         <div className="text-sm font-semibold leading-6 text-gray-900">
           Log in <span aria-hidden="true">&rarr;</span>
         </div>
@@ -29,6 +29,15 @@ export default function Navbar() {
       <Link href="/home">
         <HomeIcon className="h-6 w-6 text-gray-900" />
       </Link>
+    )
+  } else if (asPath === "/login" || asPath === "/register") {
+    // we are on the account page
+    linkElement = (
+      <div className="text-sm font-semibold leading-6 text-gray-900">
+        <Link href="/">
+          <span aria-hidden="true">←</span> Back
+        </Link>
+      </div>
     )
   }
 
