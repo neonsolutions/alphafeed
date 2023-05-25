@@ -67,16 +67,18 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt }: IFe
       <h2 className="text-gray-300 text-[16px] transform  md:hidden block mt-5 mb-1">
         {formatPostDate(new Date(publishedAt))}
       </h2>
-      <div className=" mx-auto bg-white rounded-2xl border border-gray-200 md:max-w-2xl  p-6 ">
-        <div className="w-full flex justify-between pb-3">
-          <div className="flex justify-start gap-3">
-            <h3 className="text-[16px] font-medium text-gray-900">{title}</h3>
+      <div className=" mx-auto bg-white rounded-2xl border border-gray-200 md:max-w-2xl  p-6 w-full">
+        <div className="flex justify-between items-start pb-4">
+          <div className="flex-grow min-width-0">
+            <div className="text-[16px] font-medium text-gray-900 ">{title}</div>
+          </div>
+          <div className="flex-shrink-0 flex gap-3">
             <div
               className="relative inline-flex"
               onMouseEnter={() => setDropdownVisible(true)} // Show dropdown on hover
               onMouseLeave={() => setDropdownVisible(false)} // Hide dropdown on hover exit
             >
-              <button className="inline-flex items-center rounded-md bg-gray-100 hover:bg-indigo-100 px-3 py-1 text-xs font-bold text-indigo-700 ring-1 ring-inset ring-indigo-700/30">
+              <button className="inline-flex items-center rounded-md bg-gray-100 hover:bg-indigo-100 px-3 py-1 text-xs font-bold text-indigo-700 ring-1 ring-inset ring-indigo-700/30 min-w-[53px]">
                 {scores.significance.toFixed(1)}
                 <Image alt="downIcon" width={8} height={8} src="/images/feedCard/down.svg" className="ml-1" />
               </button>
@@ -119,8 +121,8 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt }: IFe
                 </div>
               )}
             </div>
+            <Image src={icon} alt="mediaType icon" width={22} height={22} />
           </div>
-          <Image src={icon} alt="mediaType icon" width={22} height={22} />
         </div>
 
         <p className="text-gray-500 text-sm pb-4">{body}</p>
