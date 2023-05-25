@@ -9,7 +9,7 @@ export interface IFeedPost {
   title: string
   body: string
   scores: { significance: number; relevance: number; impact: number; novelty: number; reliability: number }
-  media: [string] | null
+  media: string[] | null
   source: SourceType
   link: string
   publishedAt: string // ISO Date String

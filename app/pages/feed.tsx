@@ -2,13 +2,71 @@ import FeedCard from "../components/FeedCard"
 import { IFeedPost, SourceType } from "../interfaces/IFeedPost"
 import { getPostsForDate } from "../lib/feed"
 
+const threeHoursAgo = new Date()
+threeHoursAgo.setHours(threeHoursAgo.getHours() - 3)
+
+const twentyMinutesAgo = new Date()
+twentyMinutesAgo.setMinutes(twentyMinutesAgo.getMinutes() - 20)
+
+const onePointThreeDaysAgo = new Date()
+onePointThreeDaysAgo.setDate(onePointThreeDaysAgo.getDate() - 1.3)
+
+const mockData: IFeedPost[] = [
+  {
+    title: "Amazing Twitter Post",
+    body: "A groundbreaking study reveals how AI is transforming healthcare diagnostics. The research, conducted by a team of scientists at MIT, demonstrates how AI can accurately diagnose certain medical conditions faster than human doctors. This breakthrough could potentially save millions of lives and revolutionize the healthcare industry.",
+    scores: { significance: 9, relevance: 1, impact: 9, novelty: 5, reliability: 2 },
+    media: [
+      "https://picsum.photos/200/300",
+      "https://source.unsplash.com/random/200x300",
+      "https://source.unsplash.com/random/200x300",
+    ], // Placeholder image from Lorem Picsum&#8203;`oaicite:{"index":0,"metadata":{"title":"Lorem Picsum","url":"https://picsum.photos/","text":"https://picsum.photos/200/300. To get a square image, just add the size. https://picsum.photos/200. Specifi","pub_date":null}}`&#8203;
+    source: SourceType.Twitter,
+    link: "https://www.twitter.com",
+    publishedAt: threeHoursAgo.toISOString(),
+  },
+  {
+    title: "Interesting News Article",
+    body: "demonstrates how AI can accurately diagnose certain medical conditions faster than human doctors. This breakthrough could potentially save millions of lives and revolutionize the healthcare industry.",
+    scores: { significance: 8, relevance: 2, impact: 2, novelty: 3, reliability: 3 },
+    media: [
+      "https://source.unsplash.com/random/200x300",
+      "https://source.unsplash.com/random/200x300",
+      "https://source.unsplash.com/random/200x300",
+    ], // Random image from Unsplash&#8203;`oaicite:{"index":1,"metadata":{"title":"awik.io","url":"https://awik.io/generate-random-images-unsplash-without-using-api/","text":"https://source.unsplash.com/random/WIDTHxHEIGHT\n\nLet’s generate a random image with the width and height of 300px:\n\nhttps://source.unsplash.com/random/300×300","pub_date":null}}`&#8203;
+    source: SourceType.News,
+    link: "https://www.newswebsite.com",
+    publishedAt: twentyMinutesAgo.toISOString(),
+  },
+  {
+    title: "Intriguing Research Paper",
+    body: "This research paper presents some groundbreaking findings. Take a look!",
+    scores: { significance: 7, relevance: 2, impact: 2, novelty: 3, reliability: 3 },
+    source: SourceType.Research,
+    media: null,
+    link: "https://www.researchwebsite.com",
+    publishedAt: onePointThreeDaysAgo.toISOString(),
+  },
+  {
+    title: "Intriguing Research Paper",
+    body: "This research paper presents some groundbreaking findings. Take a look!",
+    scores: { significance: 7, relevance: 2, impact: 2, novelty: 3, reliability: 3 },
+    source: SourceType.Research,
+    media: null,
+    link: "https://www.researchwebsite.com",
+    publishedAt: onePointThreeDaysAgo.toISOString(),
+  },
+]
+
 export const getServerSideProps = async () => {
+  return { props: { posts: mockData } }
+
   const posts = await getPostsForDate(new Date())
   console.log(posts)
   if (!posts) {
     return { props: { posts: [] } }
   }
-  const parsedPosts: IFeedPost[] = posts.map((post) => {
+  const parsedPosts: IFeedPost[] = posts!.map((post) => {
     const scores = post.scores! // Filtering out nulls
     const significance = (scores.impact + scores.novelty + scores.relevance) / 3
     return {
@@ -28,6 +86,7 @@ export const getServerSideProps = async () => {
       publishedAt: post.published.toISOString(),
     }
   })
+
   return { props: { posts: parsedPosts } }
 }
 
