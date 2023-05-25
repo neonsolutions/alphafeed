@@ -14,6 +14,8 @@ WORKDIR /app
 # to the /app working directory
 COPY package*.json /app
 
+COPY yarn.lock /app
+
 # Install dependencies in /app
 RUN yarn install
 
