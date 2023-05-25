@@ -1,8 +1,9 @@
 import Image from "next/image"
 import { useState } from "react"
 import { IFeedPost } from "../interfaces/IFeedPost"
+import { extractLinks } from "../lib/helpers"
 
-const FeedCard = ({ title, body, scores, media, source, link, publishedAt }: IFeedPost) => {
+const FeedCard = ({ title, body, scores, media, source, link, publishedAt, externalLinks }: IFeedPost) => {
   let icon = "/images/feedCard/internetIcon.svg"
   const [dropdownVisible, setDropdownVisible] = useState(false) // New state
 
@@ -32,6 +33,11 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt }: IFe
         </div>
       </div>
     )
+  }
+
+  const formatLink = (link: string) => {
+    const maxLength = 18 // Maximum number of characters
+    return link.length > maxLength ? link.slice(0, maxLength) + "..." : link
   }
 
   const formatPostDate = (date: Date) => {
@@ -121,7 +127,9 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt }: IFe
                 </div>
               )}
             </div>
-            <Image src={icon} alt="mediaType icon" width={22} height={22} />
+            <a href={link} target="_blank" className="transform hover:opacity-80 ">
+              <Image src={icon} alt="mediaType icon" width={22} height={22} />
+            </a>
           </div>
         </div>
 
@@ -133,10 +141,21 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt }: IFe
             ))}
           </div>
         )}
-
-        <a href={link} target="_blank" className="text-gray-400 text-xs underline">
-          {link}
-        </a>
+        {externalLinks && (
+          <div className="flex gap-2 overflow-y-scroll w-full">
+            {" "}
+            {externalLinks.map((link, index) => (
+              <span className="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                <img
+                  className="py-1 h-5 pr-1"
+                  src={`http://www.google.com/s2/favicons?domain_url=${link}`}
+                  alt="external link favicon"
+                />
+                {formatLink(link)}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )

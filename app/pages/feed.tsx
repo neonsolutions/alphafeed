@@ -22,7 +22,11 @@ const mockData: IFeedPost[] = [
       "https://source.unsplash.com/random/200x300",
       "https://source.unsplash.com/random/200x300",
     ], // Placeholder image from Lorem Picsum&#8203;`oaicite:{"index":0,"metadata":{"title":"Lorem Picsum","url":"https://picsum.photos/","text":"https://picsum.photos/200/300. To get a square image, just add the size. https://picsum.photos/200. Specifi","pub_date":null}}`&#8203;
-    externalLinks: null,
+    externalLinks: [
+      "https://picsm.phos/200/300",
+      "https://source.unsplash.com/random/200x300",
+      "https://source.unsplash.com/random/200x300",
+    ],
     source: SourceType.Twitter,
     link: "https://www.twitter.com",
     publishedAt: threeHoursAgo.toISOString(),
