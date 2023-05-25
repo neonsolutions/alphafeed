@@ -16,13 +16,24 @@ export async function getPostsForDate(date: Date): Promise<
   try {
     const posts = await prisma.feed_items.findMany({
       where: {
-        published: {
-          gte: start,
-          lte: end,
-        },
-        scores: {
-          isNot: null,
-        },
+        AND: [
+          {
+            published: {
+              gte: start,
+              lte: end,
+            },
+          },
+          {
+            scores: {
+              isNot: null,
+            },
+          },
+          {
+            scores: {
+              relevance: { gt: 7 },
+            },
+          },
+        ],
       },
       include: {
         scores: true,

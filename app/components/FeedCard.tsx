@@ -77,7 +77,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt }: IFe
               onMouseLeave={() => setDropdownVisible(false)} // Hide dropdown on hover exit
             >
               <button className="inline-flex items-center rounded-md bg-gray-100 hover:bg-indigo-100 px-3 py-1 text-xs font-bold text-indigo-700 ring-1 ring-inset ring-indigo-700/30">
-                {scores.significance.toString()}
+                {scores.significance.toFixed(1)}
                 <Image alt="downIcon" width={8} height={8} src="/images/feedCard/down.svg" className="ml-1" />
               </button>
               {dropdownVisible && ( // Show dropdown if dropdownVisible is true
