@@ -7,8 +7,6 @@ export async function getPostsForDate(date: Date): Promise<
     })[]
   | undefined
 > {
-  // return mockData // TODO: Update this to conform to return type
-
   // Create datetime boundaries for start and end of the day
   let start = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0)
   let end = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59)

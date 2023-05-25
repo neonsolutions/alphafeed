@@ -12,17 +12,19 @@ model alembic_version {
 }
 
 model feed_items {
-  id          Int       @id @default(autoincrement())
-  title       String   @db.VarChar
-  link        String   @unique @db.VarChar
-  description String   @db.VarChar
-  published   DateTime @db.Timestamp(6)
-  author      String   @db.VarChar
-  scores       scores?
+  id              Int      @id @default(autoincrement())
+  title_raw       String   @db.VarChar
+  title           String?  @db.VarChar
+  link            String  @unique @db.VarChar
+  description_raw String   @db.VarChar
+  description     String?  @db.VarChar
+  published       DateTime @db.Timestamp(6)
+  author          String   @db.VarChar
+  scores          scores?
 }
 
 model scores {
-  id           Int         @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   relevance    Float
   impact       Float
   novelty      Float
