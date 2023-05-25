@@ -1,0 +1,51 @@
+version: "3.8"
+services:
+  dev-db:
+    image: postgres:13
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: postgres
+    networks:
+      - main
+
+  dev-scheduler:
+    build:
+      context: ./service
+      dockerfile: ./docker/scheduler/Dockerfile
+    env_file:
+      - ./service/.env
+    environment:
+      - DATABASE_URI=postgresql://postgres:admin@dev-db:5432/postgres
+    networks:
+      - main
+    # volumes:
+    #   - .:/app
+    depends_on:
+      - dev-db
+    entrypoint: ["/bin/sh", "/app/entrypoint.sh"]
+
+  dev-web:
+    build:
+      context: ./app
+      dockerfile: ./docker/Dockerfile
+    env_file:
+      - ./app/.env
+    environment:
+      - DATABASE_URL=postgresql://postgres:admin@dev-db:5432/postgres
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+      - /app/.next
+    ports:
+      - 3000:3000
+    depends_on:
+      - dev-db
+    networks:
+      - main
+    entrypoint: ["/bin/sh", "/app/docker/entrypoint.sh"]
+
+networks:
+  main:
