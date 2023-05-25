@@ -19,7 +19,7 @@ def analyze_content(content: str) -> dict:
     system_prompt = analyze_content_system_prompt(AUDIENCE_DESCRIPTION)
     messages = [
         {"role": "system", "content": system_prompt},
-        {"role": "user", "content": f"Please evaluate this content: {content}. ONLY respond with valid JSON in the desired format, DO NOT UNDER ANY CIRCUMSTANCES add extra text, explanation, or notes"}
+        {"role": "user", "content": f"Please evaluate this raw content: {content}. ONLY respond with valid JSON in the desired format, DO NOT UNDER ANY CIRCUMSTANCES add extra text, explanation, or notes"}
     ]
     tries = 0
     response = None
@@ -42,17 +42,23 @@ def analyze_content(content: str) -> dict:
     evaluation = response["choices"][0]["message"]["content"]
 
     # Retry if the response is not valid JSON
-    scores = None
+    result = None
     try:
-        scores = json.loads(evaluation)
+        result = json.loads(evaluation)
         # Convert scores to float
-        for key in scores["scores"]:
-            scores["scores"][key] = float(scores["scores"][key])
-    except json.decoder.JSONDecodeError:
-        print("Retrying (JSON)")
-        scores = analyze_content(content)
+        score_keys = ["relevance", "impact", "novelty", "reliability"]
+        for key in score_keys:
+            result[key] = float(result[key])
 
-    return scores
+        result["title"]
+        result["content"]
+
+    except (json.decoder.JSONDecodeError, KeyError, ValueError) as e:
+        print(e)
+        print("Retrying (JSON)")
+        result = analyze_content(content)
+
+    return result
 
 
 def test():
@@ -73,12 +79,10 @@ Code+Models: github.com/facebookresearch/…
 Paper: scontent-lga3-2.xx.fbcdn.net…
 Blog: ai.facebook.com/blog/multili…"""
 
-    score_ignore = analyze_content(example_ignore)
-
-    score_relevant = analyze_content(example_relevant)
-
-    print("ignore", score_ignore)
-    print("relevant", score_relevant)
+    for i in [example_ignore, example_relevant]:
+        print(i)
+        print(analyze_content(i))
+        print("-----")
 
 
 def main():
@@ -87,20 +91,21 @@ def main():
     items_without_score = session.query(FeedItem).outerjoin(
         Scores).filter(Scores.id == None).all()
 
-    print("hello")
+    print(f"Found {len(items_without_score)} items without scores")
 
     for item in tqdm(items_without_score):
-        print(
-            f"Item ID: {item.id}, Item Title: {item.title[:10]}..., Scores: {item.scores}")
-        scores_dict = analyze_content(item.description)["scores"]
-        scores = Scores(relevance=scores_dict["relevance"],
-                        impact=scores_dict["impact"],
-                        novelty=scores_dict["novelty"],
-                        reliability=scores_dict["reliability"])
+        evaluation = analyze_content(item.description_raw)
+        scores = Scores(relevance=evaluation["relevance"],
+                        impact=evaluation["impact"],
+                        novelty=evaluation["novelty"],
+                        reliability=evaluation["reliability"])
         item.scores = scores
+        item.description = evaluation["content"]
+        item.title = evaluation["title"]
         session.add(item)
         session.commit()
 
 
 if __name__ == "__main__":
-    main()
+    # main()
+    test()
