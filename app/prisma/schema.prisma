@@ -13,13 +13,13 @@ model alembic_version {
 
 model feed_items {
   id              Int      @id @default(autoincrement())
-  title_raw       String   @db.VarChar
-  title           String?  @db.VarChar
-  link            String  @unique @db.VarChar
-  description_raw String   @db.VarChar
-  description     String?  @db.VarChar
-  published       DateTime @db.Timestamp(6)
-  author          String   @db.VarChar
+  title_raw       String
+  title           String?
+  link            String   @unique
+  description_raw String
+  description     String?
+  published       DateTime
+  author          String
   scores          scores?
 }
 
@@ -29,6 +29,51 @@ model scores {
   impact       Float
   novelty      Float
   reliability  Float
-  feed_item_id Int         @unique
-  feed_items   feed_items  @relation(fields: [feed_item_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  feed_item_id Int        @unique
+  feed_items   feed_items @relation(fields: [feed_item_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
 }
