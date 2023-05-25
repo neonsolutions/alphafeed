@@ -1,6 +1,7 @@
 import FeedCard from "../components/FeedCard"
 import { IFeedPost, SourceType } from "../interfaces/IFeedPost"
 import { getPostsForDate } from "../lib/feed"
+import { extractImageSources, extractLinks } from "../lib/helpers"
 
 const threeHoursAgo = new Date()
 threeHoursAgo.setHours(threeHoursAgo.getHours() - 3)
@@ -21,6 +22,7 @@ const mockData: IFeedPost[] = [
       "https://source.unsplash.com/random/200x300",
       "https://source.unsplash.com/random/200x300",
     ], // Placeholder image from Lorem Picsum&#8203;`oaicite:{"index":0,"metadata":{"title":"Lorem Picsum","url":"https://picsum.photos/","text":"https://picsum.photos/200/300. To get a square image, just add the size. https://picsum.photos/200. Specifi","pub_date":null}}`&#8203;
+    externalLinks: null,
     source: SourceType.Twitter,
     link: "https://www.twitter.com",
     publishedAt: threeHoursAgo.toISOString(),
@@ -34,6 +36,7 @@ const mockData: IFeedPost[] = [
       "https://source.unsplash.com/random/200x300",
       "https://source.unsplash.com/random/200x300",
     ], // Random image from Unsplash&#8203;`oaicite:{"index":1,"metadata":{"title":"awik.io","url":"https://awik.io/generate-random-images-unsplash-without-using-api/","text":"https://source.unsplash.com/random/WIDTHxHEIGHT\n\nLet’s generate a random image with the width and height of 300px:\n\nhttps://source.unsplash.com/random/300×300","pub_date":null}}`&#8203;
+    externalLinks: null,
     source: SourceType.News,
     link: "https://www.newswebsite.com",
     publishedAt: twentyMinutesAgo.toISOString(),
@@ -44,6 +47,7 @@ const mockData: IFeedPost[] = [
     scores: { significance: 7, relevance: 2, impact: 2, novelty: 3, reliability: 3 },
     source: SourceType.Research,
     media: null,
+    externalLinks: null,
     link: "https://www.researchwebsite.com",
     publishedAt: onePointThreeDaysAgo.toISOString(),
   },
@@ -53,6 +57,7 @@ const mockData: IFeedPost[] = [
     scores: { significance: 7, relevance: 2, impact: 2, novelty: 3, reliability: 3 },
     source: SourceType.Research,
     media: null,
+    externalLinks: null,
     link: "https://www.researchwebsite.com",
     publishedAt: onePointThreeDaysAgo.toISOString(),
   },
@@ -71,9 +76,13 @@ export const getServerSideProps = async () => {
     .map((post) => {
       const scores = post.scores! // Filtering out nulls
       const significance = (scores.impact + scores.novelty + scores.relevance) / 3
+
+      const media = extractImageSources(post.description_raw)
+      const externalLinks = extractLinks(post.description_raw)
+
       return {
-        title: post.title,
-        body: post.description,
+        title: post.title || post.title_raw,
+        body: post.description || post.description_raw,
         significance: significance,
         scores: {
           significance,
@@ -82,7 +91,8 @@ export const getServerSideProps = async () => {
           novelty: scores.novelty,
           reliability: scores.reliability,
         },
-        media: null,
+        media: media,
+        externalLinks: externalLinks,
         source: SourceType.Twitter,
         link: post.link,
         publishedAt: post.published.toISOString(),

@@ -12,5 +12,6 @@ export interface IFeedPost {
   media: string[] | null
   source: SourceType
   link: string
+  externalLinks: string[] | null
   publishedAt: string // ISO Date String
 }
