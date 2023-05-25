@@ -36,11 +36,6 @@ export async function getPostsForDate(date: Date): Promise<
       include: {
         scores: true,
       },
-      orderBy: {
-        scores: {
-          novelty: "desc",
-        },
-      },
     })
 
     return posts

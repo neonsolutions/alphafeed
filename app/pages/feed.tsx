@@ -102,7 +102,12 @@ export const getServerSideProps = async () => {
         publishedAt: post.published.toISOString(),
       }
     })
+    // Filter out posts with low significance
     .filter((post) => post.scores.significance > 7)
+    // Sort by significance
+    .sort((a, b) => {
+      return b.scores.significance - a.scores.significance
+    })
 
   return { props: { posts: parsedPosts } }
 }
