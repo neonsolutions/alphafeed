@@ -59,33 +59,36 @@ const mockData: IFeedPost[] = [
 ]
 
 export const getServerSideProps = async () => {
-  return { props: { posts: mockData } }
+  if (process.env.MOCK) {
+    return { props: { posts: mockData } }
+  }
 
   const posts = await getPostsForDate(new Date())
-  console.log(posts)
   if (!posts) {
     return { props: { posts: [] } }
   }
-  const parsedPosts: IFeedPost[] = posts!.map((post) => {
-    const scores = post.scores! // Filtering out nulls
-    const significance = (scores.impact + scores.novelty + scores.relevance) / 3
-    return {
-      title: post.title,
-      body: post.description,
-      significance: significance,
-      scores: {
-        significance,
-        relevance: scores.relevance,
-        impact: scores.impact,
-        novelty: scores.novelty,
-        reliability: scores.reliability,
-      },
-      media: null,
-      source: SourceType.Twitter,
-      link: post.link,
-      publishedAt: post.published.toISOString(),
-    }
-  })
+  const parsedPosts: IFeedPost[] = posts!
+    .map((post) => {
+      const scores = post.scores! // Filtering out nulls
+      const significance = (scores.impact + scores.novelty + scores.relevance) / 3
+      return {
+        title: post.title,
+        body: post.description,
+        significance: significance,
+        scores: {
+          significance,
+          relevance: scores.relevance,
+          impact: scores.impact,
+          novelty: scores.novelty,
+          reliability: scores.reliability,
+        },
+        media: null,
+        source: SourceType.Twitter,
+        link: post.link,
+        publishedAt: post.published.toISOString(),
+      }
+    })
+    .filter((post) => post.scores.significance > 7)
 
   return { props: { posts: parsedPosts } }
 }
