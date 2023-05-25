@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { GoogleLoginButton } from "react-social-login-buttons"
 import Link from "next/link"
+import { signIn } from "next-auth/react"
 
 export default function Login() {
   return (
@@ -12,7 +13,7 @@ export default function Login() {
         </h2>
       </div>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <GoogleLoginButton style={{ fontSize: "15px" }} onClick={() => {}} />
+        <GoogleLoginButton style={{ fontSize: "15px" }} onClick={() => signIn("google")} />
         <p className="mt-10 text-center text-sm text-gray-500">
           Not a member?{" "}
           <Link href="/register">

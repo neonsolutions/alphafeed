@@ -2,10 +2,14 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import { UserCircleIcon, HomeIcon } from "@heroicons/react/24/outline"
+import { useSession } from "next-auth/react"
 
 export default function Navbar() {
+  const { data: session, status } = useSession()
   const router = useRouter()
   const { asPath } = router
+
+  const loading = status === "loading"
 
   let linkElement
 
