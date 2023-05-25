@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Navbar />
-      <main className={dmSans.className}>{children}</main>
+      <main className={dmSans.className + " flex-grow"}>{children}</main>
       <Footer />
     </>
   )
