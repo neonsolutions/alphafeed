@@ -1,7 +1,11 @@
+import { useSession } from "next-auth/react"
 import FeedCard from "../components/FeedCard"
 import { IFeedPost, SourceType } from "../interfaces/IFeedPost"
 import { getPostsForDate } from "../lib/feed"
 import { extractImageSources, extractLinks } from "../lib/helpers"
+import { getServerSession } from "next-auth"
+import { GetServerSidePropsContext, NextPageContext } from "next"
+import { authOptions } from "./api/auth/[...nextauth]"
 
 const threeHoursAgo = new Date()
 threeHoursAgo.setHours(threeHoursAgo.getHours() - 3)
@@ -67,9 +71,21 @@ const mockData: IFeedPost[] = [
   },
 ]
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   if (process.env.MOCK) {
     return { props: { posts: mockData } }
+  }
+
+  const session = await getServerSession(context.req, context.res, authOptions)
+
+  if (!session) {
+    console.log("No session found")
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
+    }
   }
 
   const posts = await getPostsForDate(new Date())
