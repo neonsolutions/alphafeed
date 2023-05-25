@@ -19,10 +19,8 @@ RUN pipenv install --deploy --system
 
 # Copy the rest of the application files into the working directory
 COPY src /app/src
-COPY alembic /app/alembic
-COPY alembic.ini /app/alembic.ini
 
 COPY docker/scheduler/entrypoint.sh /app/entrypoint.sh
 
 # Change to src directory
-# WORKDIR /app/src
+WORKDIR /app/src
