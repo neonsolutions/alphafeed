@@ -14,7 +14,7 @@ onePointThreeDaysAgo.setDate(onePointThreeDaysAgo.getDate() - 1.3)
 
 const mockData: IFeedPost[] = [
   {
-    title: "Amazing Twitter Post",
+    title: "Amazing Twitter Post Amazing Twitter PostAmazing Twitter Post",
     body: "A groundbreaking study reveals how AI is transforming healthcare diagnostics. The research, conducted by a team of scientists at MIT, demonstrates how AI can accurately diagnose certain medical conditions faster than human doctors. This breakthrough could potentially save millions of lives and revolutionize the healthcare industry.",
     scores: { significance: 9, relevance: 1, impact: 9, novelty: 5, reliability: 2 },
     media: [
