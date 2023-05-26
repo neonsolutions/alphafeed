@@ -20,7 +20,7 @@ yarn
 You can then seed the database in the app directory
 
 ```
-yarn prisma seed
+yarn prisma db seed
 ```
 
 Then go to `localhost:3000` to view the app. Changes will hot-reload.
