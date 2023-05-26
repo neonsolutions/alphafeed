@@ -62,7 +62,15 @@ export default function Pricing({ monthlyPrice, yearlyPrice, setSubscriptionType
         <div className="-mt-2 p-2 lg:mt-0 lg:min-w-[300px] lg:max-w-md lg:flex-shrink-0 ">
           <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16 h-full ">
             <div className="mx-auto max-w-xs px-8 w-full">
-              <p className="text-base font-semibold text-gray-600">{!isYearly ? "Monthly fee" : "Yearly fee"}</p>
+              <div className="flex w-full justify-center">
+                <p className="text-base font-semibold text-gray-600">{!isYearly ? "Monthly fee" : "Yearly fee"}</p>
+                {isYearly && (
+                  <span className="flex  items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 ml-2">
+                    -20%
+                  </span>
+                )}
+              </div>
+
               <p className="mt-6 flex items-baseline justify-center gap-x-2">
                 <span className="text-5xl font-bold tracking-tight text-gray-900">
                   ${!isYearly ? monthlyPrice : yearlyPrice}
@@ -70,10 +78,11 @@ export default function Pricing({ monthlyPrice, yearlyPrice, setSubscriptionType
                 <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">USD</span>
               </p>
               <button className="mt-10  w-full rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ">
-                {" "}
                 Get access
               </button>
-              <p className="mt-6 text-xs leading-5 text-gray-600">Cancle anytime</p>
+              <p className="mt-5 mb-1 text-[14px] leading-5 text-gray-600 font-bold">7 day free trial</p>
+
+              <p className=" text-xs leading-5 text-gray-600">Cancle anytime</p>
             </div>
           </div>
         </div>
