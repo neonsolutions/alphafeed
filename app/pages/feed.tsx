@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from "next"
 import { getServerSession } from "next-auth"
 import FeedCard from "../components/FeedCard"
-import { IFeedPost, SourceType } from "../interfaces/IFeedPost"
+import { IFeedPost } from "../interfaces/IFeedPost"
 import { getPostsForDate } from "../lib/feed"
 import { authOptions } from "./api/auth/[...nextauth]"
 

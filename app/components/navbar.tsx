@@ -3,11 +3,13 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { UserCircleIcon, HomeIcon } from "@heroicons/react/24/outline"
 import { useSession } from "next-auth/react"
+import { useState } from "react"
 
 export default function Navbar() {
   const { data: session, status } = useSession()
   const router = useRouter()
   const { asPath } = router
+  const [dropdownVisible, setDropdownVisible] = useState(false) // New state
 
   const loading = status === "loading"
 
@@ -23,9 +25,29 @@ export default function Navbar() {
     )
   } else if (asPath === "/feed") {
     linkElement = (
-      <Link href="/account">
-        <UserCircleIcon className="h-6 w-6 text-gray-900" />
-      </Link>
+      <>
+        <div
+          className=""
+          onMouseEnter={() => setDropdownVisible(true)} // Show dropdown on hover
+          onMouseLeave={() => setDropdownVisible(false)} // Hide dropdown on hover exit
+        >
+          <UserCircleIcon className="h-6 w-10 text-gray-900" />
+          {dropdownVisible && ( // Show dropdown if dropdownVisible is true
+            <div className=" absolute right-8 translate w-32 rounded-md shadow-xl bg-white ring-1 ring-black ring-opacity-5 transition-all ease-out duration-300 transform opacity-100 scale-100 text-gray-900 text-[12px] font-medium">
+              <Link href="/account" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                <div role="menuitem" className="flex justify-center items-center py-2 hover:bg-gray-100 rounded-t-md">
+                  Manage billing
+                </div>
+              </Link>
+              <Link href="/account" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                <div role="menuitem" className="flex justify-center items-center py-2 hover:bg-gray-100 rounded-b-md">
+                  Sign out
+                </div>
+              </Link>
+            </div>
+          )}
+        </div>
+      </>
     )
   } else if (asPath === "/account") {
     // we are on the account page
@@ -53,7 +75,7 @@ export default function Navbar() {
             <Image src="/images/logoWithText.svg" alt="logoWithText" className="-m-1.5 p-1.5" height={30} width={100} />
           </Link>
         </div>
-        <div className=" lg:flex lg:flex-1 lg:justify-end">{linkElement}</div>
+        <div className=" lg:flex lg:flex-1 lg:justify-end z-40">{linkElement}</div>
       </nav>
     </header>
   )
