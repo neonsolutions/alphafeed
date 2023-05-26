@@ -1,7 +1,6 @@
 import Image from "next/image"
 import { useState } from "react"
 import { IFeedPost } from "../interfaces/IFeedPost"
-import { extractLinks } from "../lib/helpers"
 
 const FeedCard = ({ title, body, scores, media, source, link, publishedAt, externalLinks }: IFeedPost) => {
   let icon = "/images/feedCard/internetIcon.svg"

@@ -1,7 +1,7 @@
 import { feed_items, scores } from "@prisma/client"
 import { prisma } from "./db"
 import { IFeedPost, SourceType } from "../interfaces/IFeedPost"
-import { extractImageSources, extractLinks } from "./helpers"
+import { extractMediaSources, extractLinks } from "../utils/feed-helpers"
 
 type feed_items_with_scores = feed_items & {
   scores: scores | null
@@ -52,7 +52,7 @@ function parseFeedItems(feedItems: feed_items_with_scores[]): IFeedPost[] {
     const scores = post.scores! // Filtering out nulls
     const significance = (scores.impact + scores.novelty + scores.relevance) / 3
 
-    const media = extractImageSources(post.description_raw)
+    const media = extractMediaSources(post.description_raw)
     const externalLinks = extractLinks(post.description_raw)
 
     return {
