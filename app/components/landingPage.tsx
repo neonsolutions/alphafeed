@@ -1,12 +1,13 @@
+import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import Footer from "./footer"
-import { CheckIcon } from "@heroicons/react/20/solid"
 import infographic from "../public/images/landing/infographic.svg"
-
-const includedFeatures = ["Access to past articles", "Personalized feed", "Daily summary email", "Priority updates"]
+import Pricing from "./Pricing"
 
 export default function landingPage() {
+  const [subscriptionType, setSubscriptionType] = useState("monthly")
+
   return (
     <div>
       <div className="bg-white z-0 h-screen">
@@ -98,47 +99,8 @@ export default function landingPage() {
       {/* Pricing */}
       <div className="px-6 lg:px-8 py-32  border-t-2 border-gray-200 flex justify-center ">
         <div>
-          <h2 className="text-3xl font-bold leading-tight  text-gray-900 sm:text-4xl   text-center pb-14">Pricing</h2>
-          <div className="mx-auto max-w-3xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-[840px]">
-            <div className="p-8 sm:p-10 lg:flex-auto sm:max-w-[550px]">
-              <h3 className="text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">All-Access Subscription</h3>
-              <p className="mt-6 text-base leading-5 text-gray-600">
-                Unlock the full power of Alpha with our All-Access Subscription. Stay ahead of the AI curve with
-                unlimited access to curated content, personalized recommendations, and exclusive features.
-              </p>
-              <div className="mt-10 flex items-center gap-x-4">
-                <h4 className="flex-none text-sm font-semibold leading-6 text-indigo-500">What’s included</h4>
-                <div className="h-px flex-auto bg-gray-100" />
-              </div>
-              <ul
-                role="list"
-                className="mt-8 grid grid-cols-1 gap-4 sm:gap-6 text-sm leading-6 text-gray-600 sm:grid-cols-2 "
-              >
-                {includedFeatures.map((feature) => (
-                  <li key={feature} className="flex gap-x-2">
-                    <CheckIcon className="h-6 w-5 flex-none text-indigo-500" aria-hidden="true" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="-mt-2 p-2 lg:mt-0 lg:min-w-[300px] lg:max-w-md lg:flex-shrink-0 ">
-              <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16 h-full ">
-                <div className="mx-auto max-w-xs px-8 w-full">
-                  <p className="text-base font-semibold text-gray-600">Monthly fee</p>
-                  <p className="mt-6 flex items-baseline justify-center gap-x-2">
-                    <span className="text-5xl font-bold tracking-tight text-gray-900">$2</span>
-                    <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">USD</span>
-                  </p>
-                  <button className="mt-10  w-full rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ">
-                    {" "}
-                    Get access
-                  </button>
-                  <p className="mt-6 text-xs leading-5 text-gray-600">Cancle anytime</p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <h2 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl text-center">Pricing</h2>
+          <Pricing monthlyPrice={2} yearlyPrice={16} setSubscriptionType={setSubscriptionType} />
         </div>
       </div>
     </div>
