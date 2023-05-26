@@ -4,8 +4,9 @@ import Link from "next/link"
 import Footer from "./footer"
 import infographic from "../public/images/landing/infographic.svg"
 import Pricing from "./Pricing"
+import { IPriceIds } from "../interfaces/IPriceIds"
 
-export default function landingPage() {
+export default function landingPage({ yearlyPriceId, monthlyPriceId }: IPriceIds) {
   const [subscriptionType, setSubscriptionType] = useState("monthly")
 
   return (
@@ -100,7 +101,13 @@ export default function landingPage() {
       <div className="px-6 lg:px-8 py-32  border-t-2 border-gray-200 flex justify-center ">
         <div>
           <h2 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl text-center">Pricing</h2>
-          <Pricing monthlyPrice={2} yearlyPrice={16} setSubscriptionType={setSubscriptionType} />
+          <Pricing
+            monthlyPriceId={monthlyPriceId}
+            monthlyPrice={2}
+            yearlyPriceId={yearlyPriceId}
+            yearlyPrice={16}
+            setSubscriptionType={setSubscriptionType}
+          />
         </div>
       </div>
     </div>

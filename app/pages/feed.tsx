@@ -4,15 +4,45 @@ import FeedCard from "../components/FeedCard"
 import { IFeedPost } from "../interfaces/IFeedPost"
 import { getPostsForDate } from "../lib/feed"
 import { authOptions } from "./api/auth/[...nextauth]"
+import { prisma } from "../lib/db"
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const session = await getServerSession(context.req, context.res, authOptions)
 
-  if (!session) {
+  const redirectToLogin = {
+    redirect: {
+      destination: "/login",
+      permanent: false,
+    },
+  }
+
+  if (!session || !session.user || !session.user.email) {
     console.log("No session found")
+    return redirectToLogin
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email: session.user.email,
+    },
+  })
+
+  if (!user) {
+    console.log("No user found")
+    return redirectToLogin
+  }
+
+  if (
+    !user.stripeCustomerId ||
+    !user.stripeSubscriptionId ||
+    !user.subscriptionStatus ||
+    user.subscriptionStatus !== "active"
+  ) {
+    // TODO: Handle other subscription statuses
+    console.log("User has no active subscription")
     return {
       redirect: {
-        destination: "/login",
+        destination: "/subscribe",
         permanent: false,
       },
     }

@@ -1,16 +1,72 @@
 import React, { useState, useEffect } from "react"
 import { CheckIcon } from "@heroicons/react/20/solid"
+import { useSession } from "next-auth/react"
+import { useRouter } from "next/router"
+import { getStripe } from "../utils/stripe-client"
 
 const includedFeatures = ["Access to past articles", "Personalized feed", "Daily summary email", "Priority updates"]
 
 interface IPricing {
   monthlyPrice: number
   yearlyPrice: number
+  monthlyPriceId: string
+  yearlyPriceId: string
   setSubscriptionType: (type: string) => void
 }
 
-export default function Pricing({ monthlyPrice, yearlyPrice, setSubscriptionType }: IPricing) {
+const postData = async ({ url, data }: { url: string; data?: { priceId: string } }) => {
+  console.log("posting,", url, data)
+
+  const res: Response = await fetch(url, {
+    method: "POST",
+    headers: new Headers({ "Content-Type": "application/json" }),
+    credentials: "same-origin",
+    body: JSON.stringify(data),
+  })
+
+  if (!res.ok) {
+    console.log("Error in postData", { url, data, res })
+    console.log(res)
+
+    // throw Error(res.statusText)
+  }
+
+  return res.json()
+}
+
+export default function Pricing({
+  monthlyPrice,
+  yearlyPrice,
+  setSubscriptionType,
+  monthlyPriceId,
+  yearlyPriceId,
+}: IPricing) {
+  const { data: session } = useSession()
+  const router = useRouter()
   const [isYearly, setIsYearly] = useState(false)
+
+  const handleCheckout = async (priceId: string) => {
+    // setPriceIdLoading(price.id)
+    if (!session?.user) {
+      return router.push("/login")
+    }
+
+    console.log("hello")
+
+    try {
+      const { sessionId } = await postData({
+        url: "/api/payment/create-checkout-session",
+        data: { priceId },
+      })
+
+      const stripe = await getStripe()
+      stripe?.redirectToCheckout({ sessionId })
+    } catch (error) {
+      return alert((error as Error)?.message)
+    } finally {
+      // setPriceIdLoading(undefined)
+    }
+  }
 
   useEffect(() => {
     setSubscriptionType(isYearly ? "yearly" : "monthly")
@@ -84,7 +140,10 @@ export default function Pricing({ monthlyPrice, yearlyPrice, setSubscriptionType
                 </span>
                 <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">USD</span>
               </p>
-              <button className="mt-10  w-full rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ">
+              <button
+                onClick={() => handleCheckout(isYearly ? yearlyPriceId : monthlyPriceId)}
+                className="mt-10  w-full rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 "
+              >
                 Get access
               </button>
               <p className="mt-5 mb-1 text-[14px] leading-5 text-gray-600 font-bold">7 day free trial</p>
