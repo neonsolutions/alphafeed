@@ -1,11 +1,4 @@
 -- CreateTable
-CREATE TABLE "alembic_version" (
-    "version_num" VARCHAR(32) NOT NULL,
-
-    CONSTRAINT "alembic_version_pkc" PRIMARY KEY ("version_num")
-);
-
--- CreateTable
 CREATE TABLE "feed_items" (
     "id" SERIAL NOT NULL,
     "title_raw" TEXT NOT NULL,

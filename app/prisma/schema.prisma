@@ -7,10 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model alembic_version {
-  version_num String @id(map: "alembic_version_pkc") @db.VarChar(32)
-}
-
 model feed_items {
   id              Int      @id @default(autoincrement())
   title_raw       String
