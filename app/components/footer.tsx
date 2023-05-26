@@ -24,7 +24,7 @@ export default function Footer() {
           <p className="text-sm text-gray-400 hover:text-indigo-300 hover:underline pb-2 ">Terms And Conditions</p>
         </Link>
       </div>
-      <p className="text-sm text-gray-400/70 pt-2">Product of Onset Carbon © 2022</p>
+      <p className="text-sm text-gray-400/70 pt-2">Product of Onset Carbon © 2023</p>
     </div>
   )
 }

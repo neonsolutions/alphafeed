@@ -42,7 +42,7 @@ export default function PrivacyPolicy() {
           <li>
             <p className="pt-3">
               <strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or
-              &quot;Our&quot; in this Agreement) refers to Onset Carbon LLC, 419, 447 Broadway, 2nd Floor, New York, NY,
+              &quot;Our&quot; in this Agreement) refers to Onset Carbon Inc, 419, 447 Broadway, 2nd Floor, New York, NY,
               New York, US, 10013.
             </p>
           </li>
