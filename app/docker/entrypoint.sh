@@ -8,7 +8,8 @@ while true; do
     fi
 done
 
-# alembic upgrade head && cd src && python -m scheduler
-yarn prisma migrate dev
+yarn prisma migrate dev --skip-generate
+
+yarn prisma db seed
 
 yarn dev
