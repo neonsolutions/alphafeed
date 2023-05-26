@@ -1,81 +1,11 @@
-import { useSession } from "next-auth/react"
+import { GetServerSidePropsContext } from "next"
+import { getServerSession } from "next-auth"
 import FeedCard from "../components/FeedCard"
 import { IFeedPost, SourceType } from "../interfaces/IFeedPost"
 import { getPostsForDate } from "../lib/feed"
-import { extractImageSources, extractLinks } from "../lib/helpers"
-import { getServerSession } from "next-auth"
-import { GetServerSidePropsContext, NextPageContext } from "next"
 import { authOptions } from "./api/auth/[...nextauth]"
 
-const threeHoursAgo = new Date()
-threeHoursAgo.setHours(threeHoursAgo.getHours() - 3)
-
-const twentyMinutesAgo = new Date()
-twentyMinutesAgo.setMinutes(twentyMinutesAgo.getMinutes() - 20)
-
-const onePointThreeDaysAgo = new Date()
-onePointThreeDaysAgo.setDate(onePointThreeDaysAgo.getDate() - 1.3)
-
-const mockData: IFeedPost[] = [
-  {
-    title: "Amazing Twitter Post Amazing Twitter PostAmazing Twitter Post",
-    body: "A groundbreaking study reveals how AI is transforming healthcare diagnostics. The research, conducted by a team of scientists at MIT, demonstrates how AI can accurately diagnose certain medical conditions faster than human doctors. This breakthrough could potentially save millions of lives and revolutionize the healthcare industry.",
-    scores: { significance: 9, relevance: 1, impact: 9, novelty: 5, reliability: 2 },
-    media: [
-      "https://picsum.photos/200/300",
-      "https://source.unsplash.com/random/200x300",
-      "https://source.unsplash.com/random/200x300",
-    ], // Placeholder image from Lorem Picsum&#8203;`oaicite:{"index":0,"metadata":{"title":"Lorem Picsum","url":"https://picsum.photos/","text":"https://picsum.photos/200/300. To get a square image, just add the size. https://picsum.photos/200. Specifi","pub_date":null}}`&#8203;
-    externalLinks: [
-      "https://picsm.phos/200/300",
-      "https://source.unsplash.com/random/200x300",
-      "https://source.unsplash.com/random/200x300",
-    ],
-    source: SourceType.Twitter,
-    link: "https://www.twitter.com",
-    publishedAt: threeHoursAgo.toISOString(),
-  },
-  {
-    title: "Interesting News Article",
-    body: "demonstrates how AI can accurately diagnose certain medical conditions faster than human doctors. This breakthrough could potentially save millions of lives and revolutionize the healthcare industry.",
-    scores: { significance: 8, relevance: 2, impact: 2, novelty: 3, reliability: 3 },
-    media: [
-      "https://source.unsplash.com/random/200x300",
-      "https://source.unsplash.com/random/200x300",
-      "https://source.unsplash.com/random/200x300",
-    ], // Random image from Unsplash&#8203;`oaicite:{"index":1,"metadata":{"title":"awik.io","url":"https://awik.io/generate-random-images-unsplash-without-using-api/","text":"https://source.unsplash.com/random/WIDTHxHEIGHT\n\nLet’s generate a random image with the width and height of 300px:\n\nhttps://source.unsplash.com/random/300×300","pub_date":null}}`&#8203;
-    externalLinks: null,
-    source: SourceType.News,
-    link: "https://www.newswebsite.com",
-    publishedAt: twentyMinutesAgo.toISOString(),
-  },
-  {
-    title: "Intriguing Research Paper",
-    body: "This research paper presents some groundbreaking findings. Take a look!",
-    scores: { significance: 7, relevance: 2, impact: 2, novelty: 3, reliability: 3 },
-    source: SourceType.Research,
-    media: null,
-    externalLinks: null,
-    link: "https://www.researchwebsite.com",
-    publishedAt: onePointThreeDaysAgo.toISOString(),
-  },
-  {
-    title: "Intriguing Research Paper",
-    body: "This research paper presents some groundbreaking findings. Take a look!",
-    scores: { significance: 7, relevance: 2, impact: 2, novelty: 3, reliability: 3 },
-    source: SourceType.Research,
-    media: null,
-    externalLinks: null,
-    link: "https://www.researchwebsite.com",
-    publishedAt: onePointThreeDaysAgo.toISOString(),
-  },
-]
-
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
-  if (process.env.MOCK) {
-    return { props: { posts: mockData } }
-  }
-
   const session = await getServerSession(context.req, context.res, authOptions)
 
   if (!session) {
@@ -90,42 +20,10 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
   const posts = await getPostsForDate(new Date())
   if (!posts) {
-    return { props: { posts: [] } }
+    return { props: { posts: [], session } }
   }
-  const parsedPosts: IFeedPost[] = posts!
-    .map((post) => {
-      const scores = post.scores! // Filtering out nulls
-      const significance = (scores.impact + scores.novelty + scores.relevance) / 3
 
-      const media = extractImageSources(post.description_raw)
-      const externalLinks = extractLinks(post.description_raw)
-
-      return {
-        title: post.title || post.title_raw,
-        body: post.description || post.description_raw,
-        significance: significance,
-        scores: {
-          significance,
-          relevance: scores.relevance,
-          impact: scores.impact,
-          novelty: scores.novelty,
-          reliability: scores.reliability,
-        },
-        media: media,
-        externalLinks: externalLinks,
-        source: SourceType.Twitter,
-        link: post.link,
-        publishedAt: post.published.toISOString(),
-      }
-    })
-    // Filter out posts with low significance
-    .filter((post) => post.scores.significance > 7)
-    // Sort by significance
-    .sort((a, b) => {
-      return b.scores.significance - a.scores.significance
-    })
-
-  return { props: { posts: parsedPosts } }
+  return { props: { posts, session } }
 }
 
 const Feed = ({ posts }: { posts: IFeedPost[] }) => {
