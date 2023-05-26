@@ -27,6 +27,17 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 }
 
 const Feed = ({ posts }: { posts: IFeedPost[] }) => {
+  const getCurrentMonth = (): string => {
+    const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]
+    const currentDate = new Date()
+    return monthNames[currentDate.getMonth()]
+  }
+
+  const getCurrentDay = (): number => {
+    const currentDate = new Date()
+    return currentDate.getDate()
+  }
+
   return (
     <div>
       <div className="relative isolate px-6 pt-14 sm:pt-20 lg:px-8 w-full flex justify-center pb-32">
@@ -47,10 +58,10 @@ const Feed = ({ posts }: { posts: IFeedPost[] }) => {
             <h1 className="text-2xl font-bold  text-gray-900 sm:text-4xl">The latest in AI</h1>
             <div className="w-10 -mt-1">
               <div className="h-[18px] bg-indigo-300 rounded-t-md w-full text-center flex justify-center items-center">
-                <p className="font-bold text-[10px]">MAY</p>
+                <p className="font-bold text-[10px]">{getCurrentMonth()}</p>
               </div>
               <div className="h-6 bg-indigo-100 rounded-b-md w-full text-center flex justify-center items-center">
-                <p className="font-bold text-sm text-gray-900">31</p>
+                <p className="font-bold text-sm text-gray-900">{getCurrentDay()}</p>
               </div>
             </div>
           </div>
