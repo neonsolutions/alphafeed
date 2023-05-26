@@ -13,7 +13,14 @@ export default function Login() {
         </h2>
       </div>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <GoogleLoginButton style={{ fontSize: "15px" }} onClick={() => signIn("google")} />
+        <GoogleLoginButton
+          style={{ fontSize: "15px" }}
+          onClick={() =>
+            signIn("google", {
+              callbackUrl: "/feed",
+            })
+          }
+        />
         <p className="mt-10 text-center text-sm text-gray-500">
           Not a member?{" "}
           <Link href="/register">
