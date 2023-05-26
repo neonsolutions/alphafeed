@@ -59,6 +59,9 @@ CREATE TABLE "User" (
     "email" TEXT,
     "emailVerified" TIMESTAMP(3),
     "image" TEXT,
+    "stripeCustomerId" TEXT,
+    "stripe_subscription_id" TEXT,
+    "subscription_status" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );

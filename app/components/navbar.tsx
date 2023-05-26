@@ -4,6 +4,7 @@ import { useRouter } from "next/router"
 import { UserCircleIcon, HomeIcon } from "@heroicons/react/24/outline"
 import { useSession } from "next-auth/react"
 import { useState } from "react"
+import { signOut } from "next-auth/react"
 
 export default function Navbar() {
   const { data: session, status } = useSession()
@@ -39,11 +40,15 @@ export default function Navbar() {
                   Manage billing
                 </div>
               </Link>
-              <Link href="/account" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+
+              {/* <Link href="#" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                
+              </Link> */}
+              <button onClick={() => signOut({ callbackUrl: "/" })}>
                 <div role="menuitem" className="flex justify-center items-center py-2 hover:bg-gray-100 rounded-b-md">
                   Sign out
                 </div>
-              </Link>
+              </button>
             </div>
           )}
         </div>
