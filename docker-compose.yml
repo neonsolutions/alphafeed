@@ -32,7 +32,7 @@ services:
       context: ./app
       dockerfile: ./docker/Dockerfile
     env_file:
-      - ./app/.env
+      - ./app/.env.local
     environment:
       - DATABASE_URL=postgresql://postgres:admin@dev-db:5432/postgres
     volumes:
