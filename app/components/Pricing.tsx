@@ -16,6 +16,13 @@ export default function Pricing({ monthlyPrice, yearlyPrice, setSubscriptionType
     setSubscriptionType(isYearly ? "yearly" : "monthly")
   }, [isYearly])
 
+  function calculateDiscount(monthlyPrice: number, yearlyPrice: number): number {
+    const totalMonthlyPriceForYear = monthlyPrice * 12
+    const savings = totalMonthlyPriceForYear - yearlyPrice
+    const discountPercentage = (savings / totalMonthlyPriceForYear) * 100
+    return Math.round(discountPercentage)
+  }
+
   return (
     <div>
       <div className="w-full flex justify-center pt-10 pb-5">
@@ -66,7 +73,7 @@ export default function Pricing({ monthlyPrice, yearlyPrice, setSubscriptionType
                 <p className="text-base font-semibold text-gray-600">{!isYearly ? "Monthly fee" : "Yearly fee"}</p>
                 {isYearly && (
                   <span className="flex  items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 ml-2">
-                    -20%
+                    -{calculateDiscount(monthlyPrice, yearlyPrice)}%
                   </span>
                 )}
               </div>
