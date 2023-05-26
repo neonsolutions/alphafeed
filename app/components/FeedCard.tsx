@@ -1,10 +1,13 @@
 import Image from "next/image"
 import { useState } from "react"
 import { IFeedPost } from "../interfaces/IFeedPost"
+import { XCircleIcon } from "@heroicons/react/24/solid"
 
 const FeedCard = ({ title, body, scores, media, source, link, publishedAt, externalLinks }: IFeedPost) => {
   let icon = "/images/feedCard/internetIcon.svg"
   const [dropdownVisible, setDropdownVisible] = useState(false) // New state
+  const [modalOpen, setModalOpen] = useState(false)
+  const [modalMedia, setModalMedia] = useState("")
 
   switch (source) {
     case "twitter":
@@ -66,6 +69,39 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
 
   return (
     <div className="my-1">
+      {modalOpen && (
+        <div
+          className="fixed z-10 inset-0 overflow-y-auto"
+          aria-labelledby="modal-title"
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="pt-4 px-4 pb-20 text-center sm:p-0 mt-32 ">
+            {/* Background overlay */}
+            <div
+              className="fixed inset-0 bg-gray-800 bg-opacity-75 transition-opacity"
+              aria-hidden="true"
+              onClick={() => setModalOpen(false)}
+            ></div>
+            {/* Modal content */}
+            <div className="relative inline-block  bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8  sm:max-w-3xl w-full ">
+              <div className="sm:flex sm:items-start">
+                {[".jpeg", ".jpg", ".gif", ".png"].some((ext) => modalMedia.includes(ext)) ? (
+                  <img src={modalMedia} className="rounded-lg w-full" />
+                ) : (
+                  <video src={modalMedia} className="rounded-lg w-full" controls />
+                )}
+              </div>
+              <button
+                className="absolute top-0 right-0 m-2 text-gray-500 hover:text-gray-700 p-3 drop-shadow-md  "
+                onClick={() => setModalOpen(false)}
+              >
+                <XCircleIcon className="h-8 w-8 text-gray-500 hover:text-gray-500/80" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
       <h2 className="text-gray-300 text-[16px] transform -translate-x-44 translate-y-12 w-36 text-right md:block hidden">
         {formatPostDate(new Date(publishedAt))}
       </h2>
@@ -131,13 +167,43 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
             </a>
           </div>
         </div>
-
         <p className="text-gray-500 text-sm pb-4">{body}</p>
         {media && (
-          <div className="flex overflow-x-scroll space-x-4  pb-4">
-            {media.map((imgUrl, index) => (
-              <img key={index} src={imgUrl} alt={`media ${index}`} className="rounded-lg" />
-            ))}
+          <div className="flex overflow-x-scroll space-x-4 pb-4 ">
+            {media.map((url, index) => {
+              const isImage = [".jpeg", ".jpg", ".gif", ".png"].some((extension) => url.includes(extension))
+              return isImage ? (
+                <>
+                  {url && (
+                    <img
+                      key={index}
+                      src={url}
+                      alt={`media ${index}`}
+                      className="rounded-lg max-h-32 cursor-pointer border border-gray-200 "
+                      onClick={() => {
+                        setModalMedia(url)
+                        setModalOpen(true)
+                      }}
+                    />
+                  )}
+                </>
+              ) : (
+                <>
+                  {url && (
+                    <video
+                      key={index}
+                      src={url}
+                      className="rounded-lg max-h-32 cursor-pointer border border-gray-200 "
+                      controls
+                      onClick={() => {
+                        setModalMedia(url)
+                        setModalOpen(true)
+                      }}
+                    />
+                  )}
+                </>
+              )
+            })}
           </div>
         )}
         {externalLinks && (
@@ -146,7 +212,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
               <a href={link} target="_blank" key={"externalLink" + index}>
                 <button className="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 hover:underline">
                   <img
-                    className="py-1 h-5 pr-1"
+                    className="py-1 h-5 pr-1 "
                     src={`http://www.google.com/s2/favicons?domain_url=${link}`}
                     alt="external link favicon"
                   />
