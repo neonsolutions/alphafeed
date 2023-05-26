@@ -61,7 +61,7 @@ const Feed = ({ posts }: { posts: IFeedPost[] }) => {
           </div>
         </div>
         <div
-          className="absolute inset-x-0 top-[calc(0%)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(60%)]"
+          className="absolute inset-x-0 top-[calc(0%)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(40%)]"
           aria-hidden="true"
         >
           <div

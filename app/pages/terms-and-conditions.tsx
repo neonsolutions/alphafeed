@@ -5,8 +5,8 @@ export default function TermsAndConditions() {
         <h1 className="text-3xl font-bold pb-3 pt-7">Terms and Conditions</h1>
 
         <p className="pt-3">
-          These terms and conditions outline the rules and regulations for the use of Onset Carbon LLC's Website,
-          located at https://alphafeed.xyz.
+          These terms and conditions outline the rules and regulations for the use of Onset Carbon Inc Website, located
+          at https://alphafeed.xyz.
         </p>
 
         <p className="pt-3">
@@ -32,7 +32,7 @@ export default function TermsAndConditions() {
 
         <p className="pt-3">
           We employ the use of cookies. By accessing Alpha, you agreed to use cookies in agreement with the Onset Carbon
-          LLC's Privacy Policy.{" "}
+          Inc Privacy Policy.{" "}
         </p>
 
         <p className="pt-3">
@@ -46,7 +46,7 @@ export default function TermsAndConditions() {
         </h1>
 
         <p className="pt-3">
-          Unless otherwise stated, Onset Carbon LLC and/or its licensors own the intellectual property rights for all
+          Unless otherwise stated, Onset Carbon Inc and/or its licensors own the intellectual property rights for all
           material on Alpha. All intellectual property rights are reserved. You may access this from Alpha for your own
           personal use subjected to restrictions set in these terms and conditions.
         </p>
@@ -66,16 +66,16 @@ export default function TermsAndConditions() {
 
         <p className="pt-3">
           Parts of this website offer an opportunity for users to post and exchange opinions and information in certain
-          areas of the website. Onset Carbon LLC does not filter, edit, publish or review Comments prior to their
-          presence on the website. Comments do not reflect the views and opinions of Onset Carbon LLC,its agents and/or
+          areas of the website. Onset Carbon Inc does not filter, edit, publish or review Comments prior to their
+          presence on the website. Comments do not reflect the views and opinions of Onset Carbon Inc,its agents and/or
           affiliates. Comments reflect the views and opinions of the person who post their views and opinions. To the
-          extent permitted by applicable laws, Onset Carbon LLC shall not be liable for the Comments or for any
+          extent permitted by applicable laws, Onset Carbon Inc shall not be liable for the Comments or for any
           liability, damages or expenses caused and/or suffered as a result of any use of and/or posting of and/or
           appearance of the Comments on this website.
         </p>
 
         <p className="pt-3">
-          Onset Carbon LLC reserves the right to monitor all Comments and to remove any Comments which can be considered
+          Onset Carbon Inc reserves the right to monitor all Comments and to remove any Comments which can be considered
           inappropriate, offensive or causes breach of these Terms and Conditions.
         </p>
 
@@ -100,7 +100,7 @@ export default function TermsAndConditions() {
         </ul>
 
         <p className="pt-3">
-          You hereby grant Onset Carbon LLC a non-exclusive license to use, reproduce, edit and authorize others to use,
+          You hereby grant Onset Carbon Inc a non-exclusive license to use, reproduce, edit and authorize others to use,
           reproduce and edit any of your Comments in any and all forms, formats or media.
         </p>
 
@@ -148,7 +148,7 @@ export default function TermsAndConditions() {
           We will approve link requests from these organizations if we decide that: (a) the link would not make us look
           unfavorably to ourselves or to our accredited businesses; (b) the organization does not have any negative
           records with us; (c) the benefit to us from the visibility of the hyperlink compensates the absence of Onset
-          Carbon LLC; and (d) the link is in the context of general resource information.
+          Carbon Inc; and (d) the link is in the context of general resource information.
         </p>
 
         <p className="pt-3">
@@ -159,7 +159,7 @@ export default function TermsAndConditions() {
 
         <p className="pt-3">
           If you are one of the organizations listed in paragraph 2 above and are interested in linking to our website,
-          you must inform us by sending an e-mail to Onset Carbon LLC. Please include your name, your organization name,
+          you must inform us by sending an e-mail to Onset Carbon Inc. Please include your name, your organization name,
           contact information as well as the URL of your site, a list of any URLs from which you intend to link to our
           Website, and a list of the URLs on our site to which you would like to link. Wait 2-3 weeks for a response.
         </p>
@@ -176,7 +176,7 @@ export default function TermsAndConditions() {
         </ul>
 
         <p className="pt-3">
-          No use of Onset Carbon LLC's logo or other artwork will be allowed for linking absent a trademark license
+          No use of Onset Carbon Inc logo or other artwork will be allowed for linking absent a trademark license
           agreement.
         </p>
 
