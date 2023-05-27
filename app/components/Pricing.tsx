@@ -15,8 +15,6 @@ interface IPricing {
 }
 
 const postData = async ({ url, data }: { url: string; data?: { priceId: string } }) => {
-  console.log("posting,", url, data)
-
   const res: Response = await fetch(url, {
     method: "POST",
     headers: new Headers({ "Content-Type": "application/json" }),
@@ -26,9 +24,8 @@ const postData = async ({ url, data }: { url: string; data?: { priceId: string }
 
   if (!res.ok) {
     console.log("Error in postData", { url, data, res })
-    console.log(res)
 
-    // throw Error(res.statusText)
+    throw Error(res.statusText)
   }
 
   return res.json()
@@ -50,8 +47,6 @@ export default function Pricing({
     if (!session?.user) {
       return router.push("/login")
     }
-
-    console.log("hello")
 
     try {
       const { sessionId } = await postData({
