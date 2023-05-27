@@ -53,7 +53,7 @@ function parseFeedItems(feedItems: feed_items_with_scores[]): IFeedPost[] {
     const significance = (scores.impact + scores.novelty + scores.relevance) / 3
 
     const media = extractMediaSources(post.description_raw)
-    const externalLinks = extractLinks(post.description_raw)
+    const externalLinks = extractLinks(post.description_raw).filter((link) => !media.includes(link))
 
     return {
       title: post.title || post.title_raw,
