@@ -4,7 +4,7 @@ Alpha Feed is a web application that aggregates RSS feeds and scores them based 
 
 ## Development
 
-Start the development environment with `docker-compose`:
+Start the development environment with `docker-compose`. This will start and prepare the database.
 
 ```
 docker-compose up
@@ -17,10 +17,18 @@ cd app
 yarn
 ```
 
-You can then seed the database in the app directory
+You can then run the next app with:
 
 ```
-yarn prisma db seed
+yarn dev
 ```
 
-Then go to `localhost:3000` to view the app. Changes will hot-reload.
+Then go to `localhost:3000` to view the app.
+
+### Stripe
+
+To listen for stripe webhooks, run the following command:
+
+```
+yarn stripe:listen
+```
