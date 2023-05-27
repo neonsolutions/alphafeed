@@ -19,8 +19,6 @@ const CreateCheckoutSession: NextApiHandler = async (req, res) => {
     try {
       const customer = await createOrRetrieveCustomer(session?.user?.email)
 
-      console.log("customer", customer)
-
       const stripeSession = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         billing_address_collection: "required",
@@ -35,13 +33,12 @@ const CreateCheckoutSession: NextApiHandler = async (req, res) => {
         allow_promotion_codes: true,
         subscription_data: {
           trial_from_plan: true,
+          trial_period_days: 7,
           metadata,
         },
         success_url: `${process.env.SERVER_ENDPOINT}/feed`,
         cancel_url: `${process.env.SERVER_ENDPOINT}/`,
       })
-
-      console.log("stripeSession", stripeSession)
 
       return res.status(200).json({ sessionId: stripeSession.id })
     } catch (err: any) {
