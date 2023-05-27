@@ -76,15 +76,15 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
           role="dialog"
           aria-modal="true"
         >
-          <div className="pt-4 px-4 pb-20 text-center sm:p-0 mt-32 ">
+          <div className="pt-4 px-4 pb-20 text-center sm:p-0  h-screen ">
             {/* Background overlay */}
             <div
-              className="fixed inset-0 bg-gray-800 bg-opacity-75 transition-opacity"
+              className="fixed inset-0 bg-gray-800 bg-opacity-75 transition-opacity z-100"
               aria-hidden="true"
               onClick={() => setModalOpen(false)}
             ></div>
             {/* Modal content */}
-            <div className="relative inline-block  bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8  sm:max-w-3xl w-full ">
+            <div className="relative inline-block   rounded-lg text-left overflow-hidden shadow-xl max-w-2xl w-full mt-12 z-100 ">
               <div className="sm:flex sm:items-start">
                 {[".jpeg", ".jpg", ".gif", ".png"].some((ext) => modalMedia.includes(ext)) ? (
                   <img src={modalMedia} className="rounded-lg w-full" />
