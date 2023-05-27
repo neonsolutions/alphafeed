@@ -69,7 +69,7 @@ const Feed = ({ posts }: { posts: IFeedPost[] }) => {
 
   return (
     <div>
-      <div className="relative isolate px-6 pt-14 sm:pt-20 lg:px-8 w-full flex justify-center pb-32">
+      <div className="relative isolate px-6 pt-14 sm:pt-20 lg:px-8 w-full flex justify-center pb-32 min-h-[80vh]">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
           aria-hidden="true"
@@ -94,11 +94,17 @@ const Feed = ({ posts }: { posts: IFeedPost[] }) => {
               </div>
             </div>
           </div>
-          <div>
-            {posts.map((post, index) => (
-              <FeedCard {...post} key={index} />
-            ))}
-          </div>
+          {posts ? (
+            <div>
+              {posts.map((post, index) => (
+                <FeedCard {...post} key={index} />
+              ))}
+            </div>
+          ) : (
+            <h1 className="text-lg text-gray-400 font-medium text-center mt-8">
+              Sorry, no posts passed our filters today.
+            </h1>
+          )}
         </div>
         <div
           className="absolute inset-x-0 top-[calc(0%)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(40%)]"

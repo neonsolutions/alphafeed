@@ -10,10 +10,10 @@ const dmSans = DM_Sans({
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    <div className="overflow-hidden">
       <Navbar />
       <main className={dmSans.className + " flex-grow"}>{children}</main>
       <Footer />
-    </>
+    </div>
   )
 }
