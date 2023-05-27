@@ -32,7 +32,11 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     return redirectToLogin
   }
 
-  if (!user.stripeCustomerId || !user.stripeSubscriptionId || user?.stripeSubscriptionStatus !== "active") {
+  if (
+    !user.stripeCustomerId ||
+    !user.stripeSubscriptionId ||
+    !(user?.stripeSubscriptionStatus === "active" || user?.stripeSubscriptionStatus === "trialing")
+  ) {
     // TODO: Handle other subscription statuses
     console.log("User has no active subscription")
     return {

@@ -33,7 +33,6 @@ const CreateCheckoutSession: NextApiHandler = async (req, res) => {
         allow_promotion_codes: true,
         subscription_data: {
           trial_from_plan: true,
-          trial_period_days: 7,
           metadata,
         },
         success_url: `${process.env.SERVER_ENDPOINT}/feed`,
