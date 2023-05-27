@@ -41,14 +41,11 @@ export default function Navbar() {
                 </div>
               </Link>
 
-              {/* <Link href="#" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                
-              </Link> */}
-              <button onClick={() => signOut({ callbackUrl: "/" })}>
+              <Link href="/signout" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                 <div role="menuitem" className="flex justify-center items-center py-2 hover:bg-gray-100 rounded-b-md">
                   Sign out
                 </div>
-              </button>
+              </Link>
             </div>
           )}
         </div>
