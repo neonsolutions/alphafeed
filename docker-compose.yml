@@ -25,7 +25,7 @@ services:
     #   - .:/app
     depends_on:
       - dev-db
-    entrypoint: ["/bin/sh", "/app/entrypoint.sh"]
+    # entrypoint: ["/bin/sh", "/app/entrypoint.sh"]
 
   dev-web:
     build:

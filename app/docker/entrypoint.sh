@@ -11,5 +11,3 @@ done
 yarn prisma migrate dev --skip-generate
 
 yarn prisma db seed
-
-yarn dev
