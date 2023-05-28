@@ -5,8 +5,13 @@ import Footer from "./footer"
 import infographic from "../public/images/landing/infographic.svg"
 import Pricing from "./Pricing"
 import { IPriceIds } from "../interfaces/IPriceIds"
+import { prisma } from "../lib/db"
 
-export default function landingPage({ yearlyPriceId, monthlyPriceId }: IPriceIds) {
+export default function landingPage({
+  yearlyPriceId,
+  monthlyPriceId,
+  hasSubscription,
+}: IPriceIds & { hasSubscription: boolean }) {
   const [subscriptionType, setSubscriptionType] = useState("monthly")
 
   return (
@@ -107,6 +112,7 @@ export default function landingPage({ yearlyPriceId, monthlyPriceId }: IPriceIds
             yearlyPriceId={yearlyPriceId}
             yearlyPrice={16}
             setSubscriptionType={setSubscriptionType}
+            hasSubscription={hasSubscription}
           />
         </div>
       </div>

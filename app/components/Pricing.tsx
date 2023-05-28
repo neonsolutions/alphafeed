@@ -12,6 +12,7 @@ interface IPricing {
   monthlyPriceId: string
   yearlyPriceId: string
   setSubscriptionType: (type: string) => void
+  hasSubscription: boolean
 }
 
 const postData = async ({ url, data }: { url: string; data?: { priceId: string } }) => {
@@ -37,6 +38,7 @@ export default function Pricing({
   setSubscriptionType,
   monthlyPriceId,
   yearlyPriceId,
+  hasSubscription,
 }: IPricing) {
   const { data: session } = useSession()
   const router = useRouter()
@@ -140,8 +142,9 @@ export default function Pricing({
                 <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">USD</span>
               </p>
               <button
-                onClick={() => handleCheckout(isYearly ? yearlyPriceId : monthlyPriceId)}
+                onClick={() => !hasSubscription && handleCheckout(isYearly ? yearlyPriceId : monthlyPriceId)}
                 className="mt-10  w-full rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 flex justify-center items-center"
+                disabled={hasSubscription}
               >
                 {isLoading ? (
                   <svg
@@ -164,10 +167,13 @@ export default function Pricing({
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
+                ) : hasSubscription ? (
+                  "Already subscribed"
                 ) : (
                   "Get access"
                 )}
               </button>
+
               <p className="mt-5 mb-1 text-[14px] leading-5 text-gray-600 font-bold">7 day free trial</p>
 
               <p className=" text-xs leading-5 text-gray-600">Cancle anytime</p>
