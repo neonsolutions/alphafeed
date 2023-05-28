@@ -1,13 +1,40 @@
-import { GetStaticProps } from "next"
+import { GetServerSidePropsContext } from "next"
+import { getServerSession } from "next-auth"
+import { authOptions } from "../pages/api/auth/[...nextauth]"
 import Pricing from "../components/Pricing"
 import { IPriceIds } from "../interfaces/IPriceIds"
 import { useState } from "react"
+import { prisma } from "../lib/db"
 
 interface Props {
   priceIds: IPriceIds
 }
 
-export const getStaticProps: GetStaticProps<Props> = async () => {
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const session = await getServerSession(context.req, context.res, authOptions)
+
+  if (!session || !session.user || !session.user.email) {
+    console.log("No session found")
+    return
+  }
+
+  const user = await prisma.user.findUnique({
+    where: {
+      email: session.user.email,
+    },
+  })
+
+  if (!user) {
+    console.log("No user found")
+    return
+  }
+
+  let hasSubscription = false
+
+  if (user?.stripeSubscriptionStatus === "active" || user?.stripeSubscriptionStatus === "trialing") {
+    hasSubscription = true
+  }
+
   const { PRICE_ANNUAL_ID, PRICE_MONTHLY_ID } = process.env
 
   if (!PRICE_ANNUAL_ID || !PRICE_MONTHLY_ID) {
@@ -20,11 +47,12 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
         monthlyPriceId: PRICE_MONTHLY_ID,
         yearlyPriceId: PRICE_ANNUAL_ID,
       },
+      hasSubscription,
     },
   }
 }
 
-export default function Subscribe({ priceIds }: Props) {
+export default function Subscribe({ priceIds, hasSubscription }: Props & { hasSubscription: boolean }) {
   const [subscriptionType, setSubscriptionType] = useState("monthly")
 
   return (
@@ -37,6 +65,7 @@ export default function Subscribe({ priceIds }: Props) {
           yearlyPriceId={priceIds.yearlyPriceId}
           yearlyPrice={16}
           setSubscriptionType={setSubscriptionType}
+          hasSubscription={hasSubscription}
         />
       </div>
     </div>
