@@ -28,7 +28,7 @@ export default function Subscribe({ priceIds }: Props) {
   const [subscriptionType, setSubscriptionType] = useState("monthly")
 
   return (
-    <div className="px-6 lg:px-8 py-32  border-t-2 border-gray-200 flex justify-center ">
+    <div className="px-6 lg:px-8 pb-32 pt-24  border-t-2 border-gray-200 flex justify-center ">
       <div>
         <h2 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl text-center">Pricing</h2>
         <Pricing
