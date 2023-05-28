@@ -46,7 +46,7 @@ export default function Navbar() {
   return (
     <header className="inset-x-0 top-0 ">
       <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
-        <div className="flex lg:flex-1">
+        <div className="flex lg:flex-1 z-40">
           <Link href="/">
             <Image src="/images/logoWithText.svg" alt="logoWithText" className="-m-1.5 p-1.5" height={30} width={100} />
           </Link>

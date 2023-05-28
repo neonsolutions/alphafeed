@@ -41,10 +41,12 @@ export default function Pricing({
   const { data: session } = useSession()
   const router = useRouter()
   const [isYearly, setIsYearly] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleCheckout = async (priceId: string) => {
-    // setPriceIdLoading(price.id)
+    setIsLoading(true) // set loading state to true
     if (!session?.user) {
+      setIsLoading(false)
       return router.push("/login")
     }
 
@@ -57,9 +59,11 @@ export default function Pricing({
       const stripe = await getStripe()
       stripe?.redirectToCheckout({ sessionId })
     } catch (error) {
+      setIsLoading(false) // set loading state to false in case of error
       return alert((error as Error)?.message)
     } finally {
       // setPriceIdLoading(undefined)
+      setIsLoading(false) // set loading state to false once the request is complete
     }
   }
 
@@ -137,9 +141,32 @@ export default function Pricing({
               </p>
               <button
                 onClick={() => handleCheckout(isYearly ? yearlyPriceId : monthlyPriceId)}
-                className="mt-10  w-full rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 "
+                className="mt-10  w-full rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 flex justify-center items-center"
               >
-                Get access
+                {isLoading ? (
+                  <svg
+                    className="animate-spin  h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                ) : (
+                  "Get access"
+                )}
               </button>
               <p className="mt-5 mb-1 text-[14px] leading-5 text-gray-600 font-bold">7 day free trial</p>
 
