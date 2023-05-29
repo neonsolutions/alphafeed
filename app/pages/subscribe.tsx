@@ -4,7 +4,6 @@ import { authOptions } from "../pages/api/auth/[...nextauth]"
 import Pricing from "../components/Pricing"
 import { IPriceIds } from "../interfaces/IPriceIds"
 import { useState } from "react"
-import { prisma } from "../lib/db"
 
 interface Props {
   priceIds: IPriceIds
@@ -12,28 +11,6 @@ interface Props {
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const session = await getServerSession(context.req, context.res, authOptions)
-
-  if (!session || !session.user || !session.user.email) {
-    console.log("No session found")
-    return
-  }
-
-  const user = await prisma.user.findUnique({
-    where: {
-      email: session.user.email,
-    },
-  })
-
-  if (!user) {
-    console.log("No user found")
-    return
-  }
-
-  let hasSubscription = false
-
-  if (user?.stripeSubscriptionStatus === "active" || user?.stripeSubscriptionStatus === "trialing") {
-    hasSubscription = true
-  }
 
   const { PRICE_ANNUAL_ID, PRICE_MONTHLY_ID } = process.env
 
@@ -47,7 +24,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
         monthlyPriceId: PRICE_MONTHLY_ID,
         yearlyPriceId: PRICE_ANNUAL_ID,
       },
-      hasSubscription,
+      hasSubscription: session?.user?.hasActiveSubscription,
     },
   }
 }

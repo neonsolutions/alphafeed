@@ -1,6 +1,6 @@
 import { NextApiHandler } from "next"
 
-import { stripe } from "../../../utils/stripe"
+import { stripe } from "../../../lib/stripe"
 import { createOrRetrieveCustomer } from "../../../utils/stripe-helpers"
 import { getSession } from "next-auth/react"
 import { authOptions } from "../auth/[...nextauth]"

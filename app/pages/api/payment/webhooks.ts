@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 import Stripe from "stripe"
 import { Readable } from "node:stream"
 
-import { stripe } from "../../../utils/stripe"
+import { stripe } from "../../../lib/stripe"
 import { manageSubscriptionStatusChange } from "../../../utils/stripe-helpers"
 
 // Stripe requires the raw body to construct the event.

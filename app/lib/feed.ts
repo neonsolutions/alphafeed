@@ -1,5 +1,5 @@
 import { feed_items, scores } from "@prisma/client"
-import { prisma } from "./db"
+import { prisma } from "../lib/prisma"
 import { IFeedPost, SourceType } from "../interfaces/IFeedPost"
 import { extractMediaSources, extractLinks } from "../utils/feed-helpers"
 
