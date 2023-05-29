@@ -1,4 +1,4 @@
-import { prisma } from "./prisma"
+import { prisma } from "../lib/prisma"
 import { stripe } from "../lib/stripe"
 
 export async function createOrRetrieveCustomer(userEmail: string) {
