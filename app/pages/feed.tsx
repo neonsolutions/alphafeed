@@ -69,9 +69,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     return redirectToToday
   }
 
-  const posts = (await getPostsForDate(dateObj))?.sort(
-    (a: IFeedPost, b: IFeedPost) => b.scores.significance - a.scores.significance,
-  )
+  const posts = await getPostsForDate(dateObj)
 
   console.log(JSON.stringify(posts?.slice(0, 5)))
 

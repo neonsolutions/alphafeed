@@ -48,31 +48,33 @@ export async function getPostsForDate(date: Date): Promise<IFeedPost[] | undefin
 }
 
 function parseFeedItems(feedItems: feed_items_with_scores[]): IFeedPost[] {
-  const parsedPosts: IFeedPost[] = feedItems.map((post) => {
-    const scores = post.scores! // Filtering out nulls
-    const significance = (scores.impact + scores.novelty + scores.relevance) / 3
+  const parsedPosts: IFeedPost[] = feedItems
+    .map((post) => {
+      const scores = post.scores! // Filtering out nulls
+      const significance = Math.round(((scores.impact + scores.novelty + scores.relevance) / 3) * 10) / 10
 
-    const media = extractMediaSources(post.description_raw)
-    const externalLinks = extractLinks(post.description_raw).filter((link) => !media.includes(link))
+      const media = extractMediaSources(post.description_raw)
+      const externalLinks = extractLinks(post.description_raw).filter((link) => !media.includes(link))
 
-    return {
-      title: post.title || post.title_raw,
-      body: post.description || post.description_raw,
-      significance: significance,
-      scores: {
-        significance,
-        relevance: scores.relevance,
-        impact: scores.impact,
-        novelty: scores.novelty,
-        reliability: scores.reliability,
-      },
-      media: media,
-      externalLinks: externalLinks,
-      source: SourceType.Twitter,
-      link: post.link,
-      publishedAt: post.published.toISOString(),
-    }
-  })
+      return {
+        title: post.title || post.title_raw,
+        body: post.description || post.description_raw,
+        significance: significance,
+        scores: {
+          significance,
+          relevance: scores.relevance,
+          impact: scores.impact,
+          novelty: scores.novelty,
+          reliability: scores.reliability,
+        },
+        media: media,
+        externalLinks: externalLinks,
+        source: SourceType.Twitter,
+        link: post.link,
+        publishedAt: post.published.toISOString(),
+      }
+    })
+    .sort((a: IFeedPost, b: IFeedPost) => b.scores.significance - a.scores.significance)
 
   return parsedPosts
 }
