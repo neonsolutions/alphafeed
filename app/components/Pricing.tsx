@@ -108,7 +108,7 @@ export default function Pricing({
           Yearly
         </span>
       </div>
-      <div className="mx-auto max-w-3xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-[840px]">
+      <div className="mx-auto max-w-3xl rounded-3xl ring-1 ring-gray-200 dark:ring-gray-900 lg:mx-0 lg:flex lg:max-w-[840px]">
         <div className="p-8 sm:p-10 lg:flex-auto sm:max-w-[550px]">
           <h3 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-2xl">
             All-Access Subscription
@@ -134,7 +134,7 @@ export default function Pricing({
           </ul>
         </div>
         <div className="-mt-2 p-2 lg:mt-0 lg:min-w-[300px] lg:max-w-md lg:flex-shrink-0 ">
-          <div className="rounded-2xl bg-gray-50 dark:bg-gray-900 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16 h-full ">
+          <div className="rounded-2xl bg-gray-50 dark:bg-gray-950 py-10 text-center ring-1 ring-inset ring-gray-900/5  lg:flex lg:flex-col lg:justify-center lg:py-16 h-full ">
             <div className="mx-auto max-w-xs px-8 w-full">
               <div className="flex w-full justify-center">
                 <p className="text-base font-semibold text-gray-600  dark:text-gray-300">

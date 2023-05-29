@@ -105,7 +105,7 @@ const Feed = ({ posts }: { posts: IFeedPost[] }) => {
       <Head>
         <title>Feed - Alpha Feed</title>
       </Head>
-      <div>
+      <div className="bg-white dark:bg-black">
         <div className="relative isolate px-6 pt-14 sm:pt-20 lg:px-8 w-full flex justify-center pb-32 ">
           <div
             className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -121,7 +121,7 @@ const Feed = ({ posts }: { posts: IFeedPost[] }) => {
           </div>
           <div className="w-full max-w-[500px] ">
             <div className="flex justify-between pb-6">
-              <h1 className="text-2xl font-bold  text-gray-900 sm:text-4xl">The latest in AI</h1>
+              <h1 className="text-2xl font-bold  text-gray-900 dark:text-white sm:text-4xl">The latest in AI</h1>
               <div className="flex justify-between items-center transition-transform">
                 <button
                   onClick={() => {
