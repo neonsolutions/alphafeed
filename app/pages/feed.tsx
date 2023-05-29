@@ -1,13 +1,12 @@
+import { ArrowSmallLeftIcon, ArrowSmallRightIcon } from "@heroicons/react/24/solid"
 import { GetServerSidePropsContext } from "next"
-import { useEffect } from "react"
 import { getServerSession } from "next-auth"
 import Head from "next/head"
+import { useRouter } from "next/router"
 import FeedCard from "../components/FeedCard"
 import { IFeedPost } from "../interfaces/IFeedPost"
 import { getPostsForDate } from "../lib/feed"
 import { authOptions } from "./api/auth/[...nextauth]"
-import { ArrowSmallRightIcon, ArrowSmallLeftIcon } from "@heroicons/react/24/solid"
-import { useRouter } from "next/router"
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const session = await getServerSession(context.req, context.res, authOptions)
@@ -42,6 +41,13 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     date = new Date().toISOString().split("T")[0]
   }
 
+  const redirectToToday = {
+    redirect: {
+      destination: `/feed?date=${date}`,
+      permanent: false,
+    },
+  }
+
   let dateObj
   try {
     dateObj = new Date(date)
@@ -50,10 +56,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     }
   } catch (error) {
     console.error("Invalid date provided:", date)
-    date = new Date().toISOString().split("T")[0] // Set date to current date
-    dateObj = new Date(date)
-    context.res.writeHead(302, { Location: `/feed?date=${date}` })
-    context.res.end()
+    return redirectToToday
   }
 
   let currentDate = new Date()
@@ -63,11 +66,12 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     console.log("Future date provided, reverting to current date:", date)
     date = currentDate.toISOString().split("T")[0] // Set date to current date
     dateObj = new Date(date)
-    context.res.writeHead(302, { Location: `/feed?date=${date}` })
-    context.res.end()
+    return redirectToToday
   }
 
-  const posts = await getPostsForDate(dateObj)
+  const posts = (await getPostsForDate(dateObj))?.sort(
+    (a: IFeedPost, b: IFeedPost) => b.scores.significance - a.scores.significance,
+  )
 
   if (!posts) {
     return { props: { posts: [], session } }
