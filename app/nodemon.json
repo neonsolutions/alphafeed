@@ -1,5 +1,5 @@
 {
-  "watch": ["email.hbs"],
+  "watch": ["emails", "scripts/live-handlebars.ts"],
   "ext": ".hbs",
   "ignore": [],
   "exec": "ts-node --compiler-options {\\\"module\\\":\\\"CommonJS\\\"} scripts/live-handlebars.ts"
