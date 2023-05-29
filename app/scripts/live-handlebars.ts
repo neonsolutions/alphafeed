@@ -11,7 +11,7 @@ const posts: IFeedPost[] = [
   {
     title: "New AI system shows remarkable improvement in protein folding predictions",
     body: "A team of researchers developed a deep neural network to predict protein folding with remarkable accuracy and speed, outperforming previous state-of-the-art methods. The research paper describing their method is published in the journal Nature. The team has also shared their code publicly for others to use. A video explaining their work is available.",
-    scores: { significance: 9.333333333333334, relevance: 10, impact: 9, novelty: 9, reliability: 10 },
+    scores: { significance: 9.3, relevance: 10, impact: 9, novelty: 9, reliability: 10 },
     media: ["https://nitter.net/pic/amplify_video_thumb%2F1662844490632052736%2Fimg%2FwC0Qi23gmCWw3Bcx.jpg"],
     externalLinks: ["https://www.nature.com/articles/s41586-023-06094-5#code-availability"],
     source: SourceType.Twitter,
@@ -60,13 +60,16 @@ const posts: IFeedPost[] = [
   },
 ]
 
+const date = "23 May"
+const year = "2023"
+
 app.get("/", (req, res) => {
-  fs.readFile("./email.hbs", "utf8", (err, data) => {
+  fs.readFile("./emailTemplate.hbs", "utf8", (err, data) => {
     if (err) throw err
 
     // Compile and render the template with the test data
     const template = handlebars.compile(data)
-    const html = template({ posts })
+    const html = template({ posts, date, year })
 
     res.send(html)
   })
