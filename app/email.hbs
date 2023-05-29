@@ -12,39 +12,39 @@
     <h1>Your Daily Gist</h1>
     {{#each posts}}
       <div class="post">
-        <div class="post-title">{{this.title}}</div>
-        <div class="post-body">{{this.body}}</div>
+        <div class="post-title">{{title}}</div>
+        <div class="post-body">{{body}}</div>
         <div class="post-scores">
           Significance:
-          {{this.scores.significance}}
+          {{scores.significance}}
           | Relevance:
-          {{this.scores.relevance}}
+          {{scores.relevance}}
           | Impact:
-          {{this.scores.impact}}
+          {{scores.impact}}
           | Novelty:
-          {{this.scores.novelty}}
+          {{scores.novelty}}
           | Reliability:
-          {{this.scores.reliability}}
+          {{scores.reliability}}
         </div>
         {{!-- <div class="post-media">
-          {{#if this.media}}
+          {{#if media}}
             <h3>Media:</h3>
-            {{#each this.media}}
+            {{#each media}}
               <a href="{{this}}">{{this}}</a><br />
             {{/each}}
           {{/if}}
         </div> --}}
         <div class="post-links">
-          {{#if this.externalLinks}}
+          {{#if externalLinks}}
             <h3>External Links:</h3>
-            {{#each this.externalLinks}}
+            {{#each externalLinks}}
               <a href="{{this}}">{{this}}</a><br />
             {{/each}}
           {{/if}}
         </div>
-        <div class="post-source">Source: {{this.source}}</div>
-        <div class="post-link">Link: <a href="{{this.link}}">{{this.link}}</a></div>
-        <div class="post-date">Published At: {{this.publishedAt}}</div>
+        <div class="post-source">Source: {{source}}</div>
+        <div class="post-link">Link: <a href="{{link}}">{{link}}</a></div>
+        <div class="post-date">Published At: {{publishedAt}}</div>
       </div>
     {{/each}}
   </body>
