@@ -73,6 +73,8 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     (a: IFeedPost, b: IFeedPost) => b.scores.significance - a.scores.significance,
   )
 
+  console.log(JSON.stringify(posts?.slice(0, 5)))
+
   if (!posts) {
     return { props: { posts: [], session } }
   }
