@@ -83,7 +83,11 @@ export default function Pricing({
   return (
     <div>
       <div className="w-full flex justify-center pt-10 pb-5">
-        <span className={`ml-3 text-sm pr-3 font-medium  ${!isYearly ? " text-gray-900" : " text-gray-400"}`}>
+        <span
+          className={`ml-3 text-sm pr-3 font-medium  ${
+            !isYearly ? " text-gray-900 dark:text-white" : " text-gray-500 bg:text-gray-100"
+          }`}
+        >
           Monthly
         </span>
         <label className="relative inline-flex items-center cursor-pointer">
@@ -96,14 +100,20 @@ export default function Pricing({
           ></input>
           <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
         </label>
-        <span className={`ml-3 text-sm pr-3 font-medium ${isYearly ? " text-gray-900" : " text-gray-400"}`}>
+        <span
+          className={`ml-3 text-sm pr-3 font-medium ${
+            isYearly ? " text-gray-900 dark:text-white" : " text-gray-500 bg:text-gray-100"
+          }`}
+        >
           Yearly
         </span>
       </div>
-      <div className="mx-auto max-w-3xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-[840px]">
+      <div className="mx-auto max-w-3xl rounded-3xl ring-1 ring-gray-200 dark:ring-gray-900 lg:mx-0 lg:flex lg:max-w-[840px]">
         <div className="p-8 sm:p-10 lg:flex-auto sm:max-w-[550px]">
-          <h3 className="text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">All-Access Subscription</h3>
-          <p className="mt-6 text-base leading-5 text-gray-600">
+          <h3 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-2xl">
+            All-Access Subscription
+          </h3>
+          <p className="mt-6 text-base leading-5 text-gray-600 dark:text-gray-400">
             Unlock the full power of Alpha with our All-Access Subscription. Stay ahead of the AI curve with unlimited
             access to curated content, personalized recommendations, and exclusive features.
           </p>
@@ -113,7 +123,7 @@ export default function Pricing({
           </div>
           <ul
             role="list"
-            className="mt-8 grid grid-cols-1 gap-4 sm:gap-6 text-sm leading-6 text-gray-600 sm:grid-cols-2 "
+            className="mt-8 grid grid-cols-1 gap-4 sm:gap-6 text-sm leading-6 text-gray-600 dark:text-gray-500 sm:grid-cols-2 "
           >
             {includedFeatures.map((feature) => (
               <li key={feature} className="flex gap-x-2">
@@ -124,22 +134,25 @@ export default function Pricing({
           </ul>
         </div>
         <div className="-mt-2 p-2 lg:mt-0 lg:min-w-[300px] lg:max-w-md lg:flex-shrink-0 ">
-          <div className="rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16 h-full ">
+          <div className="rounded-2xl bg-gray-50 dark:bg-gray-950 py-10 text-center ring-1 ring-inset ring-gray-900/5  lg:flex lg:flex-col lg:justify-center lg:py-16 h-full ">
             <div className="mx-auto max-w-xs px-8 w-full">
               <div className="flex w-full justify-center">
-                <p className="text-base font-semibold text-gray-600">{!isYearly ? "Monthly fee" : "Yearly fee"}</p>
+                <p className="text-base font-semibold text-gray-600  dark:text-gray-300">
+                  {!isYearly ? "Monthly fee" : "Yearly fee"}
+                </p>
                 {isYearly && (
                   <span className="flex  items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 ml-2">
                     -{calculateDiscount(monthlyPrice, yearlyPrice)}%
                   </span>
                 )}
               </div>
-
               <p className="mt-6 flex items-baseline justify-center gap-x-2">
-                <span className="text-5xl font-bold tracking-tight text-gray-900">
+                <span className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
                   ${!isYearly ? monthlyPrice : yearlyPrice}
                 </span>
-                <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600">USD</span>
+                <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600 dark:text-gray-400">
+                  USD
+                </span>
               </p>
               <button
                 onClick={() => !hasSubscription && handleCheckout(isYearly ? yearlyPriceId : monthlyPriceId)}
@@ -174,9 +187,11 @@ export default function Pricing({
                 )}
               </button>
 
-              <p className="mt-5 mb-1 text-[14px] leading-5 text-gray-600 font-bold">7 day free trial</p>
+              <p className="mt-5 mb-1 text-[14px] leading-5 text-gray-600 dark:text-gray-400 font-bold">
+                7 day free trial
+              </p>
 
-              <p className=" text-xs leading-5 text-gray-600">Cancle anytime</p>
+              <p className=" text-xs leading-5 text-gray-600 dark:text-gray-400">Cancle anytime</p>
             </div>
           </div>
         </div>

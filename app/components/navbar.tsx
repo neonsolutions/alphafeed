@@ -22,7 +22,12 @@ const postData = async ({ url }: { url: string }) => {
   return res.json()
 }
 
-export default function Navbar() {
+interface INavbar {
+  setDarkMode: (type: boolean) => void
+  darkMode: boolean
+}
+
+export default function Navbar({ darkMode, setDarkMode }: INavbar) {
   const { data: session, status } = useSession()
   const router = useRouter()
   const { asPath } = router
@@ -51,6 +56,9 @@ export default function Navbar() {
             <Image src="/images/logoWithText.svg" alt="logoWithText" className="-m-1.5 p-1.5" height={30} width={100} />
           </Link>
         </div>
+        <button className="text-black z-40" onClick={() => setDarkMode(!darkMode)}>
+          Toggle dark mode
+        </button>
         <div className=" lg:flex lg:flex-1 lg:justify-end z-40">
           {session?.user ? (
             <>

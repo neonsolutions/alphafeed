@@ -4,7 +4,7 @@ import Link from "next/link"
 
 export default function Footer() {
   return (
-    <div className="w-full px-6 lg:px-8 py-6  border-t-2 border-gray-200 bg-gray-100 text-center ">
+    <div className="w-full px-6 lg:px-8 py-6  border-t-2 border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-black/95 text-center ">
       <div className="block justify-center sm:gap-3 gap-1 pt-2 sm:flex">
         <div className="flex gap-1 justify-center sm:pb-0 pb-1">
           <a href="" target="_blank">
