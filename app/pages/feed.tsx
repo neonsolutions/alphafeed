@@ -1,10 +1,13 @@
 import { GetServerSidePropsContext } from "next"
+import { useEffect } from "react"
 import { getServerSession } from "next-auth"
 import Head from "next/head"
 import FeedCard from "../components/FeedCard"
 import { IFeedPost } from "../interfaces/IFeedPost"
 import { getPostsForDate } from "../lib/feed"
 import { authOptions } from "./api/auth/[...nextauth]"
+import { ArrowSmallRightIcon, ArrowSmallLeftIcon } from "@heroicons/react/24/solid"
+import { useRouter } from "next/router"
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const session = await getServerSession(context.req, context.res, authOptions)
@@ -32,7 +35,40 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     }
   }
 
-  const posts = await getPostsForDate(new Date())
+  let date = context.query.date as string
+
+  if (!date) {
+    console.log("Date not provided in query parameters")
+    date = new Date().toISOString().split("T")[0]
+  }
+
+  let dateObj
+  try {
+    dateObj = new Date(date)
+    if (isNaN(dateObj.getTime())) {
+      throw new Error("Invalid date")
+    }
+  } catch (error) {
+    console.error("Invalid date provided:", date)
+    date = new Date().toISOString().split("T")[0] // Set date to current date
+    dateObj = new Date(date)
+    context.res.writeHead(302, { Location: `/feed?date=${date}` })
+    context.res.end()
+  }
+
+  let currentDate = new Date()
+  currentDate.setHours(23, 59, 59, 999) // Set to end of the day
+
+  if (dateObj > currentDate) {
+    console.log("Future date provided, reverting to current date:", date)
+    date = currentDate.toISOString().split("T")[0] // Set date to current date
+    dateObj = new Date(date)
+    context.res.writeHead(302, { Location: `/feed?date=${date}` })
+    context.res.end()
+  }
+
+  const posts = await getPostsForDate(dateObj)
+
   if (!posts) {
     return { props: { posts: [], session } }
   }
@@ -41,15 +77,23 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 }
 
 const Feed = ({ posts }: { posts: IFeedPost[] }) => {
+  const router = useRouter()
+  const { date } = router.query
+
   const getCurrentMonth = (): string => {
     const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"]
-    const currentDate = new Date()
+    const currentDate = date ? new Date(date as string) : new Date()
     return monthNames[currentDate.getMonth()]
   }
 
   const getCurrentDay = (): number => {
-    const currentDate = new Date()
+    const currentDate = date ? new Date(date as string) : new Date()
     return currentDate.getDate()
+  }
+
+  const getCurrentDate = (): string => {
+    const currentDate = new Date()
+    return currentDate.toISOString().split("T")[0]
   }
 
   return (
@@ -74,13 +118,35 @@ const Feed = ({ posts }: { posts: IFeedPost[] }) => {
           <div className="w-full max-w-[500px] ">
             <div className="flex justify-between pb-6">
               <h1 className="text-2xl font-bold  text-gray-900 sm:text-4xl">The latest in AI</h1>
-              <div className="w-10 -mt-1">
-                <div className="h-[18px] bg-indigo-300 rounded-t-md w-full text-center flex justify-center items-center">
-                  <p className="font-bold text-[10px]">{getCurrentMonth()}</p>
+              <div className="flex justify-between items-center transition-transform">
+                <button
+                  onClick={() => {
+                    const currentDate = date ? new Date(date as string) : new Date()
+                    currentDate.setDate(currentDate.getDate() - 1)
+                    router.push(`/feed?date=${currentDate.toISOString().split("T")[0]}`)
+                  }}
+                >
+                  <ArrowSmallLeftIcon className="text-gray-500 hover:text-gray-400 mr-1" width={20} height={20} />
+                </button>
+                <div className="w-10 -mt-1">
+                  <div className="h-[18px] bg-indigo-300 rounded-t-md w-full text-center flex justify-center items-center">
+                    <p className="font-bold text-[10px]">{getCurrentMonth()}</p>
+                  </div>
+                  <div className="h-6 bg-indigo-100 rounded-b-md w-full text-center flex justify-center items-center">
+                    <p className="font-bold text-sm text-gray-900">{getCurrentDay()}</p>
+                  </div>
                 </div>
-                <div className="h-6 bg-indigo-100 rounded-b-md w-full text-center flex justify-center items-center">
-                  <p className="font-bold text-sm text-gray-900">{getCurrentDay()}</p>
-                </div>
+                {getCurrentDate() !== date && (
+                  <button
+                    onClick={() => {
+                      const currentDate = date ? new Date(date as string) : new Date()
+                      currentDate.setDate(currentDate.getDate() + 1)
+                      router.push(`/feed?date=${currentDate.toISOString().split("T")[0]}`)
+                    }}
+                  >
+                    <ArrowSmallRightIcon className="text-gray-500 hover:text-gray-400 ml-1" width={20} height={20} />
+                  </button>
+                )}
               </div>
             </div>
             {posts.length > 0 ? (
