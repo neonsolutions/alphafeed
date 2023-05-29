@@ -1,9 +1,10 @@
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { IPriceIds } from "../interfaces/IPriceIds"
 import infographic from "../public/images/landing/infographic.svg"
 import Pricing from "./Pricing"
+import { useRouter } from "next/router"
 
 export default function landingPage({
   yearlyPriceId,
@@ -11,10 +12,21 @@ export default function landingPage({
   hasSubscription,
 }: IPriceIds & { hasSubscription: boolean }) {
   const [subscriptionType, setSubscriptionType] = useState("monthly")
+  const howItWorksRef = useRef<HTMLDivElement>(null)
+
+  const handleLearnMoreClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
+    if (howItWorksRef.current) {
+      window.scrollTo({
+        top: howItWorksRef.current.offsetTop,
+        behavior: "smooth",
+      })
+    }
+  }
 
   return (
     <div>
-      <div className="bg-white z-0 h-screen">
+      <div className="bg-white z-0 h-[90vh]">
         <div className="relative isolate px-6 pt-14 lg:px-8">
           <div
             className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -28,7 +40,7 @@ export default function landingPage({
               }}
             />
           </div>
-          <div className="mx-auto max-w-4xl py-32 sm:py-48 lg:py-56">
+          <div className="mx-auto max-w-4xl flex justify-center items-center h-[70vh]">
             <div className="text-center ">
               <h1 className="text-4xl font-bold leading-tight  text-gray-900 sm:text-6xl">
                 Your AI-Powered News
@@ -49,7 +61,7 @@ export default function landingPage({
                 >
                   Get started
                 </Link>
-                <a href="#" className="text-sm font-semibold leading-6 text-gray-900">
+                <a href="#" onClick={handleLearnMoreClick} className="text-sm font-semibold leading-6 text-gray-900">
                   Learn more
                 </a>
               </div>
@@ -70,7 +82,10 @@ export default function landingPage({
         </div>
       </div>
       {/* How It Works */}
-      <div className="bg-white w-full py-32  border-t-2 border-gray-200 z-10 relative text-black h-full flex justify-center">
+      <div
+        ref={howItWorksRef}
+        className="bg-white w-full py-32  border-t-2 border-gray-200 z-10 relative text-black h-full flex justify-center"
+      >
         <div className="grid grid-cols-1 sm:grid-cols-2 w-full max-w-4xl">
           <div className="flex justify-center items-start px-6 order-2 sm:order-1 sm:pt-0 pt-14">
             <Image src={infographic} alt="infographic"></Image>
