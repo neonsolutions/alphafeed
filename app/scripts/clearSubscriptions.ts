@@ -1,7 +1,7 @@
 import dotenv from "dotenv"
 dotenv.config()
 
-import { stripe } from "../utils/stripe"
+import { stripe } from "../lib/stripe"
 
 export async function cancelAllSubscriptions(): Promise<void> {
   try {

@@ -1,5 +1,5 @@
 import { NextApiHandler } from "next"
-import { stripe } from "../../../utils/stripe"
+import { stripe } from "../../../lib/stripe"
 import { createOrRetrieveCustomer } from "../../../utils/stripe-helpers"
 import { getServerSession } from "next-auth"
 import { authOptions } from "../auth/[...nextauth]"

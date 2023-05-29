@@ -1,5 +1,5 @@
-import { prisma } from "../lib/db"
-import { stripe } from "./stripe"
+import { prisma } from "./prisma"
+import { stripe } from "../lib/stripe"
 
 export async function createOrRetrieveCustomer(userEmail: string) {
   const user = await prisma.user.findUnique({

@@ -1,11 +1,9 @@
-import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import Footer from "./footer"
+import { useState } from "react"
+import { IPriceIds } from "../interfaces/IPriceIds"
 import infographic from "../public/images/landing/infographic.svg"
 import Pricing from "./Pricing"
-import { IPriceIds } from "../interfaces/IPriceIds"
-import { prisma } from "../lib/db"
 
 export default function landingPage({
   yearlyPriceId,
