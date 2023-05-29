@@ -108,7 +108,7 @@ export default function landingPage({
             monthlyPriceId={monthlyPriceId}
             monthlyPrice={2}
             yearlyPriceId={yearlyPriceId}
-            yearlyPrice={16}
+            yearlyPrice={20}
             setSubscriptionType={setSubscriptionType}
             hasSubscription={hasSubscription}
           />
