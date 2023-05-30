@@ -4,6 +4,7 @@ import type { AppProps } from "next/app"
 import { SessionProvider } from "next-auth/react"
 import Head from "next/head"
 import { ThemeProvider } from "next-themes"
+import Script from "next/script"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -18,6 +19,19 @@ function MyApp({ Component, pageProps }: AppProps) {
       <div className="flex flex-col min-h-screen h-full ">
         <SessionProvider session={pageProps.session}>
           <Layout>
+            <Script
+              strategy="lazyOnload"
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+            />
+            <Script id="ga-analytics">
+              {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+          `}
+            </Script>
             <Component {...pageProps} />
           </Layout>
         </SessionProvider>
