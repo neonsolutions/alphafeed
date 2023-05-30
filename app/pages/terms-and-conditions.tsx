@@ -6,7 +6,7 @@ export default function TermsAndConditions() {
       <Head>
         <title>Terms - Alpha Feed</title>
       </Head>
-      <div className="text-gray-900  dark:text-gray-200 w-full flex justify-center pb-14">
+      <div className="text-gray-900   w-full flex justify-center pb-14">
         <div className="p-6 max-w-2xl">
           <h1 className="text-3xl font-bold pb-3 pt-7">Terms and Conditions</h1>
 
