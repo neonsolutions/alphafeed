@@ -105,7 +105,7 @@ const Feed = ({ posts }: { posts: IFeedPost[] }) => {
       <Head>
         <title>Feed - Alpha Feed</title>
       </Head>
-      <div className="bg-white dark:bg-black">
+      <div className="">
         <div className="relative isolate px-6 pt-14 sm:pt-20 lg:px-8 w-full flex justify-center pb-32 ">
           <div
             className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -130,13 +130,17 @@ const Feed = ({ posts }: { posts: IFeedPost[] }) => {
                     router.push(`/feed?date=${currentDate.toISOString().split("T")[0]}`)
                   }}
                 >
-                  <ArrowSmallLeftIcon className="text-gray-500 hover:text-gray-400 mr-1" width={20} height={20} />
+                  <ArrowSmallLeftIcon
+                    className="text-gray-500 dark:text-gray-300 dark:hover:text-gray-100 hover:text-gray-400 mr-1"
+                    width={20}
+                    height={20}
+                  />
                 </button>
-                <div className="w-10 -mt-1">
-                  <div className="h-[18px] bg-indigo-300 rounded-t-md w-full text-center flex justify-center items-center">
+                <div className="w-10 -mt-1  transition-colors duration-500">
+                  <div className="h-[18px] bg-indigo-300 dark:bg-[#6D467B] rounded-t-md w-full text-center flex justify-center items-center">
                     <p className="font-bold text-[10px]">{getCurrentMonth()}</p>
                   </div>
-                  <div className="h-6 bg-indigo-100 rounded-b-md w-full text-center flex justify-center items-center">
+                  <div className="h-6 bg-indigo-100 dark:bg-[#B8A3CC] rounded-b-md w-full text-center flex justify-center items-center">
                     <p className="font-bold text-sm text-gray-900">{getCurrentDay()}</p>
                   </div>
                 </div>
@@ -148,7 +152,11 @@ const Feed = ({ posts }: { posts: IFeedPost[] }) => {
                       router.push(`/feed?date=${currentDate.toISOString().split("T")[0]}`)
                     }}
                   >
-                    <ArrowSmallRightIcon className="text-gray-500 hover:text-gray-400 ml-1" width={20} height={20} />
+                    <ArrowSmallRightIcon
+                      className="text-gray-500 dark:text-gray-300 dark:hover:text-gray-100 hover:text-gray-400 ml-1"
+                      width={20}
+                      height={20}
+                    />
                   </button>
                 )}
               </div>

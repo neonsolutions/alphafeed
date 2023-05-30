@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/router"
-import { UserCircleIcon, HomeIcon } from "@heroicons/react/24/outline"
+import { UserCircleIcon, SunIcon, MoonIcon } from "@heroicons/react/24/outline"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { signOut } from "next-auth/react"
@@ -73,10 +73,11 @@ export default function Navbar({ theme, setTheme }: { theme: any; setTheme: any 
             />
           </Link>
         </div>
-        <button className="text-black z-40 dark:text-white" onClick={switchTheme}>
-          {buttonText}
-        </button>
         <div className=" lg:flex lg:flex-1 lg:justify-end z-40">
+          <button className="mr-2" onClick={switchTheme}>
+            <SunIcon className=" dark:block hidden pt-[1px]" width={24}></SunIcon>
+            <MoonIcon className=" dark:hidden block text-black pt-[1px]" width={20}></MoonIcon>
+          </button>
           {session?.user ? (
             <>
               <div
@@ -84,9 +85,9 @@ export default function Navbar({ theme, setTheme }: { theme: any; setTheme: any 
                 onMouseEnter={() => setDropdownVisible(true)} // Show dropdown on hover
                 onMouseLeave={() => setDropdownVisible(false)} // Hide dropdown on hover exit
               >
-                <UserCircleIcon className="h-6 w-10 text-gray-900" />
+                <UserCircleIcon className="h-6 w-10 text-gray-900 dark:text-white" />
                 {dropdownVisible && ( // Show dropdown if dropdownVisible is true
-                  <div className=" absolute right-8 translate w-32 rounded-md shadow-xl bg-white ring-1 ring-black ring-opacity-5 transition-all ease-out duration-300 transform opacity-100 scale-100 text-gray-900 dark:text-white text-[12px] font-medium">
+                  <div className=" absolute right-8 translate w-32 rounded-md shadow-xl bg-white dark:bg-black ring-1 ring-black dark:ring-gray-800 ring-opacity-5 transition-all ease-out duration-300 transform opacity-100 scale-100 text-gray-900 dark:text-white text-[12px] font-medium">
                     <Link
                       onClick={() => {
                         redirectToCustomerPortal()
@@ -98,7 +99,7 @@ export default function Navbar({ theme, setTheme }: { theme: any; setTheme: any 
                     >
                       <div
                         role="menuitem"
-                        className="flex justify-center items-center py-2 hover:bg-gray-100 rounded-t-md"
+                        className="flex justify-center items-center py-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-t-md"
                       >
                         Manage billing
                       </div>
@@ -113,7 +114,7 @@ export default function Navbar({ theme, setTheme }: { theme: any; setTheme: any 
                     >
                       <div
                         role="menuitem"
-                        className="flex justify-center items-center py-2 hover:bg-gray-100 rounded-b-md"
+                        className="flex justify-center items-center py-2 hover:bg-gray-100  dark:hover:bg-gray-900  rounded-b-md"
                       >
                         Sign out
                       </div>

@@ -31,7 +31,10 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
     return (
       <div className="px-4">
         <div className="h-1 w-full bg-gray-300 rounded-full ">
-          <div className="h-full bg-indigo-700 rounded-full" style={{ width: `${scorePercentage}%` }}></div>
+          <div
+            className="h-full bg-indigo-700 dark:bg-indigo-400 rounded-full"
+            style={{ width: `${scorePercentage}%` }}
+          ></div>
         </div>
       </div>
     )
@@ -68,7 +71,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
   }
 
   return (
-    <div className="my-1">
+    <div className="my-1 transition-colors duration-500">
       {modalOpen && (
         <div
           className="fixed z-10 inset-0 overflow-y-auto"
@@ -79,7 +82,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
           <div className="pt-4 px-4 pb-20 text-center sm:p-0  h-screen ">
             {/* Background overlay */}
             <div
-              className="fixed inset-0 bg-gray-800 bg-opacity-75 transition-opacity z-100"
+              className="fixed inset-0 bg-gray-800  bg-opacity-75 transition-opacity z-100"
               aria-hidden="true"
               onClick={() => setModalOpen(false)}
             ></div>
@@ -102,16 +105,16 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
           </div>
         </div>
       )}
-      <h2 className="text-gray-300 text-[16px] transform -translate-x-44 translate-y-12 w-36 text-right md:block hidden">
+      <h2 className="text-gray-300 dark:text-gray-500 text-[16px] transform -translate-x-44 translate-y-12 w-36 text-right md:block hidden">
         {formatPostDate(new Date(publishedAt))}
       </h2>
       <h2 className="text-gray-300 text-[16px] transform  md:hidden block mt-5 mb-1">
         {formatPostDate(new Date(publishedAt))}
       </h2>
-      <div className=" mx-auto bg-white rounded-2xl border border-gray-200 md:max-w-2xl  p-6 w-full">
+      <div className=" mx-auto bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 md:max-w-2xl  p-6 w-full">
         <div className="flex justify-between items-start pb-4">
           <div className="flex-grow min-width-0">
-            <div className="text-[16px] font-medium text-gray-900 ">{title}</div>
+            <div className="text-[16px] font-medium text-gray-900 dark:text-white">{title}</div>
           </div>
           <div className="flex-shrink-0 flex gap-3">
             <div
@@ -119,15 +122,28 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
               onMouseEnter={() => setDropdownVisible(true)} // Show dropdown on hover
               onMouseLeave={() => setDropdownVisible(false)} // Hide dropdown on hover exit
             >
-              <button className="inline-flex items-center rounded-md bg-gray-100 hover:bg-indigo-100 px-3 py-1 text-xs font-bold text-indigo-700 ring-1 ring-inset ring-indigo-700/30 min-w-[53px]">
+              <button className="inline-flex items-center rounded-md bg-gray-100 dark:bg-gray-800 hover:bg-indigo-100 px-3 py-1 text-xs font-bold text-indigo-700 dark:text-indigo-400 ring-1 ring-inset ring-indigo-700/30 dark:ring-indigo-400/70 min-w-[53px]">
                 {scores.significance.toFixed(1)}
-                <Image alt="downIcon" width={8} height={8} src="/images/feedCard/down.svg" className="ml-1" />
+                <Image
+                  alt="downIcon"
+                  width={8}
+                  height={8}
+                  src="/images/feedCard/down.svg"
+                  className="ml-1 dark:hidden"
+                />
+                <Image
+                  alt="downIcon"
+                  width={8}
+                  height={8}
+                  src="/images/feedCard/downDark.svg"
+                  className="ml-1 dark:block hidden"
+                />
               </button>
               {dropdownVisible && ( // Show dropdown if dropdownVisible is true
-                <div className="origin-top-right z-50 absolute -left-10  top-6 w-32 rounded-md shadow-xl bg-white ring-1 ring-black ring-opacity-5 transition-all ease-out duration-300 transform opacity-100 scale-100">
+                <div className="origin-top-right z-50 absolute -left-10  top-6 w-32 rounded-md shadow-xl bg-white dark:bg-gray-800 ring-1 ring-black dark:ring-gray-700 ring-opacity-5 transition-all ease-out duration-300 transform opacity-100 scale-100">
                   <div className="py-1 pb-4" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                     <p
-                      className="flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
+                      className="flex justify-between items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300"
                       role="menuitem"
                     >
                       <span>Relevance:</span>
@@ -135,7 +151,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
                     </p>
                     {renderScoreBar(scores.relevance)}
                     <p
-                      className="flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
+                      className="flex justify-between items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300"
                       role="menuitem"
                     >
                       <span>Impact:</span>
@@ -143,7 +159,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
                     </p>
                     {renderScoreBar(scores.impact)}
                     <p
-                      className="flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
+                      className="flex justify-between items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300"
                       role="menuitem"
                     >
                       <span>Novelty:</span>
@@ -151,7 +167,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
                     </p>
                     {renderScoreBar(scores.novelty)}
                     <p
-                      className="flex justify-between items-center px-4 py-2 text-sm text-gray-700 hover:text-gray-900"
+                      className="flex justify-between items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300"
                       role="menuitem"
                     >
                       <span>Reliability:</span>
@@ -167,7 +183,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
             </a>
           </div>
         </div>
-        <p className="text-gray-500 text-sm pb-4">{body}</p>
+        <p className="text-gray-500 dark:text-gray-300 text-sm pb-4">{body}</p>
         {media && (
           <div className="flex overflow-x-scroll space-x-4 pb-4 ">
             {media.map((url, index) => {
@@ -179,7 +195,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
                       key={index}
                       src={url}
                       alt={`media ${index}`}
-                      className="rounded-lg max-h-32 cursor-pointer border border-gray-200 "
+                      className="rounded-lg max-h-32 cursor-pointer border border-gray-200 dark:border-gray-800"
                       onClick={() => {
                         setModalMedia(url)
                         setModalOpen(true)
@@ -193,7 +209,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
                     <video
                       key={index}
                       src={url}
-                      className="rounded-lg max-h-32 cursor-pointer border border-gray-200 "
+                      className="rounded-lg max-h-32 cursor-pointer border border-gray-200 dark:border-gray-800"
                       controls
                       onClick={() => {
                         setModalMedia(url)
@@ -210,7 +226,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
           <div className="flex gap-2 overflow-y-scroll w-full">
             {externalLinks.map((link, index) => (
               <a href={link} target="_blank" key={"externalLink" + index}>
-                <button className="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 hover:underline">
+                <button className="inline-flex items-center rounded-md bg-gray-50 dark:bg-black px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 dark:ring-gray-800 hover:underline">
                   <img
                     className="py-1 h-5 pr-1 "
                     src={`http://www.google.com/s2/favicons?domain_url=${link}`}
