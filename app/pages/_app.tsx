@@ -15,6 +15,22 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
         <link rel="icon" href="/favicon.svg" type="image/svg+xml"></link>
         <link rel="apple-touch-icon" href="/apple-touch-icon.png"></link>
+
+        <meta property="og:title" content="Alpha Feed" />
+        <meta
+          property="og:description"
+          content="Cut out the noise and surface the most significant Machine Learning content of the day."
+        />
+        <meta property="og:image" content="https://alphafeed.xyz/public/images/twitter-card.png" />
+        <meta property="og:url" content="https://alphafeed.xyz/" />
+
+        <meta name="twitter:title" content="Alpha Feed" />
+        <meta
+          name="twitter:description"
+          content="Cut out the noise and surface the most significant Machine Learning content of the day."
+        />
+        <meta name="twitter:image" content="https://alphafeed.xyz/public/images/twitter-card.png" />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <div className="flex flex-col min-h-screen h-full ">
         <SessionProvider session={pageProps.session}>
