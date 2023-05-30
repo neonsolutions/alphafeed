@@ -46,8 +46,7 @@ export default function landingPage({
               </h1>
               <div className="flex justify-center w-full">
                 <p className="mt-10 text-lg max-w-m leading-normal  text-gray-600 dark:text-gray-500">
-                  Cut out the noise and surface the most significant Machine Learning content of the day, which is also
-                  delivered to your inbox.
+                  Cut out the noise and surface the most significant Machine Learning content of the day.
                 </p>
               </div>
               <div className="mt-10 flex items-center justify-center gap-x-6">
