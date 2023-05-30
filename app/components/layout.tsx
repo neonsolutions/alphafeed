@@ -1,7 +1,8 @@
 import Footer from "./footer"
 import Navbar from "./navbar"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useLayoutEffect } from "react"
 import { DM_Sans } from "next/font/google"
+import { useTheme } from "next-themes"
 
 const dmSans = DM_Sans({
   weight: ["400", "500", "700"],
@@ -9,30 +10,23 @@ const dmSans = DM_Sans({
 })
 
 export default function Layout({ children }: { children: React.ReactNode }) {
-  const [darkMode, setDarkMode] = useState<boolean>(false)
+  const { theme, setTheme, resolvedTheme } = useTheme()
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("darkMode") === "true"
+    }
+    return false
+  })
 
   useEffect(() => {
-    if (localStorage.getItem("darkMode") === "true") {
-      setDarkMode(true)
-    }
+    setTheme(localStorage.getItem("theme") || "light")
   }, [])
-
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark")
-      localStorage.setItem("darkMode", "true")
-    } else {
-      document.documentElement.classList.remove("dark")
-      localStorage.setItem("darkMode", "false")
-    }
-  }, [darkMode])
 
   const mainClass = " flex flex-col min-h-screen overflow-hidden"
 
   return (
     <div className={darkMode ? "dark " + mainClass : mainClass}>
-      <Navbar darkMode={darkMode} setDarkMode={(mode: boolean) => setDarkMode(mode)} />
-
+      <Navbar theme={resolvedTheme} setTheme={setTheme} />
       <main className={dmSans.className + " flex-grow "}>{children}</main>
       <Footer />
     </div>

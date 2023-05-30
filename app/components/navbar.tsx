@@ -3,7 +3,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { UserCircleIcon, HomeIcon } from "@heroicons/react/24/outline"
 import { useSession } from "next-auth/react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { signOut } from "next-auth/react"
 
 const postData = async ({ url }: { url: string }) => {
@@ -22,18 +22,22 @@ const postData = async ({ url }: { url: string }) => {
   return res.json()
 }
 
-interface INavbar {
-  setDarkMode: (type: boolean) => void
-  darkMode: boolean
-}
-
-export default function Navbar({ darkMode, setDarkMode }: INavbar) {
+export default function Navbar({ theme, setTheme }: { theme: any; setTheme: any }) {
   const { data: session, status } = useSession()
   const router = useRouter()
   const { asPath } = router
   const [dropdownVisible, setDropdownVisible] = useState(false) // New state
-
+  const [buttonText, setButtonText] = useState("Switch to dark mode")
   const loading = status === "loading"
+
+  useEffect(() => {
+    setButtonText(`Switch to ${theme === "dark" ? "light" : "dark"} mode`)
+  }, [theme])
+
+  const switchTheme = () => {
+    setTheme(theme === "dark" ? "light" : "dark")
+    localStorage.setItem("theme", theme === "dark" ? "light" : "dark")
+  }
 
   const redirectToCustomerPortal = async () => {
     // setLoading(true);
@@ -56,8 +60,8 @@ export default function Navbar({ darkMode, setDarkMode }: INavbar) {
             <Image src="/images/logoWithText.svg" alt="logoWithText" className="-m-1.5 p-1.5" height={30} width={100} />
           </Link>
         </div>
-        <button className="text-black z-40" onClick={() => setDarkMode(!darkMode)}>
-          Toggle dark mode
+        <button className="text-black z-40" onClick={switchTheme}>
+          {buttonText}
         </button>
         <div className=" lg:flex lg:flex-1 lg:justify-end z-40">
           {session?.user ? (
