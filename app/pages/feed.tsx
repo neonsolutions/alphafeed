@@ -69,9 +69,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     return redirectToToday
   }
 
-  const posts = await getPostsForDate(dateObj)
-
-  console.log(JSON.stringify(posts?.slice(0, 5)))
+  const posts = await getPostsForDate(dateObj, 20)
 
   if (!posts) {
     return { props: { posts: [], session } }
