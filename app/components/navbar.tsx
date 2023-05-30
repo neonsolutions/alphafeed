@@ -75,7 +75,7 @@ export default function Navbar({ theme, setTheme }: { theme: any; setTheme: any 
         </div>
         <div className="flex justify-end z-40 ">
           <button className="mr-2" onClick={switchTheme}>
-            <SunIcon className=" dark:block hidden pt-[1px]" width={24}></SunIcon>
+            <SunIcon className=" dark:block hidden pt-[1px] text-white" width={24}></SunIcon>
             <MoonIcon className=" dark:hidden block text-black pt-[1px]" width={20}></MoonIcon>
           </button>
           {session?.user ? (
