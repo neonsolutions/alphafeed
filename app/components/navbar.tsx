@@ -57,10 +57,23 @@ export default function Navbar({ theme, setTheme }: { theme: any; setTheme: any 
       <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div className="flex lg:flex-1 z-40">
           <Link href="/">
-            <Image src="/images/logoWithText.svg" alt="logoWithText" className="-m-1.5 p-1.5" height={30} width={100} />
+            <Image
+              src="/images/logoWithText.svg"
+              alt="logoWithText"
+              className="-m-1.5 p-1.5 dark:hidden"
+              height={30}
+              width={100}
+            />
+            <Image
+              src="/images/logoWithTextDark.svg"
+              alt="logoWithText"
+              className="-m-1.5 p-1.5 hidden dark:block"
+              height={30}
+              width={100}
+            />
           </Link>
         </div>
-        <button className="text-black z-40" onClick={switchTheme}>
+        <button className="text-black z-40 dark:text-white" onClick={switchTheme}>
           {buttonText}
         </button>
         <div className=" lg:flex lg:flex-1 lg:justify-end z-40">
@@ -73,7 +86,7 @@ export default function Navbar({ theme, setTheme }: { theme: any; setTheme: any 
               >
                 <UserCircleIcon className="h-6 w-10 text-gray-900" />
                 {dropdownVisible && ( // Show dropdown if dropdownVisible is true
-                  <div className=" absolute right-8 translate w-32 rounded-md shadow-xl bg-white ring-1 ring-black ring-opacity-5 transition-all ease-out duration-300 transform opacity-100 scale-100 text-gray-900 text-[12px] font-medium">
+                  <div className=" absolute right-8 translate w-32 rounded-md shadow-xl bg-white ring-1 ring-black ring-opacity-5 transition-all ease-out duration-300 transform opacity-100 scale-100 text-gray-900 dark:text-white text-[12px] font-medium">
                     <Link
                       onClick={() => {
                         redirectToCustomerPortal()
@@ -112,7 +125,7 @@ export default function Navbar({ theme, setTheme }: { theme: any; setTheme: any 
           ) : router.asPath !== "/login" ? (
             <div>
               <Link href="/login">
-                <div className="text-sm font-semibold leading-6 text-gray-900">
+                <div className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
                   Log in <span aria-hidden="true">&rarr;</span>
                 </div>
               </Link>

@@ -108,7 +108,7 @@ export default function Pricing({
           Yearly
         </span>
       </div>
-      <div className="mx-auto max-w-3xl rounded-3xl ring-1 ring-gray-200 dark:ring-gray-900 lg:mx-0 lg:flex lg:max-w-[840px]">
+      <div className="mx-auto max-w-3xl rounded-3xl ring-1 ring-gray-200 dark:ring-gray-800 lg:mx-0 lg:flex lg:max-w-[840px]">
         <div className="p-8 sm:p-10 lg:flex-auto sm:max-w-[550px]">
           <h3 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-2xl">
             All-Access Subscription

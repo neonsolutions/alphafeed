@@ -2,8 +2,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState, useRef } from "react"
 import { IPriceIds } from "../interfaces/IPriceIds"
-import infographic from "../public/images/landing/infographic.svg"
-import infographicDark from "../public/images/landing/infographicDark.svg"
 import Pricing from "./Pricing"
 import { useRouter } from "next/router"
 
@@ -26,7 +24,7 @@ export default function landingPage({
   }
 
   return (
-    <div className="bg-white dark:bg-black">
+    <div className="bg-white dark:bg-black transition-colors duration-500">
       <div className=" z-0 h-[90vh]">
         <div className="relative isolate px-6 pt-14 lg:px-8">
           <div
@@ -86,12 +84,24 @@ export default function landingPage({
       {/* How It Works */}
       <div
         ref={howItWorksRef}
-        className="bg-white dark:bg-black w-full py-32  border-t-2 border-gray-200 dark:border-gray-800 z-10 relative text-black h-full flex justify-center"
+        className=" w-full py-32  border-t-2 border-gray-200 dark:border-gray-800 z-10 relative text-black h-full flex justify-center"
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 w-full max-w-4xl">
           <div className="flex justify-center items-start px-6 order-2 sm:order-1 sm:pt-0 pt-14">
-            <Image src={infographic} alt="infographic" className="dark:hidden"></Image>
-            <Image src={infographicDark} alt="infographic" className="hidden dark:block"></Image>
+            <Image
+              src="/images/landing/infographic.svg"
+              width={300}
+              height={200}
+              alt="infographic"
+              className="dark:hidden"
+            ></Image>
+            <Image
+              src="/images/landing/infographicDark.svg"
+              width={300}
+              height={200}
+              alt="infographic"
+              className="hidden dark:block"
+            ></Image>
           </div>
           <div className="flex justify-center content-center px-6 order-1 sm:order-2">
             <div>

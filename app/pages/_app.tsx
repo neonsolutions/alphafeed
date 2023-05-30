@@ -15,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml"></link>
         <link rel="apple-touch-icon" href="/apple-touch-icon.png"></link>
       </Head>
-      <div className="flex flex-col min-h-screen h-full">
+      <div className="flex flex-col min-h-screen h-full ">
         <SessionProvider session={pageProps.session}>
           <Layout>
             <Component {...pageProps} />
