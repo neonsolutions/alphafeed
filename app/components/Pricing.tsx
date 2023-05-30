@@ -156,7 +156,7 @@ export default function Pricing({
               </p>
               <button
                 onClick={() => !hasSubscription && handleCheckout(isYearly ? yearlyPriceId : monthlyPriceId)}
-                className="mt-10  w-full rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 flex justify-center items-center"
+                className="mt-10  w-full rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 flex justify-center items-center disabled:bg-gray-400"
                 disabled={hasSubscription}
               >
                 {isLoading ? (
