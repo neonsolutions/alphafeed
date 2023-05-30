@@ -45,9 +45,8 @@ export default function landingPage({
                 From Endless Scrolling to Effortless Knowing.
               </h1>
               <div className="flex justify-center w-full">
-                <p className="mt-10 text-lg max-w-xl leading-normal  text-gray-600 dark:text-gray-500">
-                  Cut out the noise and surface the most significant Machine Learning content of the day, which is also
-                  delivered to your inbox.
+                <p className="mt-10 text-lg max-w-m leading-normal  text-gray-600 dark:text-gray-500">
+                  Cut out the noise and surface the most significant Machine Learning content of the day.
                 </p>
               </div>
               <div className="mt-10 flex items-center justify-center gap-x-6">
@@ -55,7 +54,7 @@ export default function landingPage({
                   href="/feed"
                   className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Get started for $2 a month
+                  {hasSubscription ? "Go to Feed" : "Get started for $2 a month"}
                 </Link>
                 <a
                   href="#"
