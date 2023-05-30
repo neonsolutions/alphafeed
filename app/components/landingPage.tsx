@@ -84,7 +84,7 @@ export default function landingPage({
       {/* How It Works */}
       <div
         ref={howItWorksRef}
-        className=" w-full py-32  border-t-2 border-gray-200 dark:border-gray-800 z-10 relative text-black h-full flex justify-center"
+        className=" w-full py-32  border-t-2 border-gray-200 dark:border-gray-800 z-10 relative text-black h-full flex justify-center transition-colors duration-500 bg-white dark:bg-black"
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 w-full max-w-4xl">
           <div className="flex justify-center items-start px-6 order-2 sm:order-1 sm:pt-0 pt-14">

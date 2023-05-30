@@ -7,10 +7,10 @@ export default function Footer() {
     <div className="w-full px-6 lg:px-8 py-6  border-t-2 border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-black/95 text-center transition-colors duration-500">
       <div className="block justify-center sm:gap-3 gap-1 pt-2 sm:flex">
         <div className="flex gap-1 justify-center sm:pb-0 pb-1">
-          <a href="" target="_blank">
+          <a href="mailto:hello@alphafeed.xyz" target="_blank">
             <EnvelopeIcon className="w-[22px] flex-none text-gray-400 mr-2" aria-hidden="true" />
           </a>
-          <a href="" target="_blank">
+          <a href="https://twitter.com/AlphaFeedXYZ" target="_blank">
             <Image src="/images/twitterIcon.svg" alt="Twitter" width={23} height={23} />
           </a>
         </div>

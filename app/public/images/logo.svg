@@ -1,32 +1,26 @@
 <svg width="418" height="419" viewBox="0 0 418 419" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <mask id="mask0_583_25" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="418" height="419">
-    <circle cx="208.979" cy="209.643" r="208.651" fill="#221133" />
-  </mask>
-  <g mask="url(#mask0_583_25)">
-    <circle cx="208.651" cy="209.651" r="208.651" fill="#221133" />
-    <circle cx="209.046" cy="209.695" r="129.827" fill="white" />
-    <circle cx="208.959" cy="209.623" r="75.7327" fill="#221133" />
-    <rect x="314.219" y="133.414" width="275.111" height="53.9951" transform="rotate(55 314.219 133.414)"
-      fill="white" />
-    <rect x="427.785" y="389.75" width="275.111" height="53.9951" transform="rotate(-125 427.785 389.75)"
-      fill="white" />
-    <rect x="427.785" y="389.75" width="275.111" height="53.9951" transform="rotate(-125 427.785 389.75)"
-      fill="white" />
-    <g filter="url(#filter0_f_583_25)">
-      <rect x="326.051" y="154" width="92.4892" height="44.5348" transform="rotate(54.045 326.051 154)"
-        fill="#412162" />
-    </g>
-    <rect x="476.672" y="61.0234" width="275.111" height="53.9951" transform="rotate(125.892 476.672 61.0234)"
-      fill="white" />
-    <path d="M302.215 210.581L269.991 210.581L269.991 164.789L302.215 210.581Z" fill="#221133" />
-    <path d="M302.223 209.998L269.999 209.998L271.5 252.5L302.223 209.998Z" fill="#221133" />
-  </g>
-  <defs>
-    <filter id="filter0_f_583_25" x="243.633" y="107.633" width="183.089" height="193.75" filterUnits="userSpaceOnUse"
-      color-interpolation-filters="sRGB">
-      <feFlood flood-opacity="0" result="BackgroundImageFix" />
-      <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-      <feGaussianBlur stdDeviation="23.1835" result="effect1_foregroundBlur_583_25" />
-    </filter>
-  </defs>
+<mask id="mask0_583_25" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="418" height="419">
+<circle cx="208.979" cy="209.643" r="208.651" fill="#221133"/>
+</mask>
+<g mask="url(#mask0_583_25)">
+<circle cx="208.651" cy="209.651" r="208.651" fill="black"/>
+<circle cx="209.046" cy="209.695" r="129.827" fill="white"/>
+<circle cx="208.959" cy="209.623" r="75.7327" fill="black"/>
+<rect x="314.219" y="133.414" width="275.111" height="53.9951" transform="rotate(55 314.219 133.414)" fill="white"/>
+<rect x="427.785" y="389.75" width="275.111" height="53.9951" transform="rotate(-125 427.785 389.75)" fill="white"/>
+<rect x="427.785" y="389.75" width="275.111" height="53.9951" transform="rotate(-125 427.785 389.75)" fill="white"/>
+<g filter="url(#filter0_f_583_25)">
+<rect x="343.082" y="181.461" width="29.7711" height="53.8507" transform="rotate(45.0205 343.082 181.461)" fill="black"/>
+</g>
+<rect x="476.672" y="61.0234" width="275.111" height="53.9951" transform="rotate(125.892 476.672 61.0234)" fill="white"/>
+<path d="M302.215 210.581L269.991 210.581L269.991 164.789L302.215 210.581Z" fill="black"/>
+<path d="M302.223 209.998L269.999 209.998L271.5 252.5L302.223 209.998Z" fill="black"/>
+</g>
+<defs>
+<filter id="filter0_f_583_25" x="258.625" y="135.094" width="151.867" height="151.859" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="23.1835" result="effect1_foregroundBlur_583_25"/>
+</filter>
+</defs>
 </svg>
