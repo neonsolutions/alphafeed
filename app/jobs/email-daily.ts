@@ -18,7 +18,7 @@ const templatePath = process.env.EMAIL_TEMPLATE_PATH!
 
 async function main() {
   // Fetch posts and subscribed users from the database
-  const posts = await getPostsForDate(new Date())
+  const posts = await getPostsForDate(new Date(), 10)
 
   if (posts === undefined) {
     throw new Error("`posts` is undefined")

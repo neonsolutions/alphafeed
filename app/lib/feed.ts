@@ -7,7 +7,10 @@ type feed_items_with_scores = feed_items & {
   scores: scores | null
 }
 
-export async function getPostsForDate(date: Date): Promise<IFeedPost[] | undefined> {
+export async function getPostsForDate(
+  date: Date,
+  limit: number | undefined = undefined,
+): Promise<IFeedPost[] | undefined> {
   // Create datetime boundaries for start and end of the day
   let start = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 0, 0, 0)
   let end = new Date(date.getFullYear(), date.getMonth(), date.getDate(), 23, 59, 59)
@@ -37,6 +40,7 @@ export async function getPostsForDate(date: Date): Promise<IFeedPost[] | undefin
       include: {
         scores: true,
       },
+      take: limit,
     })
 
     const parsedPosts = parseFeedItems(posts)
