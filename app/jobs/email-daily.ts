@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client"
+import { PrismaClient, User } from "@prisma/client"
 import fs from "fs"
 import handlebars from "handlebars"
 import path from "path"
@@ -45,7 +45,7 @@ async function main() {
     const html = template({ posts, date: dateString })
 
     // Prepare an array of messages
-    const emails: EmailData[] = activeOrTrialingUsers.map((user) => ({
+    const emails: EmailData[] = activeOrTrialingUsers.map((user: User) => ({
       name: user.name ?? "",
       email: user.email!,
     }))
