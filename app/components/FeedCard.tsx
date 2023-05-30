@@ -226,7 +226,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
           <div className="flex gap-2 overflow-y-scroll w-full">
             {externalLinks.map((link, index) => (
               <a href={link} target="_blank" key={"externalLink" + index}>
-                <button className="inline-flex items-center rounded-md bg-gray-50 dark:bg-black px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10 dark:ring-gray-800 hover:underline">
+                <button className="inline-flex items-center rounded-md bg-gray-50 dark:bg-black px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-500 ring-1 ring-inset ring-gray-500/10 dark:ring-gray-800 hover:underline">
                   <img
                     className="py-1 h-5 pr-1 "
                     src={`http://www.google.com/s2/favicons?domain_url=${link}`}

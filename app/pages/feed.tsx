@@ -144,7 +144,7 @@ const Feed = ({ posts }: { posts: IFeedPost[] }) => {
                     <p className="font-bold text-sm text-gray-900">{getCurrentDay()}</p>
                   </div>
                 </div>
-                {getCurrentDate() !== date && (
+                {getCurrentDate() !== date && date && (
                   <button
                     onClick={() => {
                       const currentDate = date ? new Date(date as string) : new Date()
@@ -157,6 +157,7 @@ const Feed = ({ posts }: { posts: IFeedPost[] }) => {
                       width={20}
                       height={20}
                     />
+                    {/* <p>{date + getCurrentDate()}</p> */}
                   </button>
                 )}
               </div>
