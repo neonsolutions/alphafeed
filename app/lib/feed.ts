@@ -70,7 +70,7 @@ function parseFeedItems(feedItems: feed_items_with_scores[]): IFeedPost[] {
         media: media,
         externalLinks: externalLinks,
         source: SourceType.Twitter,
-        link: post.link,
+        link: post.link.replace("nitter.net", "twitter.com"),
         publishedAt: post.published.toISOString(),
       }
     })
