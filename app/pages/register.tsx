@@ -1,3 +1,4 @@
+import { signIn } from "next-auth/react"
 import Head from "next/head"
 import Image from "next/image"
 import Link from "next/link"
@@ -30,7 +31,12 @@ export default function Register() {
           </h2>
         </div>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <GoogleLoginButton style={{ fontSize: "15px" }} onClick={() => {}}>
+          <GoogleLoginButton
+            style={{ fontSize: "15px" }}
+            onClick={() => {
+              signIn("google")
+            }}
+          >
             <span>Register with Google</span>
           </GoogleLoginButton>
           <p className="mt-10 text-center text-sm text-gray-500">
