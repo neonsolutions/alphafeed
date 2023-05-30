@@ -62,14 +62,14 @@ export default function Navbar({ theme, setTheme }: { theme: any; setTheme: any 
               alt="logoWithText"
               className="-m-1.5 p-1.5 dark:hidden"
               height={30}
-              width={100}
+              width={145}
             />
             <Image
               src="/images/logoWithTextDark.svg"
               alt="logoWithText"
               className="-m-1.5 p-1.5 hidden dark:block"
               height={30}
-              width={100}
+              width={145}
             />
           </Link>
         </div>
