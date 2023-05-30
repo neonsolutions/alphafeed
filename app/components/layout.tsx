@@ -22,12 +22,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     setTheme(localStorage.getItem("theme") || "light")
   }, [])
 
-  const mainClass = " flex flex-col min-h-screen overflow-hidden"
+  const mainClass = " flex flex-col min-h-screen overflow-hidden bg-white dark:bg-black  transition-colors duration-500"
 
   return (
-    <div className={darkMode ? "dark " + mainClass : mainClass}>
+    <div className={darkMode ? "dark transition-colors duration-500" + mainClass : mainClass}>
       <Navbar theme={resolvedTheme} setTheme={setTheme} />
-      <main className={dmSans.className + " flex-grow "}>{children}</main>
+      <main className={dmSans.className + " flex-grow  "}>{children}</main>
       <Footer />
     </div>
   )

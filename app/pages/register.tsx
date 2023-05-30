@@ -11,8 +11,21 @@ export default function Register() {
       </Head>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <Image src="/images/logo.svg" alt="logoNoText" className="mx-auto h-10 w-auto" height={30} width={30} />
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <Image
+            src="/images/logo.svg"
+            alt="logoNoText"
+            className="mx-auto h-10 w-auto dark:hidden"
+            height={30}
+            width={30}
+          />
+          <Image
+            src="/images/logoDark.svg"
+            alt="logoNoText"
+            className="mx-auto h-10 w-auto hidden dark:block"
+            height={30}
+            width={30}
+          />
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
             Register an account
           </h2>
         </div>

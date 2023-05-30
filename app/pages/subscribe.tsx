@@ -33,9 +33,11 @@ export default function Subscribe({ priceIds, hasSubscription }: Props & { hasSu
   const [subscriptionType, setSubscriptionType] = useState("monthly")
 
   return (
-    <div className="px-6 lg:px-8 pb-32 pt-24  border-t-2 border-gray-200 flex justify-center ">
+    <div className="px-6 lg:px-8 pb-32 pt-24  border-t-2 border-gray-200 dark:border-gray-800 flex justify-center ">
       <div>
-        <h2 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl text-center">Pricing</h2>
+        <h2 className="text-3xl font-bold leading-tight text-gray-900 dark:text-white sm:text-4xl text-center ">
+          Pricing
+        </h2>
         <Pricing
           monthlyPriceId={priceIds.monthlyPriceId}
           monthlyPrice={2}
