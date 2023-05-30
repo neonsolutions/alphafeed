@@ -42,12 +42,12 @@ export default function landingPage({
           <div className="mx-auto max-w-4xl flex justify-center items-center h-[70vh]">
             <div className="text-center ">
               <h1 className="text-4xl font-bold leading-tight  text-gray-900 dark:text-white sm:text-6xl">
-                Your AI-Powered News
-                <span className=" text-indigo-500 leading-tight"> Aggregator for Everything AI</span>
+                From Endless Scrolling to Effortless Knowing.
               </h1>
               <div className="flex justify-center w-full">
-                <p className="mt-10 text-lg max-w-sm leading-normal  text-gray-600 dark:text-gray-500">
-                  AI moves fast, we keep you up to date and sift through the noise so you don't have to.
+                <p className="mt-10 text-lg max-w-m leading-normal  text-gray-600 dark:text-gray-500">
+                  Cut out the noise and surface the most significant Machine Learning content of the day, which is also
+                  delivered to your inbox.
                 </p>
               </div>
               <div className="mt-10 flex items-center justify-center gap-x-6">
@@ -55,7 +55,7 @@ export default function landingPage({
                   href="/feed"
                   className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Get started
+                  Get started for $2 a month
                 </Link>
                 <a
                   href="#"
@@ -111,18 +111,17 @@ export default function landingPage({
               <div className="max-w-[420px] sm:max-w-[380]">
                 <p className="text-gray-900 dark:text-white font-medium text-lg">Discover</p>
                 <p className="text-gray-600 dark:text-gray-400  text-base">
-                  AI algorithms scan thousands of news sources, blogs, forums, and academic journals, identifying the
-                  latest and most relevant AI news
+                  We ingest content from various curated sources at the cutting edge of machine learning.
                 </p>
-                <p className="text-gray-900 dark:text-white  font-medium text-lg pt-4">Analyse</p>
+                <p className="text-gray-900 dark:text-white  font-medium text-lg pt-4">Analyze</p>
                 <p className="text-gray-600  dark:text-gray-400  text-base">
-                  Our AI evaluates each piece of content, analysing its relevance and insightfulness. It filters out the
-                  noise, leaving only the most valuable information.
+                  Our AI evaluates every piece of content on various metrics from relevance to reliability to determine
+                  its significance.
                 </p>
-                <p className="text-gray-900 dark:text-white font-medium text-lg pt-4">Personalise</p>
+                <p className="text-gray-900 dark:text-white font-medium text-lg pt-4">Feed</p>
                 <p className="text-gray-600 dark:text-gray-400  text-base">
-                  Alpha learns from your reading habits and preferences, tailoring its content curation to your unique
-                  interests. The more you use Alpha
+                  The resulting feed contains the most important developments, saving you hours of endless scrolling
+                  every day.
                 </p>
               </div>
             </div>
