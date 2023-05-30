@@ -1,10 +1,15 @@
+import dotenv from "dotenv"
 import express from "express"
-import handlebars from "handlebars"
 import fs from "fs"
+import handlebars from "handlebars"
+import path from "path"
 import { IFeedPost, SourceType } from "../interfaces/IFeedPost"
+dotenv.config()
 
 const app = express()
 const port = 3001
+
+const templatePath = process.env.EMAIL_TEMPLATE_PATH!
 
 // Test data
 const posts: IFeedPost[] = [
@@ -60,16 +65,17 @@ const posts: IFeedPost[] = [
   },
 ]
 
-const date = "23 May"
-const year = "2023"
+const date = new Date().toLocaleDateString()
+
+console.log(`Template path: ${templatePath}`)
 
 app.get("/", (req, res) => {
-  fs.readFile("./emailTemplate.hbs", "utf8", (err, data) => {
+  fs.readFile(path.join(__dirname, "../", templatePath), "utf8", (err, data) => {
     if (err) throw err
 
     // Compile and render the template with the test data
     const template = handlebars.compile(data)
-    const html = template({ posts, date, year })
+    const html = template({ posts, date })
 
     res.send(html)
   })

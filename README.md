@@ -32,3 +32,29 @@ To listen for stripe webhooks, run the following command:
 ```
 yarn stripe:listen
 ```
+
+## Jobs
+
+### Ingest
+
+Ingest content from RSS feeds.
+
+```
+yarn job:ingest
+```
+
+### Score
+
+Score unscored content.
+
+```
+yarn job:score
+```
+
+### Newsletter
+
+Send out the daily newsletter to subscribers.
+
+```
+yarn job:newsletter
+```
