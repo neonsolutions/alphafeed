@@ -190,7 +190,7 @@ export default function Pricing({
                 7 day free trial
               </p>
 
-              <p className=" text-xs leading-5 text-gray-600 dark:text-gray-400">Cancle anytime</p>
+              <p className=" text-xs leading-5 text-gray-600 dark:text-gray-400">Cancel anytime</p>
             </div>
           </div>
         </div>
