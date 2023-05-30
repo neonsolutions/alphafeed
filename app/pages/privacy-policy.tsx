@@ -6,7 +6,7 @@ export default function PrivacyPolicy() {
       <Head>
         <title>Privacy Policy - Alpha Feed</title>
       </Head>
-      <div className="text-gray-900 w-full flex justify-center pb-14">
+      <div className="text-gray-900 dark:dark:text-gray-200 w-full flex justify-center pb-14">
         <div className="p-6 max-w-2xl">
           <h1 className="text-3xl font-bold pb-3 pt-7">Privacy Policy</h1>
           <p className="pt-3">Last updated: May 25, 2023</p>
