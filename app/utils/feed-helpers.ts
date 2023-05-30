@@ -19,5 +19,5 @@ export function extractMediaSources(text: string): string[] {
 export function extractLinks(text: string): string[] {
   const urlRegex = /https?:\/\/[^"'>\s]+/g
   const matches = text.match(urlRegex)
-  return matches ? matches : []
+  return matches ? matches.map((match) => match.replace("nitter.net", "twitter.com")) : []
 }
