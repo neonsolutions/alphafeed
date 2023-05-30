@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           property="og:description"
           content="Cut out the noise and surface the most significant Machine Learning content of the day."
         />
-        <meta property="og:image" content="https://alphafeed.xyz/public/images/twitter-card.png" />
+        <meta property="og:image" content="https://alphafeed.xyz/images/twitter-card.png" />
         <meta property="og:url" content="https://alphafeed.xyz/" />
 
         <meta name="twitter:title" content="Alpha Feed" />
@@ -29,7 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           name="twitter:description"
           content="Cut out the noise and surface the most significant Machine Learning content of the day."
         />
-        <meta name="twitter:image" content="https://alphafeed.xyz/public/images/twitter-card.png" />
+        <meta name="twitter:image" content="https://alphafeed.xyz/images/twitter-card.png" />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <div className="flex flex-col min-h-screen h-full ">

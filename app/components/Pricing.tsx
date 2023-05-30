@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import { getStripe } from "../utils/stripe-client"
 
-const includedFeatures = ["Access to past articles", "Personalized feed", "Daily summary email", "Priority updates"]
+const includedFeatures = ["AI filtered feed", "Daily summary email", "Priority updates", "Access to past articles"]
 
 interface IPricing {
   monthlyPrice: number
@@ -114,8 +114,7 @@ export default function Pricing({
             All-Access Subscription
           </h3>
           <p className="mt-6 text-base leading-5 text-gray-600 dark:text-gray-400">
-            Unlock the full power of Alpha with our All-Access Subscription. Stay ahead of the AI curve with unlimited
-            access to curated content, personalized recommendations, and exclusive features.
+            Alpha Feed delivers AI-curated, quality content directly to you. No fluff. No noise.
           </p>
           <div className="mt-10 flex items-center gap-x-4">
             <h4 className="flex-none text-sm font-semibold leading-6 text-indigo-500">What’s included</h4>
@@ -134,7 +133,7 @@ export default function Pricing({
           </ul>
         </div>
         <div className="-mt-2 p-2 lg:mt-0 lg:min-w-[300px] lg:max-w-md lg:flex-shrink-0 ">
-          <div className="rounded-2xl bg-gray-50 dark:bg-gray-950 py-10 text-center ring-1 ring-inset ring-gray-900/5  lg:flex lg:flex-col lg:justify-center lg:py-16 h-full ">
+          <div className="rounded-2xl bg-gray-50 dark:bg-gray-950 py-10 text-center ring-1 ring-inset ring-gray-900/5  lg:flex lg:flex-col lg:justify-center lg:py-10 h-full ">
             <div className="mx-auto max-w-xs px-8 w-full">
               <div className="flex w-full justify-center">
                 <p className="text-base font-semibold text-gray-600  dark:text-gray-300">
