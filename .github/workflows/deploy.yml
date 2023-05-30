@@ -1,0 +1,24 @@
+name: "deploy-app"
+
+# yamllint disable-line rule:truthy
+on:
+  push:
+    paths:
+      - app/**
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cloning repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Push to dokku
+        uses: dokku/github-action@master
+        with:
+          git_remote_url: "ssh://dokku@${{secrets.DOKKU_HOST}}:22/alphafeed"
+          ssh_private_key: ${{secrets.DOKKU_SSH_KEY}}
