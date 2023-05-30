@@ -19,7 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   })
 
   useEffect(() => {
-    setTheme(localStorage.getItem("theme") || "light")
+    setTheme(theme || "system")
   }, [])
 
   const mainClass = " flex flex-col min-h-screen overflow-hidden bg-white dark:bg-black  transition-colors duration-500"
