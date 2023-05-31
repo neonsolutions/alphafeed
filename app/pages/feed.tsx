@@ -167,9 +167,17 @@ const Feed = ({ posts }: { posts: IFeedPost[] }) => {
                 ))}
               </div>
             ) : (
-              <h1 className="text-lg text-gray-400 font-medium text-center mt-8">
-                Sorry, no posts passed our filters today.
-              </h1>
+              <>
+                {getCurrentDate() === date ? (
+                  <h1 className="text-lg text-gray-400 font-medium text-center mt-8">
+                    Sorry, no posts passed our filters today.
+                  </h1>
+                ) : (
+                  <h1 className="text-lg text-gray-400 font-medium text-center mt-8">
+                    Sorry, no posts passed our filters on this day.
+                  </h1>
+                )}
+              </>
             )}
           </div>
           <div

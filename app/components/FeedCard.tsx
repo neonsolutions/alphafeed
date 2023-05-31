@@ -57,7 +57,11 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
       return `${Math.floor(diffMin)} min ago`
     } else if (diffHour < 24) {
       // More than an hour but less than a day ago
-      return `${Math.floor(diffHour)} hours ago`
+      if (Math.floor(diffHour) === 1) {
+        return `${Math.floor(diffHour)} hour ago`
+      } else {
+        return `${Math.floor(diffHour)} hours ago`
+      }
     } else {
       // More than a day ago
       // Format the date and time to display dd/mm/yy and time
@@ -114,7 +118,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
       <div className=" mx-auto bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 md:max-w-2xl  p-6 w-full">
         <div className="flex justify-between items-start pb-4">
           <div className="flex-grow min-width-0">
-            <div className="text-[16px] font-medium text-gray-900 dark:text-white">{title}</div>
+            <div className="text-[16px] font-medium text-gray-900 dark:text-white pr-[8px]">{title}</div>
           </div>
           <div className="flex-shrink-0 flex gap-3">
             <div
@@ -185,7 +189,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
         </div>
         <p className="text-gray-500 dark:text-gray-300 text-sm pb-4">{body}</p>
         {media && (
-          <div className="flex overflow-x-scroll space-x-4 pb-4 ">
+          <div className="flex overflow-auto space-x-4 pb-4 ">
             {media.map((url, index) => {
               const isImage = [".jpeg", ".jpg", ".gif", ".png"].some((extension) => url.includes(extension))
               return isImage ? (
