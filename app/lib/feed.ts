@@ -32,7 +32,7 @@ export async function getPostsForDate(
           },
           {
             scores: {
-              relevance: { gt: 8 },
+              relevance: { gt: 7 },
             },
           },
         ],
@@ -40,10 +40,10 @@ export async function getPostsForDate(
       include: {
         scores: true,
       },
-      take: limit,
+      take: limit ? limit * 2 : undefined,
     })
 
-    const parsedPosts = parseFeedItems(posts)
+    const parsedPosts = parseFeedItems(posts, limit)
 
     return parsedPosts
   } catch (error) {
@@ -51,7 +51,7 @@ export async function getPostsForDate(
   }
 }
 
-function parseFeedItems(feedItems: feed_items_with_scores[]): IFeedPost[] {
+function parseFeedItems(feedItems: feed_items_with_scores[], limit: number | undefined = undefined): IFeedPost[] {
   const parsedPosts: IFeedPost[] = feedItems
     .map((post) => {
       const scores = post.scores! // Filtering out nulls
@@ -82,6 +82,7 @@ function parseFeedItems(feedItems: feed_items_with_scores[]): IFeedPost[] {
       }
     })
     .sort((a: IFeedPost, b: IFeedPost) => b.scores.significance - a.scores.significance)
+    .slice(0, limit || feedItems.length)
 
   return parsedPosts
 }
