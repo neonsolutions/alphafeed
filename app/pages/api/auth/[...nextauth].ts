@@ -23,6 +23,8 @@ export const authOptions: NextAuthOptions = {
           dbUser?.stripeSubscriptionStatus === "active" || dbUser?.stripeSubscriptionStatus === "trialing"
             ? true
             : false
+
+        session.user.optedOutNewsletter = dbUser?.optedOutNewsletter
       }
       return session
     },

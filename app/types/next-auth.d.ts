@@ -6,8 +6,11 @@ declare module "next-auth" {
    */
   interface Session {
     user?: {
-      /** The user's postal address. */
+      // Is the user paying for a subscription
       hasActiveSubscription: boolean
+
+      // Is the user subscribed to the newsletter
+      optedOutNewsletter: boolean
     } & DefaultSession["user"]
   }
 }

@@ -18,19 +18,28 @@ const templatePath = process.env.EMAIL_TEMPLATE_PATH!
 
 async function main() {
   // Fetch posts and subscribed users from the database
-  const posts = await getPostsForDate(new Date(), 10)
+  const postsDate = new Date()
+  // Update to yesterday
+  postsDate.setDate(postsDate.getDate() - 1)
+
+  console.log(`Fetching posts for ${postsDate.toLocaleDateString()}`)
+
+  const posts = await getPostsForDate(postsDate, 10)
 
   if (posts === undefined) {
     throw new Error("`posts` is undefined")
   }
 
-  const activeOrTrialingUsers = await prisma.user.findMany({
+  const eligibleUsers = await prisma.user.findMany({
     where: {
-      OR: [{ stripeSubscriptionStatus: "active" }, { stripeSubscriptionStatus: "trialing" }],
+      AND: [
+        { OR: [{ stripeSubscriptionStatus: "active" }, { stripeSubscriptionStatus: "trialing" }] },
+        { optedOutNewsletter: false },
+      ],
     },
   })
 
-  console.log(`Sending emails to ${activeOrTrialingUsers.length} users`)
+  console.log(`Sending emails to ${eligibleUsers.length} users`)
 
   // Read the Handlebars template
   fs.readFile(path.join(__dirname, "..", templatePath), "utf8", (err, templateString) => {
@@ -39,13 +48,13 @@ async function main() {
     // Compile the template
     const template = handlebars.compile(templateString)
 
-    const dateString = new Date().toLocaleDateString()
+    const dateString = postsDate.toLocaleDateString()
 
     // Generate HTML using the fetched posts
     const html = template({ posts, date: dateString })
 
     // Prepare an array of messages
-    const emails: EmailData[] = activeOrTrialingUsers.map((user: User) => ({
+    const emails: EmailData[] = eligibleUsers.map((user: User) => ({
       name: user.name ?? "",
       email: user.email!,
     }))
@@ -59,6 +68,11 @@ async function main() {
       subject: `Daily Digest for ${dateString}`,
       html,
       text: generatePlainText(posts),
+    }
+
+    if (process.env.MOCK) {
+      console.log("MOCK MODE: not sending emails")
+      return
     }
 
     // Send the emails
