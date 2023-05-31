@@ -54,7 +54,7 @@ export default function landingPage({
                   href="/feed"
                   className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  {hasSubscription ? "Go to Feed" : "Get started for $2 a month"}
+                  {hasSubscription ? "Go to Feed" : "Start your 7-day free trial"}
                 </Link>
                 <a
                   href="#"
