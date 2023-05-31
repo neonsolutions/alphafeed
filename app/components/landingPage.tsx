@@ -136,9 +136,9 @@ export default function landingPage({
           </h2>
           <Pricing
             monthlyPriceId={monthlyPriceId}
-            monthlyPrice={2}
+            monthlyPrice={2.5}
             yearlyPriceId={yearlyPriceId}
-            yearlyPrice={20}
+            yearlyPrice={25}
             setSubscriptionType={setSubscriptionType}
             hasSubscription={hasSubscription}
           />

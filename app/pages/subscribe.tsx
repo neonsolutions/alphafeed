@@ -40,9 +40,9 @@ export default function Subscribe({ priceIds, hasSubscription }: Props & { hasSu
         </h2>
         <Pricing
           monthlyPriceId={priceIds.monthlyPriceId}
-          monthlyPrice={2}
+          monthlyPrice={2.5}
           yearlyPriceId={priceIds.yearlyPriceId}
-          yearlyPrice={20}
+          yearlyPrice={25}
           setSubscriptionType={setSubscriptionType}
           hasSubscription={hasSubscription}
         />
