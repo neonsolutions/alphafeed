@@ -32,7 +32,7 @@ const Home: NextPage<Props & { hasSubscription: boolean }> = ({ priceIds, hasSub
   return (
     <>
       <Head>
-        <title>Home - Alpha Feed</title>
+        <title>Alpha Feed</title>
       </Head>
       <LandingPage {...priceIds} hasSubscription={hasSubscription} />
     </>

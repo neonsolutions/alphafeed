@@ -25,14 +25,8 @@ const postData = async ({ url }: { url: string }) => {
 export default function Navbar({ theme, setTheme }: { theme: any; setTheme: any }) {
   const { data: session, status } = useSession()
   const router = useRouter()
-  const { asPath } = router
   const [dropdownVisible, setDropdownVisible] = useState(false) // New state
-  const [buttonText, setButtonText] = useState("Switch to dark mode")
-  const loading = status === "loading"
-
-  useEffect(() => {
-    setButtonText(`Switch to ${theme === "dark" ? "light" : "dark"} mode`)
-  }, [theme])
+  const [optedOutNewsletter, setoptedOutNewsletter] = useState(true)
 
   const switchTheme = () => {
     setTheme(theme === "dark" ? "light" : "dark")
@@ -51,6 +45,25 @@ export default function Navbar({ theme, setTheme }: { theme: any; setTheme: any 
     }
     // setLoading(false);
   }
+
+  const toggleEmailSubscription = async () => {
+    // setLoading(true);
+    try {
+      const { optedOutNewsletter: updatedoptedOutNewsletter } = await postData({
+        url: "/api/toggle-email-subscription",
+      })
+      setoptedOutNewsletter(updatedoptedOutNewsletter)
+    } catch (error) {
+      if (error) return alert((error as Error).message)
+    }
+    // setLoading(false);
+  }
+
+  useEffect(() => {
+    if (session?.user?.email) {
+      setoptedOutNewsletter(session?.user?.optedOutNewsletter)
+    }
+  }, [session])
 
   return (
     <header className="inset-x-0 top-0 ">
@@ -119,6 +132,15 @@ export default function Navbar({ theme, setTheme }: { theme: any; setTheme: any 
                         Sign out
                       </div>
                     </Link>
+
+                    <div
+                      role="menuitem"
+                      className="flex w-full justify-center items-center py-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-t-md"
+                    >
+                      <button onClick={() => toggleEmailSubscription()}>
+                        Turn newsletter {optedOutNewsletter ? "on" : "off"}
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
