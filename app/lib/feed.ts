@@ -32,7 +32,7 @@ export async function getPostsForDate(
           },
           {
             scores: {
-              relevance: { gt: 7 },
+              relevance: { gt: 8 },
             },
           },
         ],
