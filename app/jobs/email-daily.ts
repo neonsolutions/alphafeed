@@ -64,7 +64,7 @@ async function main() {
         email: process.env.EMAIL_FROM!,
         name: "Alpha Feed Gist",
       },
-      to: emails,
+      bcc: emails,
       subject: `Daily Digest for ${dateString}`,
       html,
       text: generatePlainText(posts),
