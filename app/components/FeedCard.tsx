@@ -41,8 +41,14 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
   }
 
   const formatLink = (link: string) => {
-    const maxLength = 18 // Maximum number of characters
-    return link.length > maxLength ? link.slice(0, maxLength) + "..." : link
+    try {
+      const urlObj = new URL(link)
+      return urlObj.hostname
+    } catch (err) {
+      console.log("Invalid URL")
+      const maxLength = 18 // Maximum number of characters
+      return link.length > maxLength ? link.slice(0, maxLength) + "..." : link
+    }
   }
 
   const formatPostDate = (date: Date) => {
