@@ -118,6 +118,15 @@ export default function Navbar({ theme, setTheme }: { theme: any; setTheme: any 
                       </div>
                     </Link>
 
+                    <div
+                      role="menuitem"
+                      className="flex w-full justify-center items-center py-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-t-md"
+                    >
+                      <button onClick={() => toggleEmailSubscription()}>
+                        Turn newsletter {optedOutNewsletter ? "on" : "off"}
+                      </button>
+                    </div>
+
                     <Link
                       onClick={() => signOut({ callbackUrl: "/" })}
                       href="#"
@@ -132,15 +141,6 @@ export default function Navbar({ theme, setTheme }: { theme: any; setTheme: any 
                         Sign out
                       </div>
                     </Link>
-
-                    <div
-                      role="menuitem"
-                      className="flex w-full justify-center items-center py-2 hover:bg-gray-100 dark:hover:bg-gray-900 rounded-t-md"
-                    >
-                      <button onClick={() => toggleEmailSubscription()}>
-                        Turn newsletter {optedOutNewsletter ? "on" : "off"}
-                      </button>
-                    </div>
                   </div>
                 )}
               </div>

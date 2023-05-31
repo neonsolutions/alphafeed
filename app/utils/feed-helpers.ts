@@ -18,6 +18,32 @@ export function extractMediaSources(text: string): string[] {
 
 export function extractLinks(text: string): string[] {
   const urlRegex = /https?:\/\/[^"'>\s]+/g
+  const mediaExtensions = [
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".gif",
+    ".bmp",
+    ".webp",
+    ".mp4",
+    ".mp3",
+    ".wav",
+    ".ogg",
+    ".flac",
+    ".mov",
+    ".avi",
+  ]
+
   const matches = text.match(urlRegex)
-  return matches ? matches.map((match) => match.replace("nitter.net", "twitter.com")) : []
+  if (!matches) {
+    return []
+  }
+
+  // Filter out media links
+  const nonMediaLinks = matches.filter((url) => {
+    const extension = new URL(url).pathname.split(".").pop()
+    return !mediaExtensions.includes(`.${extension}`)
+  })
+
+  return nonMediaLinks
 }

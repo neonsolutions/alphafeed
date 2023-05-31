@@ -58,7 +58,10 @@ function parseFeedItems(feedItems: feed_items_with_scores[]): IFeedPost[] {
       const significance = Math.round(((scores.impact + scores.novelty + scores.relevance) / 3) * 10) / 10
 
       const media = extractMediaSources(post.description_raw)
-      const externalLinks = extractLinks(post.description_raw).filter((link) => !media.includes(link))
+      let externalLinks = extractLinks(post.description_raw)
+      externalLinks = externalLinks
+        .filter((link) => !media.includes(link))
+        .map((link) => link.replace("nitter.net", "twitter.com"))
 
       return {
         title: post.title || post.title_raw,
