@@ -147,7 +147,7 @@ export default function Pricing({
               </div>
               <p className="mt-6 flex items-baseline justify-center gap-x-2">
                 <span className="text-5xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  ${!isYearly ? monthlyPrice : yearlyPrice}
+                  ${!isYearly ? monthlyPrice.toFixed(2) : yearlyPrice}
                 </span>
                 <span className="text-sm font-semibold leading-6 tracking-wide text-gray-600 dark:text-gray-400">
                   USD
