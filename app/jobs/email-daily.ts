@@ -64,7 +64,7 @@ async function main() {
         email: process.env.EMAIL_FROM!,
         name: "Alpha Feed Gist",
       },
-      bcc: emails,
+      personalizations: emails.map((email) => ({ to: [email] })),
       subject: `Daily Digest for ${dateString}`,
       html,
       text: generatePlainText(posts),
