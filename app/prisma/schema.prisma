@@ -9,7 +9,7 @@ datasource db {
 }
 
 model feed_items {
-  id              Int      @id @default(autoincrement())
+  id              String      @id @default(uuid())
   title_raw       String
   title           String?
   link            String   @unique
@@ -26,7 +26,7 @@ model scores {
   impact       Float
   novelty      Float
   reliability  Float
-  feed_item_id Int        @unique
+  feed_item_id String        @unique
   feed_items   feed_items @relation(fields: [feed_item_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
