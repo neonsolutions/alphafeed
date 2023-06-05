@@ -69,7 +69,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     return redirectToToday
   }
 
-  const posts = await getPostsForDate(dateObj, 20)
+  const posts = (await getPostsForDate(dateObj, 20))?.filter((post) => post.scores.significance > 7)
 
   if (!posts) {
     return { props: { posts: [], session } }
