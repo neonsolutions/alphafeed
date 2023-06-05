@@ -4,6 +4,8 @@ import dotenv from "dotenv"
 import { ChatCompletionRequestMessage, OpenAIApi, Configuration as OpenAIConfig } from "openai"
 dotenv.config()
 
+let prisma: PrismaClient
+
 interface IContentEvaluation {
   title: string
   content: string
@@ -12,13 +14,11 @@ interface IContentEvaluation {
   novelty: number
   reliability: number
 }
-
-const prisma = new PrismaClient()
 const openaiConfig = new OpenAIConfig({ apiKey: process.env.OPENAI_API_KEY! })
 const openai = new OpenAIApi(openaiConfig)
 
 const AUDIENCE_DESCRIPTION =
-  "The target audience is a group of people who are interested in the topic of artificial intelligence research and are looking for the latest state of the art developments in the field. Prioritize research breakthroughs, new discoveries, and novel applications of AI."
+  "The target audience is a group of people who are interested in the topic of artificial intelligence research and are looking for the latest state of the art developments in the field. Prioritize research breakthroughs, new discoveries, and novel applications of AI. Ignore engagement baiting, sensationalism, and clickbait."
 const MAX_RETRIES = 2
 
 function analyzeSystemPrompt(audience_description: string): string {
@@ -32,15 +32,19 @@ function analyzeSystemPrompt(audience_description: string): string {
 
   Additionally, you must come up with a short title and description for the content.
   - title: The title of the content.
-  - content: The cleaned content with any HTML tags or other formatting removed. Keep it as objective and close to the original content as possible and avoid adding your own commentary or conclusions.
+  - content: A 2-4 sentence summary of the content without any links. Keep it as objective and close to the original content as possible and avoid adding your own commentary or conclusions.
 
   You can only respond with JSON that follows this format:
   {
       "title": string,
       "content": string,
+      "relevance_explanation": string,
       "relevance": number from 1 to 10,
+      "impact_explanation": string,
       "impact": number from 1 to 10,
+      "novelty_explanation": string,
       "novelty": number from 1 to 10,
+      "reliability_explanation": string,
       "reliability": number from 1 to 10,
   }
 
@@ -48,7 +52,7 @@ function analyzeSystemPrompt(audience_description: string): string {
 
   Target audience description: "${audience_description}"`
 }
-async function evaluateContent(
+export async function evaluateContent(
   content: string,
   remainingJsonRetries: number = MAX_RETRIES,
 ): Promise<IContentEvaluation | undefined> {
@@ -93,6 +97,9 @@ async function evaluateContent(
     // Convert scores to float
     const scoreKeys = ["relevance", "impact", "novelty", "reliability"]
     for (const key of scoreKeys) {
+      if (result[key] === "null" || result[key] === null) {
+        result[key] = 0
+      }
       result[key] = parseFloat(result[key])
     }
     if (result.title === undefined || result.content === undefined) {
@@ -114,6 +121,8 @@ async function evaluateContent(
 }
 
 async function main() {
+  prisma = new PrismaClient()
+
   const itemsWithoutScore = await prisma.feed_items.findMany({
     where: { scores: null },
   })
@@ -149,10 +158,14 @@ async function main() {
   )
 }
 
-main()
-  .catch((e) => {
-    throw e
-  })
-  .finally(async () => {
-    await prisma.$disconnect()
-  })
+if (require.main === module) {
+  // This block will be executed if the script is run directly
+  console.log("Script is running directly.")
+  main()
+    .catch((e) => {
+      throw e
+    })
+    .finally(async () => {
+      await prisma.$disconnect()
+    })
+}

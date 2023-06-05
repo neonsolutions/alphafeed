@@ -12,7 +12,8 @@
     "job:ingest": "ts-node --compiler-options {\\\"module\\\":\\\"CommonJS\\\"} jobs/ingest.ts",
     "job:score": "ts-node --compiler-options {\\\"module\\\":\\\"CommonJS\\\"} jobs/score.ts",
     "job:newsletter": "ts-node --compiler-options {\\\"module\\\":\\\"CommonJS\\\"} jobs/email-daily.ts",
-    "dev:email": "nodemon"
+    "dev:email": "nodemon",
+    "test:score": "ts-node --compiler-options {\\\"module\\\":\\\"CommonJS\\\"} test/score.test.ts"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
