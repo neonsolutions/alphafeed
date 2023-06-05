@@ -24,11 +24,13 @@ async function main() {
 
   console.log(`Fetching posts for ${postsDate.toLocaleDateString()}`)
 
-  const posts = await getPostsForDate(postsDate, 10)
+  const posts = (await getPostsForDate(postsDate, 10))?.filter((post) => post.scores.significance > 8)
 
   if (posts === undefined) {
     throw new Error("`posts` is undefined")
   }
+
+  // TODO: Handle case where there are no posts
 
   const eligibleUsers = await prisma.user.findMany({
     where: {
