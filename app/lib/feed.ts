@@ -2,6 +2,7 @@ import { feed_items, scores } from "@prisma/client"
 import { prisma } from "../lib/prisma"
 import { IFeedPost, SourceType } from "../interfaces/IFeedPost"
 import { extractMediaSources, extractLinks } from "../utils/feed-helpers"
+import { computeSignificance } from "../utils/eval"
 
 type feed_items_with_scores = feed_items & {
   scores: scores | null
@@ -55,7 +56,8 @@ function parseFeedItems(feedItems: feed_items_with_scores[], limit: number | und
   const parsedPosts: IFeedPost[] = feedItems
     .map((post) => {
       const scores = post.scores! // Filtering out nulls
-      const significance = Math.round(((scores.impact + scores.novelty + scores.relevance) / 3) * 10) / 10
+      const rawSignificance = computeSignificance(scores)
+      const significance = Math.round(rawSignificance * 10) / 10
 
       const media = extractMediaSources(post.description_raw)
       let externalLinks = extractLinks(post.description_raw)
