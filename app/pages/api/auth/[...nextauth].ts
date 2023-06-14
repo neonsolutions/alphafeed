@@ -11,7 +11,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
-  secret: process.env.SECRET,
+  secret: process.env.SECRET!,
   adapter: PrismaAdapter(prisma),
   callbacks: {
     async session({ session, user, token }) {
@@ -23,6 +23,7 @@ export const authOptions: NextAuthOptions = {
           dbUser?.stripeSubscriptionStatus === "active" || dbUser?.stripeSubscriptionStatus === "trialing"
             ? true
             : false
+        session.user.stripeSubscriptionId = dbUser?.stripeSubscriptionId
 
         session.user.optedOutNewsletter = dbUser?.optedOutNewsletter
       }

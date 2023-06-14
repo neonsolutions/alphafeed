@@ -3,6 +3,7 @@ import { CheckIcon } from "@heroicons/react/20/solid"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
 import { getStripe } from "../utils/stripe-client"
+import { Session } from "next-auth"
 
 const includedFeatures = ["AI filtered feed", "Daily summary email", "Priority updates", "Access to past articles"]
 
@@ -12,7 +13,7 @@ interface IPricing {
   monthlyPriceId: string
   yearlyPriceId: string
   setSubscriptionType: (type: string) => void
-  hasSubscription: boolean
+  user: Session["user"]
 }
 
 const postData = async ({ url, data }: { url: string; data?: { priceId: string } }) => {
@@ -38,7 +39,7 @@ export default function Pricing({
   setSubscriptionType,
   monthlyPriceId,
   yearlyPriceId,
-  hasSubscription,
+  user,
 }: IPricing) {
   const { data: session } = useSession()
   const router = useRouter()
@@ -67,6 +68,21 @@ export default function Pricing({
       // setPriceIdLoading(undefined)
       setIsLoading(false) // set loading state to false once the request is complete
     }
+  }
+
+  const redirectToCustomerPortal = async () => {
+    // setLoading(true);
+    try {
+      setIsLoading(true)
+      const { url, error } = await postData({
+        url: "/api/payment/create-portal-link",
+      })
+      window.location.assign(url)
+    } catch (error) {
+      setIsLoading(false)
+      if (error) return alert((error as Error).message)
+    }
+    // setLoading(false);
   }
 
   useEffect(() => {
@@ -154,9 +170,12 @@ export default function Pricing({
                 </span>
               </p>
               <button
-                onClick={() => !hasSubscription && handleCheckout(isYearly ? yearlyPriceId : monthlyPriceId)}
+                onClick={() =>
+                  !user?.hasActiveSubscription
+                    ? handleCheckout(isYearly ? yearlyPriceId : monthlyPriceId)
+                    : redirectToCustomerPortal()
+                }
                 className="mt-10  w-full rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 flex justify-center items-center disabled:bg-gray-400"
-                disabled={hasSubscription}
               >
                 {isLoading ? (
                   <svg
@@ -179,18 +198,19 @@ export default function Pricing({
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                ) : hasSubscription ? (
-                  "Already subscribed"
+                ) : user?.hasActiveSubscription ? (
+                  "Manage subscription"
                 ) : (
                   "Get access"
                 )}
               </button>
+              {!user?.stripeSubscriptionId && (
+                <p className="mt-5 text-[14px] leading-5 text-gray-600 dark:text-gray-400 font-bold">
+                  7 day free trial
+                </p>
+              )}
 
-              <p className="mt-5 mb-1 text-[14px] leading-5 text-gray-600 dark:text-gray-400 font-bold">
-                7 day free trial
-              </p>
-
-              <p className=" text-xs leading-5 text-gray-600 dark:text-gray-400">Cancel anytime</p>
+              <p className="mt-2 text-xs leading-5 text-gray-600 dark:text-gray-400">Cancel anytime</p>
             </div>
           </div>
         </div>

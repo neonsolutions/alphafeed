@@ -8,6 +8,7 @@ declare module "next-auth" {
     user?: {
       // Is the user paying for a subscription
       hasActiveSubscription: boolean
+      stripeSubscriptionId: string | null
 
       // Is the user subscribed to the newsletter
       optedOutNewsletter: boolean

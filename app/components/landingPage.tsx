@@ -4,12 +4,9 @@ import { useState, useRef } from "react"
 import { IPriceIds } from "../interfaces/IPriceIds"
 import Pricing from "./Pricing"
 import { useRouter } from "next/router"
+import { Session } from "next-auth"
 
-export default function landingPage({
-  yearlyPriceId,
-  monthlyPriceId,
-  hasSubscription,
-}: IPriceIds & { hasSubscription: boolean }) {
+export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPriceIds & { user: Session["user"] }) {
   const [subscriptionType, setSubscriptionType] = useState("monthly")
   const howItWorksRef = useRef<HTMLDivElement>(null)
 
@@ -54,7 +51,7 @@ export default function landingPage({
                   href="/feed"
                   className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  {hasSubscription ? "Go to Feed" : "Start your 7-day free trial"}
+                  {user?.stripeSubscriptionId ? "Go to Feed" : "Start your 7-day free trial"}
                 </Link>
                 <a
                   href="#"
@@ -140,7 +137,7 @@ export default function landingPage({
             yearlyPriceId={yearlyPriceId}
             yearlyPrice={25}
             setSubscriptionType={setSubscriptionType}
-            hasSubscription={hasSubscription}
+            user={user}
           />
         </div>
       </div>

@@ -1,10 +1,9 @@
 import { NextApiHandler } from "next"
 
+import { getServerSession } from "next-auth"
 import { stripe } from "../../../lib/stripe"
 import { createOrRetrieveCustomer } from "../../../utils/stripe-helpers"
-import { getSession } from "next-auth/react"
 import { authOptions } from "../auth/[...nextauth]"
-import { getServerSession } from "next-auth"
 
 const CreateCheckoutSession: NextApiHandler = async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
@@ -19,6 +18,13 @@ const CreateCheckoutSession: NextApiHandler = async (req, res) => {
     try {
       const customer = await createOrRetrieveCustomer(session?.user?.email)
 
+      if (
+        customer.stripeSubscriptionId &&
+        (customer.stripeSubscriptionStatus === "active" || customer.stripeSubscriptionStatus === "trialing")
+      ) {
+        return res.status(400).json({ error: { statusCode: 400, message: "You are already subscribed" } })
+      }
+
       const stripeSession = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
         billing_address_collection: "required",
@@ -32,7 +38,7 @@ const CreateCheckoutSession: NextApiHandler = async (req, res) => {
         mode: "subscription",
         allow_promotion_codes: true,
         subscription_data: {
-          trial_from_plan: true,
+          trial_from_plan: !customer.stripeSubscriptionId,
           metadata,
         },
         success_url: `${process.env.SERVER_ENDPOINT}/feed`,
