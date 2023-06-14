@@ -33,9 +33,11 @@ export default function Register() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <GoogleLoginButton
             style={{ fontSize: "15px" }}
-            onClick={() => {
-              signIn("google")
-            }}
+            onClick={() =>
+              signIn("google", {
+                callbackUrl: "/feed",
+              })
+            }
           >
             <span>Register with Google</span>
           </GoogleLoginButton>
