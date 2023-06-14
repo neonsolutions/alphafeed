@@ -11,25 +11,25 @@ services:
     networks:
       - main
 
-  dev-web:
-    build:
-      context: ./app
-      dockerfile: ./docker/Dockerfile
-    env_file:
-      - ./app/.env
-    environment:
-      - DATABASE_URL=postgresql://postgres:admin@dev-db:5432/postgres
-    volumes:
-      - ./app:/app
-      - /app/node_modules
-      - /app/.next
-    # ports:
-    #   - 3000:3000
-    depends_on:
-      - dev-db
-    networks:
-      - main
-    entrypoint: ["/bin/sh", "/app/docker/entrypoint.sh"]
+  # dev-web:
+  #   build:
+  #     context: ./app
+  #     dockerfile: ./docker/Dockerfile
+  #   env_file:
+  #     - ./app/.env
+  #   environment:
+  #     - DATABASE_URL=postgresql://postgres:admin@dev-db:5432/postgres
+  #   volumes:
+  #     - ./app:/app
+  #     - /app/node_modules
+  #     - /app/.next
+  #   # ports:
+  #   #   - 3000:3000
+  #   depends_on:
+  #     - dev-db
+  #   networks:
+  #     - main
+  #   entrypoint: ["/bin/sh", "/app/docker/entrypoint.sh"]
 
 networks:
   main:

@@ -1,5 +1,5 @@
 import type { GetServerSidePropsContext, NextPage } from "next"
-import { getServerSession } from "next-auth"
+import { Session, getServerSession } from "next-auth"
 import Head from "next/head"
 import LandingPage from "../components/landingPage"
 import { IPriceIds } from "../interfaces/IPriceIds"
@@ -23,18 +23,18 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
         monthlyPriceId: PRICE_MONTHLY_ID,
         yearlyPriceId: PRICE_ANNUAL_ID,
       },
-      hasSubscription: session?.user?.hasActiveSubscription || false,
+      user: session?.user,
     },
   }
 }
 
-const Home: NextPage<Props & { hasSubscription: boolean }> = ({ priceIds, hasSubscription }) => {
+const Home: NextPage<Props & { user: Session["user"] }> = ({ priceIds, user }) => {
   return (
     <>
       <Head>
         <title>Alpha Feed</title>
       </Head>
-      <LandingPage {...priceIds} hasSubscription={hasSubscription} />
+      <LandingPage {...priceIds} user={user} />
     </>
   )
 }

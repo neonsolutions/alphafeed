@@ -1,9 +1,9 @@
 import { GetServerSidePropsContext } from "next"
-import { getServerSession } from "next-auth"
-import { authOptions } from "../pages/api/auth/[...nextauth]"
+import { Session, getServerSession } from "next-auth"
+import { useState } from "react"
 import Pricing from "../components/Pricing"
 import { IPriceIds } from "../interfaces/IPriceIds"
-import { useState } from "react"
+import { authOptions } from "../pages/api/auth/[...nextauth]"
 
 interface Props {
   priceIds: IPriceIds
@@ -24,12 +24,12 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
         monthlyPriceId: PRICE_MONTHLY_ID,
         yearlyPriceId: PRICE_ANNUAL_ID,
       },
-      hasSubscription: session?.user?.hasActiveSubscription,
+      user: session?.user,
     },
   }
 }
 
-export default function Subscribe({ priceIds, hasSubscription }: Props & { hasSubscription: boolean }) {
+export default function Subscribe({ priceIds, user }: Props & { user: Session["user"] }) {
   const [subscriptionType, setSubscriptionType] = useState("monthly")
 
   return (
@@ -44,7 +44,7 @@ export default function Subscribe({ priceIds, hasSubscription }: Props & { hasSu
           yearlyPriceId={priceIds.yearlyPriceId}
           yearlyPrice={25}
           setSubscriptionType={setSubscriptionType}
-          hasSubscription={hasSubscription}
+          user={user}
         />
       </div>
     </div>
