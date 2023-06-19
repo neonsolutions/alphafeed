@@ -124,6 +124,49 @@ export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPr
           </div>
         </div>
       </div>
+      {/* How It Works */}
+      <div
+        ref={howItWorksRef}
+        className=" w-full py-32  border-t-2 border-gray-200 dark:border-gray-800 z-10 relative text-black h-full flex justify-center transition-colors duration-500 bg-white dark:bg-black"
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 w-full max-w-4xl">
+          <div className="flex justify-center items-start px-6 order-2 sm:order-1 sm:pt-0 ">
+            <div className="absolute overflow-hidden max-h-[445px] rounded-[30px]">
+              {" "}
+              {/* <Image
+                alt="demoFeed"
+                src="/images/landing/demoFeed.png"
+                id="feed2"
+                width={220}
+                height={2000}
+                className="absolute animate-scroll delay-5000" // assuming the animation duration is 10s
+              /> */}
+              <Image
+                alt="demoFeed"
+                src="/images/landing/demoFeed.png"
+                id="feed"
+                className=""
+                width={220}
+                height={2000}
+              ></Image>
+              <Image
+                alt="demoFeedIphoneScreen"
+                src="/images/landing/iphoneScreenFeed.png"
+                width={350}
+                height={780}
+                className="absolute top-0"
+              ></Image>
+            </div>
+          </div>
+          <div className="flex justify-center content-center px-6 order-1 sm:order-2">
+            <div>
+              <h2 className="text-3xl font-bold leading-tight  text-gray-900 dark:text-white sm:text-4xl  pb-6">
+                How It Works
+              </h2>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Pricing */}
       <div className="px-6 lg:px-8 pt-32 pb-40  border-t-2 border-gray-200 dark:border-gray-800 flex justify-center ">
