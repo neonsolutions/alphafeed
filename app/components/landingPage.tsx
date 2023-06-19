@@ -154,7 +154,7 @@ export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPr
             <div className="flex justify-center content-center px-6 order-1 sm:order-2">
               <div>
                 <h3 className="text-xl sm:text-xl leading-tight text-gray-900 dark:text-white text-center pb-2">
-                  Mail
+                  Newsletter
                 </h3>
                 <Image alt="iphoneEmailFeed" src="/images/landing/iphoneEmailFeed.png" width={220} height={780}></Image>
               </div>
