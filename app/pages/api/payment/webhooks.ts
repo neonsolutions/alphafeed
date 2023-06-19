@@ -1,9 +1,11 @@
 import { NextApiRequest, NextApiResponse } from "next"
-import Stripe from "stripe"
 import { Readable } from "node:stream"
+import Stripe from "stripe"
 
+import path from "path"
 import { stripe } from "../../../lib/stripe"
-import { manageSubscriptionStatusChange } from "../../../utils/stripe-helpers"
+import { sendEmail } from "../../../utils/email-helpers"
+import { getCustomerBySubscription, manageSubscriptionStatusChange } from "../../../utils/stripe-helpers"
 
 // Stripe requires the raw body to construct the event.
 export const config = {
@@ -58,6 +60,28 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
               subscription.customer as string,
               event.type === "customer.subscription.created",
             )
+            break
+          case "customer.subscription.trial_will_end":
+            const subscription_ = event.data.object as Stripe.Subscription
+            const user = await getCustomerBySubscription(subscription_.id)
+
+            if (!user) {
+              throw new Error("Could not find user with subscription")
+            }
+
+            if (!subscription_.default_payment_method) {
+              // Send an email asking the customer to update their payment method
+              const templatePath = path.join(process.cwd(), "emails", "payment-expiring.hbs")
+              sendEmail(
+                [{ name: user?.name || undefined, email: user.email! }],
+                "Your Free Trial is Ending Soon",
+                templatePath,
+                {
+                  customer_name: user.name,
+                  manage_payment_url: `${process.env.NEXTAUTH_URL}/payment/manage`,
+                },
+              )
+            }
             break
           case "checkout.session.completed":
             const checkoutSession = event.data.object as Stripe.Checkout.Session

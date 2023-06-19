@@ -36,6 +36,14 @@ export async function createOrRetrieveCustomer(userEmail: string) {
   return updatedUser
 }
 
+export function getCustomerBySubscription(subscriptionId: string) {
+  return prisma.user.findFirst({
+    where: {
+      stripeSubscriptionId: subscriptionId,
+    },
+  })
+}
+
 export async function manageSubscriptionStatusChange(subscriptionId: string, customerId: string, createAction = false) {
   const user = await prisma.user.findFirst({
     where: {
