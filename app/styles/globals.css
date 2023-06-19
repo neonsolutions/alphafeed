@@ -26,10 +26,10 @@ body {
     transform: translateY(0);
   }
   100% {
-    transform: translateY(calc(-1 * 100vh));
+    transform: translateY(calc(-1 * 1800px));
   }
 }
 
 #feed {
-  animation: scroll 10s linear infinite;
+  animation: scroll 40s linear infinite;
 }

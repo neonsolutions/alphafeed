@@ -143,7 +143,7 @@ export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPr
               /> */}
               <Image
                 alt="demoFeed"
-                src="/images/landing/demoFeed.png"
+                src="/images/landing/demoFeedForIphone.png"
                 id="feed"
                 className=""
                 width={220}
