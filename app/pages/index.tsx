@@ -23,7 +23,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
         monthlyPriceId: PRICE_MONTHLY_ID,
         yearlyPriceId: PRICE_ANNUAL_ID,
       },
-      user: session?.user,
+      user: session?.user || null,
     },
   }
 }

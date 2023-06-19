@@ -27,7 +27,7 @@ const CreateCheckoutSession: NextApiHandler = async (req, res) => {
 
       const stripeSession = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
-        billing_address_collection: "required",
+        // billing_address_collection: "required",
         customer: customer.stripeCustomerId!,
         line_items: [
           {
@@ -38,9 +38,14 @@ const CreateCheckoutSession: NextApiHandler = async (req, res) => {
         mode: "subscription",
         allow_promotion_codes: true,
         subscription_data: {
-          trial_from_plan: !customer.stripeSubscriptionId,
-          metadata,
+          trial_settings: {
+            end_behavior: {
+              missing_payment_method: "cancel",
+            },
+          },
+          trial_period_days: 7,
         },
+        payment_method_collection: "if_required",
         success_url: `${process.env.SERVER_ENDPOINT}/feed`,
         cancel_url: `${process.env.SERVER_ENDPOINT}/`,
       })
