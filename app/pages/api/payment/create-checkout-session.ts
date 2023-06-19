@@ -4,6 +4,7 @@ import { getServerSession } from "next-auth"
 import { stripe } from "../../../lib/stripe"
 import { createOrRetrieveCustomer } from "../../../utils/stripe-helpers"
 import { authOptions } from "../auth/[...nextauth]"
+import Stripe from "stripe"
 
 const CreateCheckoutSession: NextApiHandler = async (req, res) => {
   const session = await getServerSession(req, res, authOptions)
@@ -18,11 +19,21 @@ const CreateCheckoutSession: NextApiHandler = async (req, res) => {
     try {
       const customer = await createOrRetrieveCustomer(session?.user?.email)
 
-      if (
-        customer.stripeSubscriptionId &&
-        (customer.stripeSubscriptionStatus === "active" || customer.stripeSubscriptionStatus === "trialing")
-      ) {
+      if (customer.stripeSubscriptionId && customer.stripeSubscriptionStatus === "active") {
         return res.status(400).json({ error: { statusCode: 400, message: "You are already subscribed" } })
+      }
+
+      let subscriptionData: Stripe.Checkout.SessionCreateParams.SubscriptionData | {} = {}
+
+      if (!customer.stripeSubscriptionId) {
+        subscriptionData = {
+          trial_settings: {
+            end_behavior: {
+              missing_payment_method: "cancel",
+            },
+          },
+          trial_period_days: 7,
+        }
       }
 
       const stripeSession = await stripe.checkout.sessions.create({
@@ -38,12 +49,7 @@ const CreateCheckoutSession: NextApiHandler = async (req, res) => {
         mode: "subscription",
         allow_promotion_codes: true,
         subscription_data: {
-          trial_settings: {
-            end_behavior: {
-              missing_payment_method: "cancel",
-            },
-          },
-          trial_period_days: 7,
+          ...subscriptionData,
         },
         payment_method_collection: "if_required",
         success_url: `${process.env.SERVER_ENDPOINT}/feed`,

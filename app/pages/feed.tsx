@@ -24,7 +24,6 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   }
 
   if (!session.user.hasActiveSubscription) {
-    // TODO: Handle other subscription statuses
     console.log("User has no active subscription")
     return {
       redirect: {
