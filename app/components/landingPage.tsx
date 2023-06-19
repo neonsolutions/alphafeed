@@ -5,6 +5,7 @@ import { IPriceIds } from "../interfaces/IPriceIds"
 import Pricing from "./Pricing"
 import { useRouter } from "next/router"
 import { Session } from "next-auth"
+import PhoneFeedDemo from "./PhoneFeedDemo"
 
 export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPriceIds & { user: Session["user"] }) {
   const [subscriptionType, setSubscriptionType] = useState("monthly")
@@ -21,8 +22,8 @@ export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPr
   }
 
   return (
-    <div className="bg-white dark:bg-black transition-colors duration-500">
-      <div className=" z-0 h-[90vh]">
+    <div className="bg-white dark:bg-black transition-colors duration-500 ">
+      <div className=" z-0  sm:h-[90vh] h-[75vh]">
         <div className="relative isolate px-6 pt-14 lg:px-8">
           <div
             className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -36,17 +37,17 @@ export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPr
               }}
             />
           </div>
-          <div className="mx-auto max-w-4xl flex justify-center items-center h-[70vh]">
-            <div className="text-center ">
+          <div className="mx-auto max-w-5xl block justify-center sm:flex  items-center h-[70vh]">
+            <div className="text-center sm:text-left">
               <h1 className="text-4xl font-bold leading-tight  text-gray-900 dark:text-white sm:text-6xl">
                 From Endless Scrolling to Effortless Knowing.
               </h1>
-              <div className="flex justify-center w-full">
+              <div className="">
                 <p className="mt-10 text-lg max-w-m leading-normal  text-gray-600 dark:text-gray-500">
                   Cut out the noise and surface the most significant AI related news of the day.
                 </p>
               </div>
-              <div className="mt-10 flex items-center justify-center gap-x-6">
+              <div className="mt-10 flex items-center sm:justify-start justify-center gap-x-6">
                 <Link
                   href="/feed"
                   className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -61,6 +62,9 @@ export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPr
                   Learn more
                 </a>
               </div>
+            </div>
+            <div className="sm:mr-10 mr-0 sm:ml-10 ml-0 pt-10 sm:pt-0 sm:w-auto w-full sm:flex flex justify-center">
+              <PhoneFeedDemo />
             </div>
           </div>
           <div
@@ -119,6 +123,40 @@ export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPr
                   The resulting feed contains the most important developments, saving you hours of endless scrolling
                   every day.
                 </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* Feed Demo */}
+
+      <div
+        ref={howItWorksRef}
+        className=" w-full py-32  border-t-2 border-gray-200 dark:border-gray-800 z-10 relative text-black  transition-colors duration-500 bg-white dark:bg-black"
+      >
+        <h2 className="text-3xl font-bold leading-tight text-gray-900 dark:text-white sm:text-4xl text-center">
+          Everything you should know{" "}
+        </h2>
+        <h4 className="text-gray-600 dark:text-gray-400  text-base text-center pt-3">
+          Delivered daily and available on-demand
+        </h4>
+        <div className="h-full flex justify-center pt-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 w-full max-w-4xl">
+            <div className="flex justify-center  px-6 order-2 sm:order-1 sm:pt-0 auto">
+              <div>
+                <h3 className="text-xl sm:text-xl leading-tight text-gray-900 dark:text-white text-center pb-2 pt-10 sm:pt-0">
+                  Web
+                </h3>
+                <PhoneFeedDemo />
+              </div>
+            </div>
+
+            <div className="flex justify-center content-center px-6 order-1 sm:order-2">
+              <div>
+                <h3 className="text-xl sm:text-xl leading-tight text-gray-900 dark:text-white text-center pb-2">
+                  Newsletter
+                </h3>
+                <Image alt="iphoneEmailFeed" src="/images/landing/iphoneEmailFeed.png" width={220} height={780}></Image>
               </div>
             </div>
           </div>
