@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react"
 import { CheckIcon } from "@heroicons/react/20/solid"
+import { Session } from "next-auth"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
+import { useEffect, useState } from "react"
 import { getStripe } from "../utils/stripe-client"
-import { Session } from "next-auth"
 
 const includedFeatures = ["AI filtered feed", "Daily summary email", "Priority updates", "Access to past articles"]
 
@@ -205,9 +205,14 @@ export default function Pricing({
                 )}
               </button>
               {!user?.stripeSubscriptionId && (
-                <p className="mt-5 text-[14px] leading-5 text-gray-600 dark:text-gray-400 font-bold">
-                  7 day free trial
-                </p>
+                <>
+                  <p className="mt-5 text-[14px] leading-5 text-gray-600 dark:text-gray-400 font-bold">
+                    7 day free trial
+                  </p>
+                  <p className="mt-1 text-[14px] leading-5 text-gray-600 dark:text-gray-400 font-bold">
+                    No card required
+                  </p>
+                </>
               )}
 
               <p className="mt-2 text-xs leading-5 text-gray-600 dark:text-gray-400">Cancel anytime</p>
