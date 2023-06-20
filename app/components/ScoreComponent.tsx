@@ -13,7 +13,7 @@ const calculateRightPercentage = (score: number) => {
 const ScoreComponent = ({ title, score, description }: IScoreComponentProps) => {
   return (
     <div className="pb-3 sm:w-[250px] w-full">
-      <div className="">
+      <div className="w-full">
         <div className="flex justify-between">
           <p className="text-gray-900 dark:text-white">{title}</p>
           <p className="text-gray-900 dark:text-white">{score}</p>
