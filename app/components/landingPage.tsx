@@ -6,6 +6,7 @@ import Pricing from "./Pricing"
 import { useRouter } from "next/router"
 import { Session } from "next-auth"
 import PhoneFeedDemo from "./PhoneFeedDemo"
+import ScoreComponent from "./ScoreComponent"
 
 export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPriceIds & { user: Session["user"] }) {
   const [subscriptionType, setSubscriptionType] = useState("monthly")
@@ -128,12 +129,42 @@ export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPr
           </div>
         </div>
       </div>
+      {/* Score Demo */}
+      <div className=" w-full pt-32  border-t-2 border-gray-200 dark:border-gray-800 z-10 relative text-black h-full flex justify-center transition-colors duration-500 bg-white dark:bg-black ml-0 sm:ml-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 w-full max-w-4xl pb-0">
+          <div className="flex justify-center items-start px-6 order-2 sm:order-1 sm:pt-0 pt-14">
+            <h2 className="text-3xl font-bold leading-tight  text-gray-900 dark:text-white sm:text-4xl  pb-6"></h2>
+            <div className="sm:h-[480px] h-[340px] overflow-hidden sm:max-w-none max-w-[400px] ">
+              <Image alt="iphoneScoreDemo" src="/images/landing/iphoneScores.png" width={500} height={1200}></Image>
+            </div>
+          </div>
+          <div className=" px-6 order-1 sm:order-2 flex justify-center sm:block">
+            <div>
+              <h2 className="text-3xl font-bold leading-tight  text-gray-900 dark:text-white sm:text-4xl  pb-6">
+                Scoring
+              </h2>
+              <ScoreComponent
+                score={10}
+                title="Relevance"
+                description="Whether it directly affects or interests the target audience."
+              />
+              <ScoreComponent
+                score={8}
+                title="Impact"
+                description="The extent of the effects and the number of people impacted."
+              />
+              <ScoreComponent score={9} title="Novelty" description="How unexpected or new the information is." />
+              <ScoreComponent
+                score={9}
+                title="Reliability"
+                description="Considering the source's reputation and credibility."
+              />
+            </div>
+          </div>
+        </div>
+      </div>
       {/* Feed Demo */}
-
-      <div
-        ref={howItWorksRef}
-        className=" w-full py-32  border-t-2 border-gray-200 dark:border-gray-800 z-10 relative text-black  transition-colors duration-500 bg-white dark:bg-black"
-      >
+      <div className=" w-full py-32  border-t-2 border-gray-200 dark:border-gray-800 z-10 relative text-black  transition-colors duration-500 bg-white dark:bg-black">
         <h2 className="text-3xl font-bold leading-tight text-gray-900 dark:text-white sm:text-4xl text-center">
           Everything you should know{" "}
         </h2>
@@ -150,7 +181,6 @@ export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPr
                 <PhoneFeedDemo />
               </div>
             </div>
-
             <div className="flex justify-center content-center px-6 order-1 sm:order-2">
               <div>
                 <h3 className="text-xl sm:text-xl leading-tight text-gray-900 dark:text-white text-center pb-2">
@@ -162,7 +192,6 @@ export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPr
           </div>
         </div>
       </div>
-
       {/* Pricing */}
       <div className="px-6 lg:px-8 pt-32 pb-40  border-t-2 border-gray-200 dark:border-gray-800 flex justify-center ">
         <div>
