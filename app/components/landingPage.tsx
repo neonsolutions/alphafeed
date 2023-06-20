@@ -130,10 +130,7 @@ export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPr
       </div>
       {/* Feed Demo */}
 
-      <div
-        ref={howItWorksRef}
-        className=" w-full py-32  border-t-2 border-gray-200 dark:border-gray-800 z-10 relative text-black  transition-colors duration-500 bg-white dark:bg-black"
-      >
+      <div className=" w-full py-32  border-t-2 border-gray-200 dark:border-gray-800 z-10 relative text-black  transition-colors duration-500 bg-white dark:bg-black">
         <h2 className="text-3xl font-bold leading-tight text-gray-900 dark:text-white sm:text-4xl text-center">
           Everything you should know{" "}
         </h2>
