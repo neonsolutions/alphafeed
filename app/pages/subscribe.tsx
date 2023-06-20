@@ -1,9 +1,10 @@
 import { GetServerSidePropsContext } from "next"
 import { Session, getServerSession } from "next-auth"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Pricing from "../components/Pricing"
 import { IPriceIds } from "../interfaces/IPriceIds"
 import { authOptions } from "../pages/api/auth/[...nextauth]"
+import { User } from "@prisma/client"
 
 interface Props {
   priceIds: IPriceIds
@@ -31,6 +32,29 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
 export default function Subscribe({ priceIds, user }: Props & { user: Session["user"] }) {
   const [subscriptionType, setSubscriptionType] = useState("monthly")
+
+  const [checkSubscription, setCheckSubscription] = useState(true)
+
+  useEffect(() => {
+    if (checkSubscription) {
+      // Fetch /api/check-subscription every 2 seconds to see if the user has an active subscription
+      const interval = setInterval(async () => {
+        const response = await fetch("/api/check-subscription")
+
+        if (!response.ok) {
+          return
+        }
+
+        const { user: newUser } = (await response.json()) as { user: User | undefined }
+
+        if (newUser?.stripeSubscriptionStatus === "active" || newUser?.stripeSubscriptionStatus === "trialing") {
+          window.location.href = "/feed"
+        }
+      }, 2000)
+
+      return () => clearInterval(interval)
+    }
+  }, [checkSubscription])
 
   return (
     <div className="px-6 lg:px-8 pb-32 pt-24  border-t-2 border-gray-200 dark:border-gray-800 flex justify-center ">
