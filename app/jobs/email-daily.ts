@@ -20,7 +20,7 @@ async function main() {
   // Fetch posts and subscribed users from the database
   const postsDate = new Date()
   // Update to yesterday
-  postsDate.setDate(postsDate.getDate() - 1)
+  postsDate.setDate(postsDate.getDate() - 2)
 
   console.log(`Fetching posts for ${postsDate.toLocaleDateString()}`)
   const posts = (await getPostsForDate(postsDate, 20))?.filter((post) => post.scores.significance > 8).slice(0, 10)
