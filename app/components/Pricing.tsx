@@ -1,5 +1,4 @@
 import { CheckIcon } from "@heroicons/react/20/solid"
-import { User } from "@prisma/client"
 import { Session } from "next-auth"
 import { useSession } from "next-auth/react"
 import { useRouter } from "next/router"
@@ -46,32 +45,8 @@ export default function Pricing({
   const router = useRouter()
   const [isYearly, setIsYearly] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [checkSubscription, setCheckSubscription] = useState(true)
-
-  useEffect(() => {
-    if (checkSubscription) {
-      // Fetch /api/check-subscription every 2 seconds to see if the user has an active subscription
-      const interval = setInterval(async () => {
-        const response = await fetch("/api/check-subscription")
-
-        if (!response.ok) {
-          return
-        }
-
-        const { user: newUser } = (await response.json()) as { user: User | undefined }
-
-        if (newUser?.stripeSubscriptionStatus === "active" || newUser?.stripeSubscriptionStatus === "trialing") {
-          window.location.href = "/feed"
-        }
-      }, 2000)
-
-      return () => clearInterval(interval)
-    }
-  }, [checkSubscription])
 
   const handleCheckout = async (priceId: string) => {
-    setCheckSubscription(true)
-
     setIsLoading(true) // set loading state to true
     if (!session?.user) {
       setIsLoading(false)
