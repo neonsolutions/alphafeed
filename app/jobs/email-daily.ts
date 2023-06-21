@@ -101,7 +101,7 @@ function generatePlainText(posts: IFeedPost[]): string {
     result += `  Reliability: ${post.scores.reliability}\n`
 
     if (post.media) {
-      result += `Media: ${post.media.join(", ")}\n`
+      result += `Media: ${post.media.images.join(", ")} ${post.media.videos.join(", ")}\n`
     }
 
     result += `Source: ${post.source}\n`

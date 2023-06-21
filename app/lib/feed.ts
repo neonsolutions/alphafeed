@@ -86,7 +86,7 @@ function parseFeedItems(feedItems: feed_items_with_scores[], limit: number | und
       const media = extractMediaSources(post.description_raw)
       let externalLinks = extractLinks(post.description_raw)
       externalLinks = externalLinks
-        .filter((link) => !media.includes(link))
+        .filter((link) => !media.images.includes(link) && !media.videos.includes(link))
         .map((link) => link.replace("nitter.net", "twitter.com"))
 
       return {

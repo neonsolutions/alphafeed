@@ -9,7 +9,10 @@ export interface IFeedPost {
   title: string
   body: string
   scores: { significance: number; relevance: number; impact: number; novelty: number; reliability: number }
-  media: string[] | null
+  media: {
+    images: string[]
+    videos: string[]
+  }
   source: SourceType
   link: string
   externalLinks: string[] | null

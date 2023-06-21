@@ -3,6 +3,20 @@ import { useState } from "react"
 import { IFeedPost } from "../interfaces/IFeedPost"
 import { XCircleIcon } from "@heroicons/react/24/solid"
 
+const ScoreBar = ({ score }: { score: number }) => {
+  const scorePercentage = (score / 10) * 100
+  return (
+    <div className="px-4">
+      <div className="h-1 w-full bg-gray-300 rounded-full ">
+        <div
+          className="h-full bg-indigo-700 dark:bg-indigo-400 rounded-full"
+          style={{ width: `${scorePercentage}%` }}
+        ></div>
+      </div>
+    </div>
+  )
+}
+
 const FeedCard = ({ title, body, scores, media, source, link, publishedAt, externalLinks }: IFeedPost) => {
   let icon = "/images/feedCard/internetIcon.svg"
   const [dropdownVisible, setDropdownVisible] = useState(false) // New state
@@ -24,20 +38,6 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
       break
     default:
       icon = "/images/feedCard/internetIcon.svg"
-  }
-
-  const renderScoreBar = (score: number) => {
-    const scorePercentage = (score / 10) * 100
-    return (
-      <div className="px-4">
-        <div className="h-1 w-full bg-gray-300 rounded-full ">
-          <div
-            className="h-full bg-indigo-700 dark:bg-indigo-400 rounded-full"
-            style={{ width: `${scorePercentage}%` }}
-          ></div>
-        </div>
-      </div>
-    )
   }
 
   const formatLink = (link: string) => {
@@ -159,7 +159,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
                       <span>Relevance:</span>
                       <span>{scores.relevance}</span>
                     </p>
-                    {renderScoreBar(scores.relevance)}
+                    <ScoreBar score={scores.relevance} key="relevance" />
                     <p
                       className="flex justify-between items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300"
                       role="menuitem"
@@ -167,7 +167,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
                       <span>Impact:</span>
                       <span>{scores.impact}</span>
                     </p>
-                    {renderScoreBar(scores.impact)}
+                    <ScoreBar score={scores.impact} key="impact" />
                     <p
                       className="flex justify-between items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300"
                       role="menuitem"
@@ -175,7 +175,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
                       <span>Novelty:</span>
                       <span>{scores.novelty}</span>
                     </p>
-                    {renderScoreBar(scores.novelty)}
+                    <ScoreBar score={scores.novelty} key="novelty" />
                     <p
                       className="flex justify-between items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300"
                       role="menuitem"
@@ -183,7 +183,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
                       <span>Reliability:</span>
                       <span>{scores.reliability}</span>
                     </p>
-                    {renderScoreBar(scores.reliability)}
+                    <ScoreBar score={scores.reliability} key="reliability" />
                   </div>
                 </div>
               )}
@@ -194,11 +194,11 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
           </div>
         </div>
         <p className="text-gray-500 dark:text-gray-300 text-sm pb-4">{body}</p>
-        {media && (
+        {(media.images.length > 0 || media.videos.length > 0) && (
           <div className="flex overflow-auto space-x-4 pb-4 ">
-            {media.map((url, index) => {
+            {media.images.map((url, index) => {
               const isImage = [".jpeg", ".jpg", ".gif", ".png"].some((extension) => url.includes(extension))
-              return isImage ? (
+              return (
                 <>
                   {url && (
                     <img
@@ -213,7 +213,10 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
                     />
                   )}
                 </>
-              ) : (
+              )
+            })}
+            {media.videos.map((url, index) => {
+              return (
                 <>
                   {url && (
                     <video

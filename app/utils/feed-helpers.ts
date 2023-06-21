@@ -1,18 +1,21 @@
 import { JSDOM } from "jsdom"
 
-export function extractMediaSources(text: string): string[] {
+export function extractMediaSources(text: string): { images: string[]; videos: string[] } {
   try {
     const dom = new JSDOM(text)
     const imgElements = dom.window.document.getElementsByTagName("img")
     const vidElements = dom.window.document.querySelectorAll("video source")
-    const sources = [
-      ...Array.from(vidElements).map((vid) => (vid as any).src),
-      ...Array.from(imgElements).map((img) => img.src),
-    ]
-    return sources
+
+    return {
+      images: Array.from(imgElements).map((img) => img.src),
+      videos: Array.from(vidElements).map((vid) => (vid as any).src),
+    }
   } catch (error) {
     console.error("Could not parse HTML: ", error)
-    return []
+    return {
+      images: [],
+      videos: [],
+    }
   }
 }
 
@@ -34,6 +37,8 @@ export function extractLinks(text: string): string[] {
     ".avi",
   ]
 
+  const ignoreDomains = ["twitter.com", "nitter.net"]
+
   const matches = text.match(urlRegex)
   if (!matches) {
     return []
@@ -45,5 +50,11 @@ export function extractLinks(text: string): string[] {
     return !mediaExtensions.includes(`.${extension}`)
   })
 
-  return nonMediaLinks
+  // Filter out ignored domains
+  const filteredLinks = nonMediaLinks.filter((url) => {
+    const domain = new URL(url).hostname
+    return !ignoreDomains.includes(domain)
+  })
+
+  return filteredLinks
 }
