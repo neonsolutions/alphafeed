@@ -36,7 +36,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   let date = context.query.date as string
 
   if (!date) {
-    console.log("Date not provided in query parameters")
+    // Date not provided in query parameters
     date = new Date().toISOString().split("T")[0]
   }
 

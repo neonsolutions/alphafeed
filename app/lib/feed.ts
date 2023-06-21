@@ -32,19 +32,43 @@ export async function getPostsForDate(
             },
           },
           {
-            scores: {
-              relevance: { gt: 7 },
-            },
+            AND: [
+              {
+                scores: {
+                  relevance: { gt: 7 },
+                },
+              },
+              {
+                scores: {
+                  novelty: { gt: 7 },
+                },
+              },
+              {
+                scores: {
+                  impact: { gt: 7 },
+                },
+              },
+            ],
           },
         ],
       },
       include: {
         scores: true,
       },
-      take: limit ? limit * 2 : undefined,
+      orderBy: {
+        scores: {
+          relevance: "desc",
+        },
+      },
     })
 
-    const parsedPosts = parseFeedItems(posts, limit)
+    const sortedFeedItems = posts.sort((a, b) => {
+      const avgScoreA = (a.scores!.relevance + a.scores!.impact + a.scores!.novelty) / 3
+      const avgScoreB = (b.scores!.relevance + b.scores!.impact + b.scores!.novelty) / 3
+      return avgScoreB - avgScoreA // for descending order
+    })
+
+    const parsedPosts = parseFeedItems(sortedFeedItems, limit)
 
     return parsedPosts
   } catch (error) {
@@ -83,7 +107,7 @@ function parseFeedItems(feedItems: feed_items_with_scores[], limit: number | und
         publishedAt: post.published.toISOString(),
       }
     })
-    .sort((a: IFeedPost, b: IFeedPost) => b.scores.significance - a.scores.significance)
+    // .sort((a: IFeedPost, b: IFeedPost) => b.scores.significance - a.scores.significance)
     .slice(0, limit || feedItems.length)
 
   return parsedPosts
