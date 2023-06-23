@@ -124,7 +124,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
       <div className=" mx-auto bg-white dark:bg-gray-900 rounded-2xl border border-gray-200 dark:border-gray-800 md:max-w-2xl  p-6 w-full">
         <div className="flex justify-between items-start pb-4">
           <div className="flex-grow min-width-0">
-            <div className="text-[16px] font-medium text-gray-900 dark:text-white pr-[8px]">{title}</div>
+            <div className="text-[16px] font-medium text-gray-900 dark:text-white pr-[8px] break-words">{title}</div>
           </div>
           <div className="flex-shrink-0 flex gap-3">
             <div
@@ -193,7 +193,7 @@ const FeedCard = ({ title, body, scores, media, source, link, publishedAt, exter
             </a>
           </div>
         </div>
-        <p className="text-gray-500 dark:text-gray-300 text-sm pb-4">{body}</p>
+        <p className="text-gray-500 dark:text-gray-300 text-sm pb-4 break-words">{body}</p>
         {(media.images.length > 0 || media.videos.length > 0) && (
           <div className="flex overflow-auto space-x-4 pb-4 ">
             {media.images.map((url, index) => {
