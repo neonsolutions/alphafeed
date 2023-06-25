@@ -9,7 +9,7 @@ dotenv.config()
 const app = express()
 const port = 3001
 
-const templatePath = process.env.EMAIL_TEMPLATE_PATH!
+const templatePath = path.join(process.cwd(), "emails", "payment-expiring.hbs")
 
 // Test data
 const posts: IFeedPost[] = [
@@ -73,12 +73,16 @@ const date = new Date().toLocaleDateString()
 console.log(`Template path: ${templatePath}`)
 
 app.get("/", (req, res) => {
-  fs.readFile(path.join(__dirname, "../", templatePath), "utf8", (err, data) => {
+  fs.readFile(templatePath, "utf8", (err, templateFile) => {
     if (err) throw err
 
     // Compile and render the template with the test data
-    const template = handlebars.compile(data)
-    const html = template({ posts, date })
+    const template = handlebars.compile(templateFile)
+
+    const html = template({
+      customer_name: "John",
+      manage_payment_url: `${process.env.NEXTAUTH_URL}/payment/manage`,
+    })
 
     res.send(html)
   })
