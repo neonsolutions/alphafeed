@@ -65,13 +65,20 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
             const subscription_ = event.data.object as Stripe.Subscription
             const user = await getCustomerBySubscription(subscription_.id)
 
+            console.log(`User (${user?.id}) free trial is ending soon`)
+
             if (!user) {
               throw new Error("Could not find user with subscription")
             }
 
             if (!subscription_.default_payment_method) {
+              console.log(`User (${user?.id}) does not have a default payment method`)
+
               // Send an email asking the customer to update their payment method
               const templatePath = path.join(process.cwd(), "emails", "payment-expiring.hbs")
+
+              console.log(`Sending email at ${templatePath} user (${user?.id})`)
+
               sendEmail(
                 [{ name: user?.name || undefined, email: user.email! }],
                 "Your Free Trial is Ending Soon",
