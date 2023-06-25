@@ -31,6 +31,7 @@ const relevantEvents = new Set([
   "customer.subscription.created",
   "customer.subscription.updated",
   "customer.subscription.deleted",
+  "customer.subscription.trial_will_end",
 ])
 
 const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
