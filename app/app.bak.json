@@ -7,6 +7,10 @@
     {
       "command": "node dist/jobs/score.js",
       "schedule": "*/10 * * * *"
+    },
+    {
+      "command": "node dist/jobs/email-daily.js",
+      "schedule": "0 19 * * *"
     }
   ]
 }
