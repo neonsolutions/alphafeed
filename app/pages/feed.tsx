@@ -7,6 +7,7 @@ import FeedCard from "../components/FeedCard"
 import { IFeedPost } from "../interfaces/IFeedPost"
 import { getPostsForDate } from "../lib/feed"
 import { authOptions } from "./api/auth/[...nextauth]"
+import { ServiceWarning } from "../components/ServiceWarning"
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const session = await getServerSession(context.req, context.res, authOptions)
@@ -117,6 +118,10 @@ const Feed = ({ posts }: { posts: IFeedPost[] }) => {
             />
           </div>
           <div className="w-full max-w-[500px] ">
+            <div className="mb-10">
+              <ServiceWarning />
+            </div>
+
             <div className="flex justify-between pb-6">
               <h1 className="text-2xl font-bold  text-gray-900 dark:text-white sm:text-4xl">The latest in AI</h1>
               <div className="flex justify-between items-center transition-transform">
