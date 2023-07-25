@@ -7,7 +7,6 @@ import { useRouter } from "next/router"
 import { Session } from "next-auth"
 import PhoneFeedDemo from "./PhoneFeedDemo"
 import ScoreComponent from "./ScoreComponent"
-import { ServiceWarning } from "./ServiceWarning"
 
 export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPriceIds & { user: Session["user"] }) {
   const [subscriptionType, setSubscriptionType] = useState("monthly")
@@ -83,6 +82,7 @@ export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPr
           </div>
         </div>
       </div>
+
       {/* How It Works */}
       <div
         ref={howItWorksRef}
@@ -194,12 +194,8 @@ export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPr
         </div>
       </div>
       {/* Pricing */}
-
-      <div className="px-6 lg:px-8  pb-40  border-t-2 border-gray-200 dark:border-gray-800 flex justify-center ">
+      <div className="px-6 lg:px-8  pt-32 pb-40  border-t-2 border-gray-200 dark:border-gray-800 flex justify-center ">
         <div>
-          <div className="lg:max-w-[840px] pt-10 pb-20">
-            <ServiceWarning />
-          </div>
           <div>
             <h2 className="text-3xl font-bold leading-tight text-gray-900 dark:text-white sm:text-4xl text-center">
               Pricing
