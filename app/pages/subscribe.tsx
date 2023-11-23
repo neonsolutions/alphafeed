@@ -5,6 +5,7 @@ import Pricing from "../components/Pricing"
 import { IPriceIds } from "../interfaces/IPriceIds"
 import { authOptions } from "../pages/api/auth/[...nextauth]"
 import { User } from "@prisma/client"
+import { ServiceWarning } from "../components/ServiceWarning"
 
 interface Props {
   priceIds: IPriceIds
@@ -59,6 +60,11 @@ export default function Subscribe({ priceIds, user }: Props & { user: Session["u
   return (
     <div className="px-6 lg:px-8 pb-32 pt-24  border-t-2 border-gray-200 dark:border-gray-800 flex justify-center ">
       <div>
+        <div className="flex justify-center pb-20">
+          <div className="max-w-[840px]">
+            <ServiceWarning />
+          </div>
+        </div>
         <h2 className="text-3xl font-bold leading-tight text-gray-900 dark:text-white sm:text-4xl text-center ">
           Pricing
         </h2>

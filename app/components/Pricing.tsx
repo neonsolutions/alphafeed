@@ -45,6 +45,7 @@ export default function Pricing({
   const router = useRouter()
   const [isYearly, setIsYearly] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const PaymentDisabled = true
 
   const handleCheckout = async (priceId: string) => {
     setIsLoading(true) // set loading state to true
@@ -176,8 +177,11 @@ export default function Pricing({
                     : redirectToCustomerPortal()
                 }
                 className="mt-10  w-full rounded-md bg-indigo-500 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 flex justify-center items-center disabled:bg-gray-400"
+                disabled={PaymentDisabled}
               >
-                {isLoading ? (
+                {PaymentDisabled ? (
+                  <>Service currently unavailable</>
+                ) : isLoading ? (
                   <svg
                     className="animate-spin  h-5 w-5 text-white"
                     xmlns="http://www.w3.org/2000/svg"

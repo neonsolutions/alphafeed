@@ -82,6 +82,7 @@ export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPr
           </div>
         </div>
       </div>
+
       {/* How It Works */}
       <div
         ref={howItWorksRef}
@@ -193,19 +194,21 @@ export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPr
         </div>
       </div>
       {/* Pricing */}
-      <div className="px-6 lg:px-8 pt-32 pb-40  border-t-2 border-gray-200 dark:border-gray-800 flex justify-center ">
+      <div className="px-6 lg:px-8  pt-32 pb-40  border-t-2 border-gray-200 dark:border-gray-800 flex justify-center ">
         <div>
-          <h2 className="text-3xl font-bold leading-tight text-gray-900 dark:text-white sm:text-4xl text-center">
-            Pricing
-          </h2>
-          <Pricing
-            monthlyPriceId={monthlyPriceId}
-            monthlyPrice={2.5}
-            yearlyPriceId={yearlyPriceId}
-            yearlyPrice={25}
-            setSubscriptionType={setSubscriptionType}
-            user={user}
-          />
+          <div>
+            <h2 className="text-3xl font-bold leading-tight text-gray-900 dark:text-white sm:text-4xl text-center">
+              Pricing
+            </h2>
+            <Pricing
+              monthlyPriceId={monthlyPriceId}
+              monthlyPrice={2.5}
+              yearlyPriceId={yearlyPriceId}
+              yearlyPrice={25}
+              setSubscriptionType={setSubscriptionType}
+              user={user}
+            />
+          </div>
         </div>
       </div>
     </div>
