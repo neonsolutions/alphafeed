@@ -50,10 +50,10 @@ export default function landingPage({ yearlyPriceId, monthlyPriceId, user }: IPr
               </div>
               <div className="mt-10 flex items-center sm:justify-start justify-center gap-x-6">
                 <Link
-                  href="/feed"
+                  href="/"
                   className="rounded-md bg-indigo-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  {user?.stripeSubscriptionId ? "Go to Feed" : "Start your 7-day free trial"}
+                  {user?.stripeSubscriptionId ? "Go to Feed" : "Service currently unavailable"}
                 </Link>
                 <a
                   href="#"

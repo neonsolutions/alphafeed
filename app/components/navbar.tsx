@@ -147,11 +147,11 @@ export default function Navbar({ theme, setTheme }: { theme: any; setTheme: any 
             </>
           ) : router.asPath !== "/login" ? (
             <div>
-              <Link href="/login">
+              {/* <Link href="/login">
                 <div className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
                   Log in <span aria-hidden="true">&rarr;</span>
                 </div>
-              </Link>
+              </Link> */}
             </div>
           ) : (
             <></>
